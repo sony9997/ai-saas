@@ -5,7 +5,7 @@ import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Sun, Moon, Menu as MenuIcon, X } from 'lucide-vue-next'
 import { useTheme } from '@/composables/useTheme'
 import { useAuth } from '@/composables/useAuth'
-import { navigation } from '@/config/navigation'
+import { useNavigation } from '@/config/navigation'
 import { storeToRefs } from 'pinia'
 
 const { isDark, toggleTheme } = useTheme()
@@ -14,6 +14,8 @@ const router = useRouter()
 
 // 使用 storeToRefs 来保持响应性
 const { user } = storeToRefs(useAuth())
+
+const { navigation } = useNavigation()
 
 const isScrolled = ref(false)
 
