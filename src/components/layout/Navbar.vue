@@ -1,15 +1,19 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
-import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItems } from '@headlessui/vue'
-import { Sun, Moon, Menu as MenuIcon, X, User } from 'lucide-vue-next'
+import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
+import { Sun, Moon, Menu as MenuIcon, X } from 'lucide-vue-next'
 import { useTheme } from '@/composables/useTheme'
 import { useAuth } from '@/composables/useAuth'
 import { navigation } from '@/config/navigation'
+import { storeToRefs } from 'pinia'
 
 const { isDark, toggleTheme } = useTheme()
-const { user, logout } = useAuth()
+const { logout } = useAuth()
 const router = useRouter()
+
+// 使用 storeToRefs 来保持响应性
+const { user } = storeToRefs(useAuth())
 
 const isScrolled = ref(false)
 
@@ -23,9 +27,13 @@ const navbarClass = computed(() => ({
   'bg-transparent': !isScrolled.value
 }))
 
+const isLoggedIn = computed(() => {
+  return !!user.value
+})
+
 const handleLogout = async () => {
   await logout()
-  router.push('/')
+  router.push('/login')
 }
 </script>
 
@@ -64,43 +72,31 @@ const handleLogout = async () => {
           </button>
 
           <!-- Auth Buttons -->
-          <template v-if="!user">
-            <router-link
-              to="/login"
-              class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-            >
-              登录
-            </router-link>
-            <router-link
-              to="/register"
-              class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
-            >
-              免费注册
-            </router-link>
-          </template>
-
-          <!-- User Menu -->
-          <Menu as="div" class="relative ml-3" v-else>
-            <MenuButton class="flex items-center space-x-2 text-gray-300 hover:text-white">
-              <User class="h-5 w-5" />
-              <span class="text-sm">{{ user.email }}</span>
-            </MenuButton>
-
-            <MenuItems class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <div class="flex items-center space-x-4">
+            <template v-if="!isLoggedIn">
               <router-link
-                to="/dashboard"
-                class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                to="/login"
+                class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
               >
-                控制台
+                登录
               </router-link>
+              <router-link
+                to="/register"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
+              >
+                免费注册
+              </router-link>
+            </template>
+
+            <template v-else>
               <button
                 @click="handleLogout"
-                class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
               >
                 退出登录
               </button>
-            </MenuItems>
-          </Menu>
+            </template>
+          </div>
 
           <!-- Mobile menu button -->
           <DisclosureButton class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:bg-gray-800">
@@ -124,7 +120,7 @@ const handleLogout = async () => {
         </router-link>
 
         <!-- Mobile Auth Buttons -->
-        <template v-if="!user">
+        <template v-if="!isLoggedIn">
           <router-link
             to="/login"
             class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
@@ -139,12 +135,6 @@ const handleLogout = async () => {
           </router-link>
         </template>
         <template v-else>
-          <router-link
-            to="/dashboard"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
-          >
-            控制台
-          </router-link>
           <button
             @click="handleLogout"
             class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"

@@ -3,10 +3,10 @@ import { onMounted } from 'vue'
 import { useAuth } from '@/composables/useAuth'
 import Navbar from './components/layout/Navbar.vue'
 
-const { checkAuth } = useAuth()
+const { initUser } = useAuth()
 
 onMounted(() => {
-  checkAuth()
+  initUser()
 })
 </script>
 

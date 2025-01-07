@@ -1,28 +1,15 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useRouter } from 'vue-router'
 import { useAuth } from '@/composables/useAuth'
 
-const router = useRouter()
-const { user, logout } = useAuth()
-
-const handleLogout = async () => {
-  await logout()
-  router.push('/login')
-}
+const { user } = useAuth()
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-100">
     <header class="bg-white shadow">
-      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 flex justify-between items-center">
+      <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-        <button
-          @click="handleLogout"
-          class="rounded-md bg-purple-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-purple-500"
-        >
-          Logout
-        </button>
       </div>
     </header>
     <main>
