@@ -6,6 +6,9 @@ import Pricing from '../views/Pricing.vue'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
 import Dashboard from '../views/Dashboard.vue'
+import Docs from '../views/Docs.vue'
+import News from '../views/News.vue'
+import About from '../views/About.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -24,6 +27,21 @@ const router = createRouter({
       path: '/pricing',
       name: 'pricing',
       component: Pricing
+    },
+    {
+      path: '/docs',
+      name: 'docs',
+      component: Docs
+    },
+    {
+      path: '/news',
+      name: 'news',
+      component: News
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: About
     },
     {
       path: '/login',

@@ -2,12 +2,30 @@
 import { ref } from 'vue'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { useUserStore } from '@/stores/user'
+import { useRouter } from 'vue-router'
+import { watch } from 'vue'
 
 const navigation = [
   { name: '首页', href: '/' },
   { name: '功能', href: '/features' },
   { name: '定价', href: '/pricing' },
 ]
+
+const userStore = useUserStore()
+const router = useRouter()
+
+console.log('userStore.isLoggedIn:', userStore.isLoggedIn)
+
+// 监听登录状态变化
+watch(() => userStore.isLoggedIn, (newValue) => {
+  console.log('登录状态变化:', newValue)
+})
+
+const handleLogout = () => {
+  userStore.logout()
+  router.push('/login')
+}
 </script>
 
 <template>
@@ -30,12 +48,17 @@ const navigation = [
           </div>
         </div>
         <div class="hidden sm:ml-6 sm:flex sm:items-center">
-          <button
-            type="button"
-            class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500"
-          >
-            开始使用
-          </button>
+          <div class="nav-buttons">
+            <!-- 添加调试信息 -->
+            <!-- <div>当前登录状态: {{ userStore.isLoggedIn }}</div> -->
+            
+            <template v-if="!userStore.isLoggedIn">
+              <button @click="$router.push('/login')">登录</button>
+              <button @click="$router.push('/register')">免费注册</button>
+            </template>
+            
+            <button v-else @click="handleLogout">登出</button>
+          </div>
         </div>
         <div class="-mr-2 flex items-center sm:hidden">
           <DisclosureButton class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500">
@@ -57,6 +80,33 @@ const navigation = [
         >
           {{ item.name }}
         </router-link>
+        
+        <!-- 添加移动端的登录/登出按钮 -->
+        <div class="border-t border-gray-200 pt-4 pb-3">
+          <div class="space-y-1">
+            <template v-if="!userStore.isLoggedIn">
+              <button
+                @click="$router.push('/login')"
+                class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 w-full text-left"
+              >
+                登录
+              </button>
+              <button  
+                @click="$router.push('/register')"
+                class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 w-full text-left"
+              >
+                免费注册
+              </button>
+            </template>
+            <button
+              v-else
+              @click="handleLogout"
+              class="block px-4 py-2 text-base font-medium text-gray-500 hover:bg-gray-100 hover:text-gray-800 w-full text-left"
+            >
+              登出
+            </button>
+          </div>
+        </div>
       </div>
     </DisclosurePanel>
   </Disclosure>
