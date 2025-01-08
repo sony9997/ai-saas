@@ -2,38 +2,47 @@
   <div class="relative min-h-screen bg-dark-800">
     <ParticlesBackground />
     <PageLayout>
-      <div class="py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl sm:text-center">
-            <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">选择适合您的方案</h2>
-            <p class="mt-6 text-lg leading-8 text-gray-300">
+      <div class="py-16 sm:py-24">
+        <div class="mx-auto max-w-7xl px-4 lg:px-8">
+          <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg text-center">
+            <h2 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+              选择适合您的方案
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
               我们提供灵活的定价方案，满足不同规模企业的需求。
             </p>
           </div>
-          <div class="mx-auto mt-16 max-w-2xl rounded-3xl ring-1 ring-gray-700 sm:mt-20 lg:mx-0 lg:flex lg:max-w-none">
-            <div class="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-3">
-              <div v-for="tier in tiers" :key="tier.name" class="p-8 sm:p-10 dark:bg-dark-700">
-                <h3 class="text-2xl font-bold tracking-tight text-white">{{ tier.name }}</h3>
-                <p class="mt-6 flex items-baseline gap-x-1">
-                  <span v-if="tier.price !== '联系我们'" class="text-4xl font-bold tracking-tight text-white">¥{{ tier.price }}</span>
-                  <span v-else class="text-4xl font-bold tracking-tight text-white">{{ tier.price }}</span>
-                  <span v-if="tier.price !== '联系我们'" class="text-sm font-semibold leading-6 text-gray-300">/月</span>
-                </p>
-                <ul role="list" class="mt-8 space-y-3 text-sm leading-6 text-gray-300">
-                  <li v-for="feature in tier.features" :key="feature" class="flex gap-x-3">
-                    <svg class="h-6 w-5 flex-none text-indigo-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z" clip-rule="evenodd" />
-                    </svg>
-                    {{ feature }}
-                  </li>
-                </ul>
-                <a
-                  href="#"
-                  class="mt-8 block rounded-md bg-indigo-600 px-3.5 py-2 text-center text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  开始使用
-                </a>
-              </div>
+
+          <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <div v-for="tier in tiers" :key="tier.name" 
+                 class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300">
+              <h3 class="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                {{ tier.name }}
+              </h3>
+              <p class="flex items-baseline gap-x-2 mb-6">
+                <span v-if="tier.price !== '联系我们'" class="text-4xl font-bold text-gray-900 dark:text-white">
+                  ¥{{ tier.price }}
+                </span>
+                <span v-else class="text-4xl font-bold text-gray-900 dark:text-white">
+                  {{ tier.price }}
+                </span>
+                <span v-if="tier.price !== '联系我们'" class="text-gray-600 dark:text-gray-300">
+                  /月
+                </span>
+              </p>
+              <ul class="space-y-4 mb-8">
+                <li v-for="feature in tier.features" :key="feature" 
+                    class="flex items-center text-gray-600 dark:text-gray-300">
+                  <svg class="w-5 h-5 text-indigo-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                  </svg>
+                  {{ feature }}
+                </li>
+              </ul>
+              <a href="#" 
+                 class="block w-full text-center px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold transition duration-150">
+                开始使用
+              </a>
             </div>
           </div>
         </div>
@@ -82,3 +91,10 @@ const tiers = [
   }
 ]
 </script>
+
+<style scoped>
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+</style>

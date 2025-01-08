@@ -1,87 +1,105 @@
 <script setup lang="ts">
 import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
+import {
+  ChatBubbleBottomCenterTextIcon,
+  DocumentTextIcon,
+  PhotoIcon,
+  ChartBarIcon
+} from '@heroicons/vue/24/outline'
 
 const features = [
   {
     title: '智能对话',
-    description: '基于先进的AI模型，提供自然、流畅的对话体验',
-    icon: '💬'
+    description: '基于大语言模型的智能对话系统，支持多轮对话、上下文理解、个性化回复。',
+    icon: ChatBubbleBottomCenterTextIcon
   },
   {
     title: '文本生成',
-    description: '快速生成高质量的文章、报告和创意内容',
-    icon: '📝'
+    description: '智能文本创作和处理，支持多语言翻译、文章生成、摘要提取等功能。',
+    icon: DocumentTextIcon
   },
   {
     title: '图像处理',
-    description: '智能图像编辑、生成和优化',
-    icon: '🎨'
+    description: '强大的计算机视觉能力，支持图像识别、目标检测、图像生成等场景。',
+    icon: PhotoIcon
   },
   {
     title: '数据分析',
-    description: '深度学习驱动的数据分析和可视化',
-    icon: '📊'
+    description: '智能数据分析和可视化，助力企业深入理解数据，提供决策支持。',
+    icon: ChartBarIcon
   }
 ]
 </script>
 
 <template>
   <div class="relative min-h-screen bg-dark-800">
-    <!-- 粒子背景 -->
     <ParticlesBackground />
-    
-    <!-- 页面内容 -->
     <PageLayout>
-      <!-- Hero Section -->
-      <div class="relative isolate px-6 pt-14 lg:px-8">
-        <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-          <div class="text-center">
-            <h1 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">
-              下一代AI助手，助力业务增长
-            </h1>
-            <p class="mt-6 text-lg leading-8 text-gray-300">
-              利用最先进的人工智能技术，为您的业务提供智能化解决方案。从自然语言处理到计算机视觉，我们为您提供全方位的AI能力。
-            </p>
-            <div class="mt-10 flex items-center justify-center gap-x-6">
-              <a
-                href="#"
-                class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                免费试用
-              </a>
-              <a href="#" class="text-sm font-semibold leading-6 text-gray-300 hover:text-white">
-                了解更多 <span aria-hidden="true">→</span>
-              </a>
-            </div>
+      <div class="container mx-auto px-4 py-16">
+        <!-- Hero Section -->
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-16 shadow-lg">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
+            下一代 AI 开放平台
+          </h1>
+          <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl">
+            提供简单易用的 API 接口，助力开发者快速将 AI 能力集成到应用中。
+            无论是自然语言处理、计算机视觉还是语音识别，我们都能满足您的需求。
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <a href="#" class="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-semibold transition duration-300 ease-in-out transform hover:-translate-y-0.5">
+              开始使用
+            </a>
+            <a href="#" class="inline-flex items-center px-6 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold transition duration-300 ease-in-out transform hover:-translate-y-0.5">
+              了解更多
+            </a>
           </div>
         </div>
-      </div>
 
-      <!-- Features Section -->
-      <div class="py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl lg:text-center">
-            <h2 class="text-base font-semibold leading-7 text-indigo-400">强大功能</h2>
-            <p class="mt-2 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              一站式AI解决方案
-            </p>
-          </div>
-          <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <dl class="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-4">
-              <div v-for="feature in features" :key="feature.title" class="flex flex-col">
-                <dt class="flex items-center gap-x-3 text-base font-semibold leading-7 text-white">
-                  <span class="text-3xl">{{ feature.icon }}</span>
-                  {{ feature.title }}
-                </dt>
-                <dd class="mt-4 flex flex-auto flex-col text-base leading-7 text-gray-300">
-                  <p class="flex-auto">{{ feature.description }}</p>
-                </dd>
+        <!-- Features Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div v-for="feature in features" :key="feature.title" 
+               class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-8 shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1 group">
+            <div class="flex flex-col items-center text-center">
+              <div class="w-16 h-16 mb-6 text-indigo-500 group-hover:text-indigo-400 transition-colors duration-300">
+                <component :is="feature.icon" class="w-full h-full animate-float"/>
               </div>
-            </dl>
+              <h3 class="text-xl font-semibold text-gray-900 dark:text-white mb-4 group-hover:text-indigo-400 transition-colors duration-300">
+                {{ feature.title }}
+              </h3>
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                {{ feature.description }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
     </PageLayout>
   </div>
 </template>
+
+<style scoped>
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+/* 添加渐变边框效果 */
+.group:hover {
+  background: linear-gradient(145deg, rgba(255,255,255,0.1), rgba(99,102,241,0.1));
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+</style>

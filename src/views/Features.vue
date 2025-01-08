@@ -1,27 +1,73 @@
 <template>
-  <StarryLayout>
+  <div class="relative min-h-screen bg-dark-800">
+    <ParticlesBackground />
     <PageLayout>
-      <div class="bg-white py-24 sm:py-32">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
-          <div class="mx-auto max-w-2xl lg:text-center">
-            <h2 class="text-base font-semibold leading-7 text-indigo-600">产品功能</h2>
-            <p class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
-              探索AI的无限可能
+      <div class="container mx-auto px-4 py-12">
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
+            功能特性
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
+            探索我们提供的丰富 AI 功能，为您的应用赋能。
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div v-for="feature in features" :key="feature.title"
+               class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300">
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+              {{ feature.title }}
+            </h2>
+            <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
+              {{ feature.description }}
             </p>
-            <p class="mt-6 text-lg leading-8 text-gray-600">
-              我们提供全面的AI功能，满足您的各种业务需求。从自然语言处理到计算机视觉，从数据分析到自动化工作流程。
-            </p>
-          </div>
-          <div class="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-none">
-            <!-- Feature details here -->
+            <ul class="space-y-2">
+              <li v-for="item in feature.items" :key="item"
+                  class="flex items-center text-gray-600 dark:text-gray-300">
+                <svg class="w-5 h-5 text-indigo-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+                </svg>
+                {{ item }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
     </PageLayout>
-  </StarryLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
-import StarryLayout from '@/components/layout/StarryLayout.vue'
+import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
+
+const features = [
+  {
+    title: '自然语言处理',
+    description: '基于最新的深度学习技术，提供全面的自然语言处理能力。',
+    items: [
+      '智能对话生成',
+      '文本分类与摘要',
+      '情感分析',
+      '命名实体识别'
+    ]
+  },
+  {
+    title: '计算机视觉',
+    description: '强大的视觉AI能力，支持多种图像和视频处理场景。',
+    items: [
+      '物体检测与识别',
+      '人脸识别与分析',
+      '图像分割',
+      '场景理解'
+    ]
+  }
+]
 </script>
+
+<style scoped>
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+</style>
