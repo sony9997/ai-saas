@@ -13,24 +13,61 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div v-for="feature in features" :key="feature.title"
-               class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition duration-300">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              {{ feature.title }}
-            </h2>
-            <p class="text-gray-600 dark:text-gray-300 mb-4 leading-relaxed">
-              {{ feature.description }}
-            </p>
-            <ul class="space-y-2">
-              <li v-for="item in feature.items" :key="item"
-                  class="flex items-center text-gray-600 dark:text-gray-300">
-                <svg class="w-5 h-5 text-indigo-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"/>
+          <!-- 对话 -->
+          <router-link to="/tools/chat" 
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-purple-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                 </svg>
-                {{ item }}
-              </li>
-            </ul>
-          </div>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 对话</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">与 AI 进行自然语言对话交互</p>
+            </div>
+          </router-link>
+
+          <!-- 文生图 -->
+          <router-link to="/tools/text2image"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-blue-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">文本生成图像</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">通过文字描述生成相应的图像</p>
+            </div>
+          </router-link>
+
+          <!-- 图生图 -->
+          <router-link to="/tools/image2image"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-green-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2" />
+                </svg>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">图像生成图像</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">基于输入图像生成新的图像</p>
+            </div>
+          </router-link>
+
+          <!-- 翻唱 -->
+          <router-link to="/tools/sing"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-pink-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
+                </svg>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 翻唱</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">使用 AI 技术进行歌曲翻唱</p>
+            </div>
+          </router-link>
         </div>
       </div>
     </PageLayout>
@@ -40,29 +77,6 @@
 <script setup lang="ts">
 import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
-
-const features = [
-  {
-    title: '自然语言处理',
-    description: '基于最新的深度学习技术，提供全面的自然语言处理能力。',
-    items: [
-      '智能对话生成',
-      '文本分类与摘要',
-      '情感分析',
-      '命名实体识别'
-    ]
-  },
-  {
-    title: '计算机视觉',
-    description: '强大的视觉AI能力，支持多种图像和视频处理场景。',
-    items: [
-      '物体检测与识别',
-      '人脸识别与分析',
-      '图像分割',
-      '场景理解'
-    ]
-  }
-]
 </script>
 
 <style scoped>

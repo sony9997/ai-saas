@@ -9,6 +9,10 @@ import Dashboard from '../views/Dashboard.vue'
 import Docs from '../views/Docs.vue'
 import News from '../views/News.vue'
 import About from '../views/About.vue'
+import Chat from '../views/tools/Chat.vue'
+import Text2Image from '../views/tools/Text2Image.vue'
+import Image2Image from '../views/tools/Image2Image.vue'
+import Sing from '../views/tools/Sing.vue'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -21,7 +25,33 @@ const router = createRouter({
     {
       path: '/tools',
       name: 'tools',
-      component: Tools
+      component: Tools,
+      children: [
+        {
+          path: 'chat',
+          name: 'chat',
+          component: Chat,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'text2image',
+          name: 'text2image',
+          component: Text2Image,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'image2image',
+          name: 'image2image',
+          component: Image2Image,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'sing',
+          name: 'sing',
+          component: Sing,
+          meta: { requiresAuth: true }
+        }
+      ]
     },
     {
       path: '/pricing',
