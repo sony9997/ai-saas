@@ -1,25 +1,26 @@
 <template>
-  <StarryLayout>
+  <div class="relative min-h-screen bg-dark-800">
+    <ParticlesBackground />
     <PageLayout>
       <div class="container mx-auto px-4 py-8">
-        <h1 class="text-2xl font-bold mb-6">新闻动态</h1>
+        <h1 class="text-2xl font-bold mb-6 text-white">新闻动态</h1>
         <div class="space-y-6">
-          <article v-for="news in newsList" :key="news.id" class="bg-white rounded-lg shadow-md p-6 dark:bg-gray-800">
-            <h2 class="text-xl font-semibold mb-2 dark:text-white">{{ news.title }}</h2>
-            <p class="text-gray-600 mb-4 dark:text-gray-300">{{ news.summary }}</p>
+          <article v-for="news in newsList" :key="news.id" class="dark:bg-dark-700 rounded-lg shadow-md p-6">
+            <h2 class="text-xl font-semibold mb-2 text-white">{{ news.title }}</h2>
+            <p class="text-gray-300 mb-4">{{ news.summary }}</p>
             <div class="flex justify-between items-center">
-              <span class="text-sm text-gray-500 dark:text-gray-400">{{ news.date }}</span>
-              <a href="#" class="text-blue-600 hover:text-blue-800 dark:text-blue-400">阅读更多</a>
+              <span class="text-sm text-gray-400">{{ news.date }}</span>
+              <a href="#" class="text-indigo-400 hover:text-indigo-300">阅读更多</a>
             </div>
           </article>
         </div>
       </div>
     </PageLayout>
-  </StarryLayout>
+  </div>
 </template>
 
 <script setup lang="ts">
-import StarryLayout from '@/components/layout/StarryLayout.vue'
+import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
 
 const newsList = [
