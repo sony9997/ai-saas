@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { supabase } from '@/config/supabase'
 import Home from '../views/Home.vue'
-import Features from '../views/Features.vue'
+import Tools from '../views/Tools.vue'
 import Pricing from '../views/Pricing.vue'
 import Login from '../views/auth/Login.vue'
 import Register from '../views/auth/Register.vue'
@@ -19,9 +19,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/features',
-      name: 'features',
-      component: Features
+      path: '/tools',
+      name: 'tools',
+      component: Tools
     },
     {
       path: '/pricing',

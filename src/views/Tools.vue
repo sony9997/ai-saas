@@ -5,10 +5,10 @@
       <div class="container mx-auto px-4 py-12">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
-            功能特性
+            AI 工具
           </h1>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
-            探索我们提供的丰富 AI 功能，为您的应用赋能。
+            探索我们提供的丰富 AI 工具，为您的应用赋能。
           </p>
         </div>
 
@@ -70,4 +70,4 @@ const features = [
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-</style>
+</style> 
