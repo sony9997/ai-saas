@@ -2,7 +2,8 @@
   <div class="relative min-h-screen bg-dark-800">
     <PageLayout>
       <div class="container mx-auto px-4 py-12">
-        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg">
+        <!-- 使用路由路径判断是否显示页头 -->
+        <div v-if="$route.path === '/tools'" class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-6">
             AI 工具
           </h1>
@@ -11,10 +12,11 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- 工具选择区域 -->
+        <div v-if="$route.path === '/tools'" class="grid grid-cols-1 md:grid-cols-2 gap-8">
           <!-- 对话 -->
-          <router-link to="/tools/chat" 
-            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div @click="router.push('/tools/chat')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 mb-4 text-purple-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -24,11 +26,11 @@
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 对话</h2>
               <p class="text-gray-600 dark:text-gray-300 text-center">与 AI 进行自然语言对话交互</p>
             </div>
-          </router-link>
+          </div>
 
           <!-- 文生图 -->
-          <router-link to="/tools/text2image"
-            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div @click="router.push('/tools/text2image')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 mb-4 text-blue-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -38,11 +40,11 @@
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">文本生成图像</h2>
               <p class="text-gray-600 dark:text-gray-300 text-center">通过文字描述生成相应的图像</p>
             </div>
-          </router-link>
+          </div>
 
           <!-- 图生图 -->
-          <router-link to="/tools/image2image"
-            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div @click="router.push('/tools/image2image')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 mb-4 text-green-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -52,11 +54,11 @@
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">图像生成图像</h2>
               <p class="text-gray-600 dark:text-gray-300 text-center">基于输入图像生成新的图像</p>
             </div>
-          </router-link>
+          </div>
 
           <!-- 翻唱 -->
-          <router-link to="/tools/sing"
-            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+          <div @click="router.push('/tools/sing')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 mb-4 text-pink-500">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -66,16 +68,21 @@
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 翻唱</h2>
               <p class="text-gray-600 dark:text-gray-300 text-center">使用 AI 技术进行歌曲翻唱</p>
             </div>
-          </router-link>
+          </div>
         </div>
+
+        <!-- 工具内容区域 -->
+        <router-view v-else></router-view>
       </div>
     </PageLayout>
   </div>
 </template>
 
 <script setup lang="ts">
-import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
+import { useRouter } from 'vue-router'
 import PageLayout from '@/components/layout/PageLayout.vue'
+
+const router = useRouter()
 </script>
 
 <style scoped>

@@ -9,10 +9,10 @@ import Dashboard from '../views/Dashboard.vue'
 import Docs from '../views/Docs.vue'
 import News from '../views/News.vue'
 import About from '../views/About.vue'
-import Chat from '../views/tools/Chat.vue'
-import Text2Image from '../views/tools/Text2Image.vue'
-import Image2Image from '../views/tools/Image2Image.vue'
-import Sing from '../views/tools/Sing.vue'
+import Chat from '@/views/tools/Chat.vue'
+import Text2Image from '@/views/tools/Text2Image.vue'
+import Image2Image from '@/views/tools/Image2Image.vue'
+import Sing from '@/views/tools/Sing.vue'
 
 const router = createRouter({
   history: createWebHistory(),
