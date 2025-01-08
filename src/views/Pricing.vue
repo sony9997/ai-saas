@@ -1,6 +1,5 @@
 <template>
   <div class="relative min-h-screen bg-dark-800">
-    <ParticlesBackground />
     <PageLayout>
       <div class="py-16 sm:py-24">
         <div class="mx-auto max-w-7xl px-4 lg:px-8">

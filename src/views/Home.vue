@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
 import {
   ChatBubbleBottomCenterTextIcon,
@@ -34,7 +33,6 @@ const features = [
 
 <template>
   <div class="relative min-h-screen bg-dark-800">
-    <ParticlesBackground />
     <PageLayout>
       <div class="container mx-auto px-4 py-16">
         <!-- Hero Section -->

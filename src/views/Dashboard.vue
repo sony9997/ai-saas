@@ -1,6 +1,5 @@
 <template>
   <div class="relative min-h-screen bg-dark-800">
-    <ParticlesBackground />
     <PageLayout>
       <div class="container mx-auto px-4 py-12">
         <!-- 页面标题 -->

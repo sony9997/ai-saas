@@ -1,6 +1,5 @@
 <template>
   <div class="relative min-h-screen bg-dark-800">
-    <ParticlesBackground />
     <PageLayout>
       <div class="container mx-auto px-4 py-12">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-8 shadow-lg">
