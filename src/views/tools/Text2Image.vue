@@ -1,6 +1,26 @@
 <template>
   <div class="relative h-screen bg-dark-800">
     <PageLayout>
+      <button 
+      class="absolute -top-4 left-6 p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
+      @click="router.back()"
+      v-if="$route.path !== '/tools'"
+    >
+      <svg 
+        xmlns="http://www.w3.org/2000/svg" 
+        width="20" 
+        height="20" 
+        viewBox="0 0 24 24" 
+        fill="none" 
+        stroke="currentColor" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+      >
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+    </button>
+
       <div class="container mx-auto px-4 py-6">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
           <h1 class="text-3xl font-bold text-gray-900 mb-4">文本生成图像</h1>
@@ -134,7 +154,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 import PageLayout from '@/components/layout/PageLayout.vue'
+
+const router = useRouter()
 
 // 表单数据
 const formData = ref({
@@ -159,7 +182,7 @@ const generateImage = async () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer app-ScnXmap00TaBi16pXayWKmJ8'
+        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
       },
       body: JSON.stringify({
         inputs: {
