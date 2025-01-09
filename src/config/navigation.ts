@@ -14,11 +14,11 @@ export const useNavigation = () => {
       { name: '关于', href: '/about' }
     ]
 
-    const privateRoutes = [
-      { name: '仪表盘', href: '/dashboard' }
-    ]
+    // const privateRoutes = [
+    //   { name: '仪表盘', href: '/dashboard' }
+    // ]
 
-    return user.value ? [...publicRoutes, ...privateRoutes] : publicRoutes
+    return user.value ? [...publicRoutes] : publicRoutes
   })
 
   return {

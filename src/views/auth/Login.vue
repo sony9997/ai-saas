@@ -17,7 +17,7 @@ const handleSubmit = async (e: Event) => {
   e.preventDefault()
   await login(email.value, password.value)
   if (!error.value) {
-    router.push('/dashboard')
+    router.push('/tools')
   }
 }
 </script>
