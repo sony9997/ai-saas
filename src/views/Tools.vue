@@ -13,7 +13,7 @@
         </div>
 
         <!-- 工具选择区域 -->
-        <div v-if="$route.path === '/tools'" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div v-if="$route.path === '/tools'" class="grid grid-cols-1 md:grid-cols-2 gap-8">           
           <!-- 对话 -->
           <div @click="router.push('/tools/chat')"
             class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
