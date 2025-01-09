@@ -16,10 +16,12 @@
     <iframe
       v-show="!loading"
       src="https://om.qimuinfo.top/chatbot/yq0gM2PT1tVnZtFo"
-      class="absolute inset-0 w-full h-full"
+      class="absolute inset-0 w-full h-full overflow-hidden"
       frameborder="0"
+      scrolling="no"
       allow="microphone"
       @load="loading = false"
+      style="overflow: hidden;"
     >
     </iframe>
 
