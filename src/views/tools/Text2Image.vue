@@ -14,7 +14,7 @@
                 <textarea
                   v-model="formData.prompt"
                   rows="4"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-600 placeholder-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="请输入详细的图片描述..."
                 />
               </div>
@@ -24,22 +24,30 @@
                 <label class="block text-sm font-medium text-gray-900 mb-2">基础模型</label>
                 <select 
                   v-model="formData.baseModel"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="majicmixFantasy_v3OVae">majicmixFantasy_v3OVae</option>
-                  <option value="majicmixRealistic_v7">majicmixRealistic_v7</option>
+                  <option value="墨幽的姐姐——墨幽岚_v1">墨幽的姐姐——墨幽岚_v1.safetensors</option>
+                  <option value="beautifulRealistic_v7">beautifulRealistic_v7.safetensors</option>
+                  <option value="majicmixFantasy_v30Vae">majicmixFantasy_v30Vae.safetensors</option>
                 </select>
               </div>
 
               <!-- LORA模型设置 -->
               <div>
                 <label class="block text-sm font-medium text-gray-900 mb-2">LORA模型名称</label>
-                <input
+                <select 
                   v-model="formData.loraModel"
-                  type="text"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-200 placeholder-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="请输入LORA模型名称"
-                />
+                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                >
+                  <option value="F.1-宫崎骏风格_v1.0.safetensors">F.1-宫崎骏风格_v1.0.safetensors</option>
+                  <option value="glass-girl.safetensors">glass-girl.safetensors</option>
+                  <option value="mangheXL.safetensors">mangheXL.safetensors</option>
+                  <option value="MengX girl_Mix_V40.safetensors">MengX girl_Mix_V40.safetensors</option>
+                  <option value="pixel_f2.safetensors">pixel_f2.safetensors</option>
+                  <option value="SDXL_动漫Samaritan 3d Cartoon.safetensors">SDXL_动漫Samaritan 3d Cartoon.safetensors</option>
+                  <option value="ReminiClay黏土风_SDXLV1.0.safetensors">ReminiClay黏土风_SDXLV1.0.safetensors</option>
+                  <option value="xlabsgirlf1.safetensors">xlabsgirlf1.safetensors</option>
+                </select>
               </div>
 
               <!-- Strength设置 -->
@@ -48,7 +56,7 @@
                 <input
                   v-model="formData.strength"
                   type="number"
-                  min="0"
+                  min="0.1"
                   max="1"
                   step="1.0"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -61,7 +69,7 @@
                 <input
                   v-model="formData.steps"
                   type="number"
-                  min="1"
+                  min="15"
                   value="30"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
@@ -131,10 +139,10 @@ import PageLayout from '@/components/layout/PageLayout.vue'
 // 表单数据
 const formData = ref({
   prompt: '',
-  baseModel: 'majicmixFantasy_v3OVae',
+  baseModel: 'beautifulRealistic_v7',
   loraModel: '',
-  strength: 0.5,
-  steps: 20,
+  strength: 1.0,
+  steps: 30,
   width: 720,
   height: 1024
 })
