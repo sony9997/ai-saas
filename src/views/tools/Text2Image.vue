@@ -41,82 +41,19 @@
 
               <!-- 基础模型选择 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">基础模型</label>
+                <label class="block text-sm font-medium text-gray-900 mb-2">风格选择</label>
                 <select 
                   v-model="formData.baseModel"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="墨幽的姐姐——墨幽岚_v1">墨幽的姐姐——墨幽岚_v1.safetensors</option>
-                  <option value="beautifulRealistic_v7">beautifulRealistic_v7.safetensors</option>
-                  <option value="majicmixFantasy_v30Vae">majicmixFantasy_v30Vae.safetensors</option>
+                  <option value="墨幽岚">墨幽岚</option>
+                  <option value="美丽的现实主义亚洲人">美丽的现实主义亚洲人</option>
+                  <option value="麦橘写实">麦橘写实</option>
+                  <option value="国风">国风</option>
+                  <option value="墨幽二次元">墨幽二次元</option>
+                  <option value="麦橘幻想">麦橘幻想</option>
+                  <option value="FLUX">FLUX</option>
                 </select>
-              </div>
-
-              <!-- LORA模型设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">LORA模型名称</label>
-                <select 
-                  v-model="formData.loraModel"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="F.1-宫崎骏风格_v1.0.safetensors">F.1-宫崎骏风格_v1.0.safetensors</option>
-                  <option value="glass-girl.safetensors">glass-girl.safetensors</option>
-                  <option value="mangheXL.safetensors">mangheXL.safetensors</option>
-                  <option value="MengX girl_Mix_V40.safetensors">MengX girl_Mix_V40.safetensors</option>
-                  <option value="pixel_f2.safetensors">pixel_f2.safetensors</option>
-                  <option value="SDXL_动漫Samaritan 3d Cartoon.safetensors">SDXL_动漫Samaritan 3d Cartoon.safetensors</option>
-                  <option value="ReminiClay黏土风_SDXLV1.0.safetensors">ReminiClay黏土风_SDXLV1.0.safetensors</option>
-                  <option value="xlabsgirlf1.safetensors">xlabsgirlf1.safetensors</option>
-                </select>
-              </div>
-
-              <!-- Strength设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Strength</label>
-                <input
-                  v-model="formData.strength"
-                  type="number"
-                  min="0.1"
-                  max="1"
-                  step="1.0"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <!-- Steps设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Steps</label>
-                <input
-                  v-model="formData.steps"
-                  type="number"
-                  min="15"
-                  value="30"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <!-- 图片尺寸设置 -->
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-900 mb-2">宽度</label>
-                  <input
-                    v-model="formData.width"
-                    type="number"
-                    min="64"
-                    step="64"
-                    class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-900 mb-2">高度</label>
-                  <input
-                    v-model="formData.height"
-                    type="number"
-                    min="64"
-                    step="64"
-                    class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
               </div>
 
               <!-- 生成按钮 -->
@@ -188,7 +125,7 @@ const generateImage = async () => {
         inputs: {
           action: 'txt2img',
           prompt: formData.value.prompt,
-          images: []
+          baseModel: formData.value.baseModel,
         },
         response_mode: 'blocking',
         user: 'hed-1'
