@@ -52,7 +52,6 @@
                   <option value="国风">国风</option>
                   <option value="墨幽二次元">墨幽二次元</option>
                   <option value="麦橘幻想">麦橘幻想</option>
-                  <option value="FLUX">FLUX</option>
                 </select>
               </div>
 
