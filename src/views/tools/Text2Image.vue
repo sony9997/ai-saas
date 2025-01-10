@@ -98,7 +98,7 @@ const router = useRouter()
 // 表单数据
 const formData = ref({
   prompt: '',
-  baseModel: 'beautifulRealistic_v7',
+  baseModel: '美丽的现实主义亚洲人',
   loraModel: '',
   strength: 1.0,
   steps: 30,
