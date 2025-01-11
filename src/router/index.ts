@@ -13,7 +13,7 @@ import Chat from '@/views/tools/Chat.vue'
 import Text2Image from '@/views/tools/Text2Image.vue'
 import Image2Image from '@/views/tools/Image2Image.vue'
 import Sing from '@/views/tools/Sing.vue'
-
+import FaceSwap from '@/views/tools/FaceSwap.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -49,6 +49,12 @@ const router = createRouter({
           path: 'sing',
           name: 'sing',
           component: Sing,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'faceswap',
+          name: 'faceswap',
+          component: FaceSwap,
           meta: { requiresAuth: true }
         }
       ]

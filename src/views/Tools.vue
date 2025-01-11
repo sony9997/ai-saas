@@ -56,8 +56,22 @@
             </div>
           </div>
 
-          <!-- 翻唱 -->
-          <div @click="router.push('/tools/sing')"
+          <!-- AI换脸 -->
+          <div @click="router.push('/tools/faceswap')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-orange-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 换脸</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">智能人脸替换与编辑</p>
+            </div>
+          </div>
+
+          <!-- 注释掉AI翻唱模块 -->
+          <!-- <div @click="router.push('/tools/sing')"
             class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
             <div class="flex flex-col items-center">
               <div class="w-16 h-16 mb-4 text-pink-500">
@@ -68,7 +82,7 @@
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 翻唱</h2>
               <p class="text-gray-600 dark:text-gray-300 text-center">使用 AI 技术进行歌曲翻唱</p>
             </div>
-          </div>
+          </div> -->
         </div>
 
         <!-- 工具内容区域 -->
