@@ -43,7 +43,7 @@
                   />
                   <div class="- my-1 text-center text-gray-500">或</div>
                   <input
-                    v-model="formData.imageUrl"
+                    v-model="formData.image.url"
                     type="text"
                     placeholder="输入图片URL..."
                     class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -53,94 +53,40 @@
 
               <!-- 提示词输入 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">提示词描述</label>
+                <label class="block text-sm font-medium text-gray-900 mb-2">正向提示词</label>
                 <textarea
                   v-model="formData.prompt"
                   rows="4"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-600 placeholder-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="请输入详细的图片描述..."
+                  placeholder="请输入正向提示词..."
+                />
+              </div>
+              <div>
+                <label class="block text-sm font-medium text-gray-900 mb-2">反向提示词</label>
+                <textarea
+                  v-model="formData.negative_prompt"
+                  rows="4"
+                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-600 placeholder-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="请输入反向提示词..."
                 />
               </div>
 
               <!-- 基础模型选择 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">基础模型</label>
+                <label class="block text-sm font-medium text-gray-900 mb-2">风格选择</label>
                 <select 
                   v-model="formData.baseModel"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
-                  <option value="墨幽的姐姐——墨幽岚_v1">墨幽的姐姐——墨幽岚_v1.safetensors</option>
-                  <option value="beautifulRealistic_v7">beautifulRealistic_v7.safetensors</option>
-                  <option value="majicmixFantasy_v30Vae">majicmixFantasy_v30Vae.safetensors</option>
+                  <option value="墨幽岚">墨幽岚</option>
+                  <option value="美丽的现实主义亚洲人">美丽的现实主义亚洲人</option>
+                  <option value="麦橘写实">麦橘写实</option>
+                  <option value="国风">国风</option>
+                  <option value="墨幽二次元">墨幽二次元</option>
+                  <option value="麦橘幻想">麦橘幻想</option>
                 </select>
               </div>
 
-              <!-- LORA模型设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">LORA模型名称</label>
-                <select 
-                  v-model="formData.loraModel"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="F.1-宫崎骏风格_v1.0.safetensors">F.1-宫崎骏风格_v1.0.safetensors</option>
-                  <option value="glass-girl.safetensors">glass-girl.safetensors</option>
-                  <option value="mangheXL.safetensors">mangheXL.safetensors</option>
-                  <option value="MengX girl_Mix_V40.safetensors">MengX girl_Mix_V40.safetensors</option>
-                  <option value="pixel_f2.safetensors">pixel_f2.safetensors</option>
-                  <option value="SDXL_动漫Samaritan 3d Cartoon.safetensors">SDXL_动漫Samaritan 3d Cartoon.safetensors</option>
-                  <option value="ReminiClay黏土风_SDXLV1.0.safetensors">ReminiClay黏土风_SDXLV1.0.safetensors</option>
-                  <option value="xlabsgirlf1.safetensors">xlabsgirlf1.safetensors</option>
-                </select>
-              </div>
-
-              <!-- Strength设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Strength</label>
-                <input
-                  v-model="formData.strength"
-                  type="number"
-                  min="0.1"
-                  max="1"
-                  step="1.0"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <!-- Steps设置 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">Steps</label>
-                <input
-                  v-model="formData.steps"
-                  type="number"
-                  min="15"
-                  value="30"
-                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              <!-- 图片尺寸设置 -->
-              <div class="grid grid-cols-2 gap-4">
-                <div>
-                  <label class="block text-sm font-medium text-gray-900 mb-2">宽度</label>
-                  <input
-                    v-model="formData.width"
-                    type="number"
-                    min="64"
-                    step="64"
-                    class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-                <div>
-                  <label class="block text-sm font-medium text-gray-900 mb-2">高度</label>
-                  <input
-                    v-model="formData.height"
-                    type="number"
-                    min="64"
-                    step="64"
-                    class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
 
               <!-- 生成按钮 -->
               <button
@@ -154,16 +100,16 @@
 
             <!-- 图片预览区域 -->
             <div class="space-y-4">
-              <!-- 输入图片预览 -->
+              <!-- 参考图片预览 -->
               <div class="flex items-center justify-center border-2 border-dashed border-dark-500 rounded-lg min-h-[180px]">
                 <img
                   v-if="inputImagePreview"
                   :src="inputImagePreview"
-                  alt="输入图片预览"
+                  alt="输入参考图片"
                   class="max-w-full max-h-[180px] rounded-lg"
                 />
                 <div v-else class="text-gray-900">
-                  输入图片预览区域
+                  参考图片预览区域
                 </div>
               </div>
 
@@ -200,38 +146,70 @@ const router = useRouter()
 
 // 表单数据
 const formData = ref({
-  imageUrl: '',
-  prompt: '',
-  baseModel: 'beautifulRealistic_v7',
-  loraModel: '',
-  strength: 1.0,
-  steps: 30,
-  width: 720,
-  height: 1024
+  prompt: '1girl',
+  baseModel: '麦橘写实',
+  negative_prompt: '',
+  image:{
+    transfer_method: 'local_file',
+    type: 'image',
+    upload_file_id: '',
+    url: ''
+  }
 })
 
 // 状态管理
 const loading = ref(false)
 const inputImagePreview = ref('')
 const generatedImage = ref('')
+const user='hed-1'
 
 // 处理图片上传
-const handleImageUpload = (event: Event) => {
+const handleImageUpload = async (event: Event) => {
   const file = (event.target as HTMLInputElement).files?.[0]
-  if (file) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      inputImagePreview.value = e.target?.result as string
-      formData.value.imageUrl = '' // 清空URL输入
+  if (!file) return
+
+  // 本地预览
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    inputImagePreview.value = e.target?.result as string
+    formData.value.image.url = '' // 清空URL输入
+  }
+  reader.readAsDataURL(file)
+
+  // 上传到服务器
+  try {
+    const bodyData = new FormData()
+    bodyData.append('file', file)
+    bodyData.append('user', user)
+
+    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+      },
+      body: bodyData
+    })
+
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.message || '上传失败')
     }
-    reader.readAsDataURL(file)
+
+    // 保存上传后的文件ID到formData.image中
+    formData.value.image.upload_file_id = data.id
+    formData.value.image.transfer_method = 'local_file'
+  } catch (error) {
+    console.error('上传图片失败:', error)
+    alert('上传图片失败,请重试')
   }
 }
 
 // 监听URL输入变化
-watch(() => formData.value.imageUrl, (newUrl) => {
+watch(() => formData.value.image.url, (newUrl) => {
   if (newUrl) {
     inputImagePreview.value = newUrl
+    formData.value.image.url = newUrl
+    formData.value.image.transfer_method = 'remote_url'
   }
 })
 
@@ -253,15 +231,18 @@ const generateImage = async () => {
       body: JSON.stringify({
         inputs: {
           action: 'img2img',
+          baseModel: formData.value.baseModel,
           prompt: formData.value.prompt,
-          images: [inputImagePreview.value]
+          negative_prompt: formData.value.negative_prompt,
+          images: [formData.value.image]
         },
         response_mode: 'blocking',
-        user: 'hed-1'
+        user: user
       })
     })
 
     const data = await response.json()
+    console.log("data", data)
     const imageUrl = data?.data?.outputs?.output?.[0]?.url
     if (!imageUrl) {
       throw new Error('生成的图片URL无效')
@@ -269,7 +250,7 @@ const generateImage = async () => {
     generatedImage.value = imageUrl
   } catch (error) {
     console.error('生成图片失败:', error)
-    // 这里可以添加错误提示
+    alert('生成图片失败,请重试')
   } finally {
     loading.value = false
   }
