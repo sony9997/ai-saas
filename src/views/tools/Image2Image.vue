@@ -33,8 +33,7 @@
             <div class="grid grid-cols-2 gap-6">
               <!-- 参考图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer"
-                style="aspect-ratio: 720/1024;"
+                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
                 @click="showImagePreview(inputImagePreview)"
               >
                 <div class="w-full h-full flex items-center justify-center">
@@ -52,8 +51,7 @@
 
               <!-- 生成图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer"
-                style="aspect-ratio: 720/1024;"
+                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
                 @click="showImagePreview(generatedImage)"
               >
                 <div class="w-full h-full flex items-center justify-center">
@@ -78,7 +76,7 @@
             <div class="grid grid-cols-2 gap-6">
               <!-- 输入图片上传区域 -->
               <div>
-                <label class="block text-sm font-medium text-black mb-2">输入图片</label>
+                <label class="block text-sm font-medium text-black mb-2">输入参考图片</label>
                 <div class="space-y-2">
                   <div class="relative">
                     <input
@@ -116,7 +114,7 @@
                   class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="墨幽岚">墨幽岚</option>
-                  <option value="美丽的现实主义亚洲人">美丽的现实主义亚洲人</option>
+                  <option value="美丽的现实主义">美丽的现实主义</option>
                   <option value="麦橘写实">麦橘写实</option>
                   <option value="国风">国风</option>
                   <option value="墨幽二次元">墨幽二次元</option>

@@ -47,7 +47,7 @@
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="墨幽岚">墨幽岚</option>
-                  <option value="美丽的现实主义亚洲人">美丽的现实主义亚洲人</option>
+                  <option value="美丽的现实主义">美丽的现实主义</option>
                   <option value="麦橘写实">麦橘写实</option>
                   <option value="国风">国风</option>
                   <option value="墨幽二次元">墨幽二次元</option>
@@ -98,7 +98,7 @@ const router = useRouter()
 // 表单数据
 const formData = ref({
   prompt: '',
-  baseModel: '美丽的现实主义亚洲人',
+  baseModel: '美丽的现实主义',
   loraModel: '',
   strength: 1.0,
   steps: 30,
