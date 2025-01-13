@@ -66,7 +66,7 @@
                 </svg>
               </div>
               <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">AI 换脸</h2>
-              <p class="text-gray-600 dark:text-gray-300 text-center">智能人脸替换与编辑</p>
+              <p class="text-gray-600 dark:text-gray-300 text-center">智能人脸替换</p>
             </div>
           </div>
 

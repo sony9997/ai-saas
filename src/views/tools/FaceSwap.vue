@@ -71,7 +71,7 @@
             <!-- 第二排:上传按钮和生成结果 -->
             <div class="grid grid-cols-2 gap-6">
               <!-- 源图片上传 -->
-              <div>
+              <div class="space-y-2">
                 <input
                   type="file"
                   ref="sourceImageInput"
@@ -85,10 +85,17 @@
                 >
                   上传源图片
                 </button>
+                <!-- 源图片URL输入 -->
+                <input
+                  v-model="formData.sourceImage.url"
+                  type="text"
+                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="或输入图片URL"
+                />
               </div>
 
               <!-- 目标图片上传 -->
-              <div>
+              <div class="space-y-2">
                 <input
                   type="file"
                   ref="targetImageInput"
@@ -102,6 +109,13 @@
                 >
                   上传目标图片
                 </button>
+                <!-- 目标图片URL输入 -->
+                <input
+                  v-model="formData.targetImage.url"
+                  type="text"
+                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="或输入图片URL"
+                />
               </div>
             </div>
 
@@ -149,52 +163,167 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import PageLayout from '@/components/layout/PageLayout.vue'
 
 const router = useRouter()
-const sourceImageInput = ref<HTMLInputElement | null>(null)
-const targetImageInput = ref<HTMLInputElement | null>(null)
-const sourceImagePreview = ref<string>('')
-const targetImagePreview = ref<string>('')
-const generatedImage = ref<string>('')
-const previewImage = ref<string>('')
-const loading = ref(false)
 
-// 计算是否可以生成图片
+// 表单数据
+const formData = ref({
+  sourceImage: {
+    transfer_method: 'local_file',
+    type: 'image',
+    upload_file_id: '',
+    url: ''
+  },
+  targetImage: {
+    transfer_method: 'local_file', 
+    type: 'image',
+    upload_file_id: '',
+    url: ''
+  }
+})
+
+// 状态管理
+const loading = ref(false)
+const sourceImagePreview = ref('')
+const targetImagePreview = ref('')
+const generatedImage = ref('')
+const previewImage = ref('')
+const sourceImageInput = ref<HTMLInputElement>()
+const targetImageInput = ref<HTMLInputElement>()
+const user = 'hed-1'
+
+// 计算属性:判断是否可以生成
 const canGenerate = computed(() => {
-  return sourceImagePreview.value && targetImagePreview.value && !loading.value
+  return sourceImagePreview.value && targetImagePreview.value
 })
 
 // 处理源图片上传
-const handleSourceImageUpload = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  if (input.files && input.files[0]) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      sourceImagePreview.value = e.target?.result as string
+const handleSourceImageUpload = async (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+
+  // 本地预览
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    sourceImagePreview.value = e.target?.result as string
+    formData.value.sourceImage.url = '' // 清空URL输入
+  }
+  reader.readAsDataURL(file)
+
+  // 上传到服务器
+  try {
+    const bodyData = new FormData()
+    bodyData.append('file', file)
+    bodyData.append('user', user)
+
+    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+      },
+      body: bodyData
+    })
+
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.message || '上传失败')
     }
-    reader.readAsDataURL(input.files[0])
+
+    formData.value.sourceImage.upload_file_id = data.id
+    formData.value.sourceImage.transfer_method = 'local_file'
+  } catch (error) {
+    console.error('上传图片失败:', error)
+    alert('上传图片失败,请重试')
   }
 }
 
 // 处理目标图片上传
-const handleTargetImageUpload = (event: Event) => {
-  const input = event.target as HTMLInputElement
-  if (input.files && input.files[0]) {
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      targetImagePreview.value = e.target?.result as string
+const handleTargetImageUpload = async (event: Event) => {
+  const file = (event.target as HTMLInputElement).files?.[0]
+  if (!file) return
+
+  // 本地预览
+  const reader = new FileReader()
+  reader.onload = (e) => {
+    targetImagePreview.value = e.target?.result as string
+    formData.value.targetImage.url = '' // 清空URL输入
+  }
+  reader.readAsDataURL(file)
+
+  // 上传到服务器
+  try {
+    const bodyData = new FormData()
+    bodyData.append('file', file)
+    bodyData.append('user', user)
+
+    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+      },
+      body: bodyData
+    })
+
+    const data = await response.json()
+    if (!response.ok) {
+      throw new Error(data.message || '上传失败')
     }
-    reader.readAsDataURL(input.files[0])
+
+    formData.value.targetImage.upload_file_id = data.id
+    formData.value.targetImage.transfer_method = 'local_file'
+  } catch (error) {
+    console.error('上传图片失败:', error)
+    alert('上传图片失败,请重试')
+  }
+}
+
+// 生成图片
+const generateImage = async () => {
+  if (!sourceImagePreview.value || !targetImagePreview.value) {
+    alert('请先上传源图片和目标图片')
+    return
+  }
+
+  loading.value = true
+  try {
+    const response = await fetch('http://218.76.9.139:8535/v1/workflows/run', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+      },
+      body: JSON.stringify({
+        inputs: {
+          action: 'switch_face',
+          images: [formData.value.sourceImage, formData.value.targetImage]
+        },
+        response_mode: 'blocking',
+        user: user
+      })
+    })
+
+    const data = await response.json()
+    console.log("data", data)
+    const imageUrl = data?.data?.outputs?.output?.[0]?.url
+    if (!imageUrl) {
+      throw new Error('生成的图片URL无效')
+    }
+    generatedImage.value = imageUrl
+  } catch (error) {
+    console.error('生成图片失败:', error)
+    alert('生成图片失败,请重试')
+  } finally {
+    loading.value = false
   }
 }
 
 // 显示图片预览
-const showImagePreview = (image: string) => {
-  if (image) {
-    previewImage.value = image
+const showImagePreview = (imageUrl: string) => {
+  if (imageUrl) {
+    previewImage.value = imageUrl
   }
 }
 
@@ -203,23 +332,24 @@ const closeImagePreview = () => {
   previewImage.value = ''
 }
 
-// 生成图片
-const generateImage = async () => {
-  if (!canGenerate.value) return
-
-  loading.value = true
-  try {
-    // TODO: 调用换脸API
-    // 这里需要添加实际的API调用逻辑
-    await new Promise(resolve => setTimeout(resolve, 2000)) // 模拟API调用
-    generatedImage.value = sourceImagePreview.value // 临时使用源图片作为结果
-  } catch (error) {
-    console.error('生成失败:', error)
-    alert('生成失败,请重试')
-  } finally {
-    loading.value = false
+// 监听源图片URL变化
+watch(() => formData.value.sourceImage.url, (newUrl) => {
+  if (newUrl) {
+    sourceImagePreview.value = newUrl
+    formData.value.sourceImage.transfer_method = 'remote_url'
+    formData.value.sourceImage.upload_file_id = '' // 清空file_id
   }
-}
+})
+
+// 监听目标图片URL变化
+watch(() => formData.value.targetImage.url, (newUrl) => {
+  if (newUrl) {
+    targetImagePreview.value = newUrl
+    formData.value.targetImage.transfer_method = 'remote_url'
+    formData.value.targetImage.upload_file_id = '' // 清空file_id
+  }
+})
+
 </script>
 
 <style scoped>
