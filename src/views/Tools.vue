@@ -70,6 +70,20 @@
             </div>
           </div>
 
+          <!-- 统一图片生成 -->
+          <div @click="router.push('/tools/unified-image')"
+            class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">
+            <div class="flex flex-col items-center">
+              <div class="w-16 h-16 mb-4 text-indigo-500">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+              </div>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">统一图片生成</h2>
+              <p class="text-gray-600 dark:text-gray-300 text-center">多种图片生成模式集成</p>
+            </div>
+          </div>
+
           <!-- 注释掉AI翻唱模块 -->
           <!-- <div @click="router.push('/tools/sing')"
             class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer">

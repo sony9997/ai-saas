@@ -14,6 +14,7 @@ import Text2Image from '@/views/tools/Text2Image.vue'
 import Image2Image from '@/views/tools/Image2Image.vue'
 import Sing from '@/views/tools/Sing.vue'
 import FaceSwap from '@/views/tools/FaceSwap.vue'
+import UnifiedImage from '@/views/tools/UnifiedImage.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -55,6 +56,12 @@ const router = createRouter({
           path: 'faceswap',
           name: 'faceswap',
           component: FaceSwap,
+          meta: { requiresAuth: true }
+        },
+        {
+          path: 'unified-image',
+          name: 'unified-image',
+          component: UnifiedImage,
           meta: { requiresAuth: true }
         }
       ]
