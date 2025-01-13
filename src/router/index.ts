@@ -15,6 +15,7 @@ import Image2Image from '@/views/tools/Image2Image.vue'
 import Sing from '@/views/tools/Sing.vue'
 import FaceSwap from '@/views/tools/FaceSwap.vue'
 import UnifiedImage from '@/views/tools/UnifiedImage.vue'
+import Donate from '../views/Donate.vue'
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -103,6 +104,11 @@ const router = createRouter({
       name: 'dashboard',
       component: Dashboard,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/donate',
+      name: 'donate',
+      component: Donate
     }
   ]
 })

@@ -11,7 +11,8 @@ export const useNavigation = () => {
       // { name: '文档', href: '/docs' },
       // { name: '定价', href: '/pricing' },
       // { name: '新闻', href: '/news' },
-      { name: '关于', href: '/about' }
+      { name: '捐赠', href: '/donate' },
+      { name: '关于', href: '/about' },
     ]
 
     // const privateRoutes = [

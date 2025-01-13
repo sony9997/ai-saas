@@ -4,45 +4,64 @@
       <div class="container mx-auto px-4 py-12">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 shadow-lg">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-8">
-            关于我们
+            关于我
           </h1>
           
           <div class="space-y-8">
             <div>
               <p class="text-gray-600 dark:text-gray-300 leading-relaxed mb-6">
-                我们是一家致力于让 AI 技术更易用、更普及的科技公司。通过提供简单易用的 API 和完整的解决方案，
-                帮助开发者和企业快速将 AI 能力集成到自己的应用中。
+                你好！我是一名热爱技术的独立开发者。我喜欢探索新技术，开发有趣的项目，并与志同道合的朋友分享交流。
+                这个网站就是我的一个尝试，希望能为大家带来一些有用且有趣的东西。
               </p>
             </div>
 
             <div>
               <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                我们的使命
+                我在做什么
               </h2>
               <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                让每个应用都能轻松获得 AI 能力，推动技术创新和产业升级。
+                我致力于开发简单易用的工具和应用，让AI技术能更好地服务于日常生活和工作。
+                同时也在这里分享我的学习心得和技术积累，希望能与大家一起进步。
               </p>
             </div>
 
             <div>
               <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                我们的愿景
+                我的期待
               </h2>
               <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
-                成为全球领先的 AI 服务提供商，为各行各业提供可靠、高效的 AI 解决方案。
+                希望通过这个平台，能认识更多对技术有热情的朋友。无论你是开发者还是普通用户，
+                都欢迎和我交流，分享你的想法和建议。让我们一起探索技术的无限可能！
               </p>
             </div>
 
             <div>
               <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                核心价值观
+                我的理念
               </h2>
               <ul class="space-y-3 text-gray-600 dark:text-gray-300 list-disc list-inside pl-4">
-                <li>创新驱动发展</li>
-                <li>用户体验至上</li>
-                <li>技术赋能未来</li>
-                <li>开放共赢合作</li>
+                <li>保持好奇心，不断学习</li>
+                <li>简单实用优于花哨复杂</li>
+                <li>乐于分享，共同成长</li>
+                <li>用技术服务生活</li>
               </ul>
+            </div>
+
+            <div>
+              <h2 class="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                联系我
+              </h2>
+              <p class="text-gray-600 dark:text-gray-300 leading-relaxed">
+                如果你有任何问题、建议或者合作想法，欢迎通过以下方式联系我：
+                <br>
+                Email: hedonghncs@gmail.com
+                <br>
+                官网: <a href="https://qimuinfo.top/" 
+                      target="_blank" 
+                      class="text-blue-500 hover:text-blue-600 hover:underline transition-colors">
+                      https://qimuinfo.top/
+                    </a>
+              </p>
             </div>
           </div>
         </div>
