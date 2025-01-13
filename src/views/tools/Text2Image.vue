@@ -114,11 +114,11 @@ const generatedImage = ref('')
 const generateImage = async () => {
   loading.value = true
   try {
-    const response = await fetch('http://218.76.9.139:8535/v1/workflows/run', {
+    const response = await fetch(import.meta.env.VITE_DIFY_API_URL+'/workflows/run', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
       },
       body: JSON.stringify({
         inputs: {

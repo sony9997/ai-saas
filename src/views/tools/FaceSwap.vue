@@ -219,10 +219,10 @@ const handleSourceImageUpload = async (event: Event) => {
     bodyData.append('file', file)
     bodyData.append('user', user)
 
-    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
+    const response = await fetch(import.meta.env.VITE_DIFY_API_URL+'/files/upload', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
       },
       body: bodyData
     })
@@ -259,10 +259,10 @@ const handleTargetImageUpload = async (event: Event) => {
     bodyData.append('file', file)
     bodyData.append('user', user)
 
-    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
+    const response = await fetch(import.meta.env.VITE_DIFY_API_URL+'/files/upload', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
       },
       body: bodyData
     })
@@ -289,11 +289,11 @@ const generateImage = async () => {
 
   loading.value = true
   try {
-    const response = await fetch('http://218.76.9.139:8535/v1/workflows/run', {
+    const response = await fetch(import.meta.env.VITE_DIFY_API_URL+'/workflows/run', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
       },
       body: JSON.stringify({
         inputs: {

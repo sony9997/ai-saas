@@ -83,13 +83,13 @@
                 <div class="space-y-2">
                   <input
                     type="file"
-                    :ref="`imageInput${index}`"
+                    :ref="el => { if (el) imageInputRefs[index] = el as HTMLInputElement }"
                     class="hidden"
                     accept="image/*"
                     @change="(e) => handleImageUpload(e, index)"
                   />
                   <button
-                    @click="$refs[`imageInput${index}`].click()"
+                    @click="handleUploadClick(index)"
                     class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
                   >
                     上传图片 {{index + 1}}
@@ -269,6 +269,7 @@
 import { ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import PageLayout from '@/components/layout/PageLayout.vue'
+import { Client } from "@gradio/client"
 
 const router = useRouter()
 const user = 'hed-1'
@@ -311,102 +312,99 @@ const refreshSeed = () => {
   seed.value = Math.floor(Math.random() * 2147483648)
 }
 
-// 计算是否可以生成
-const canGenerate = computed(() => {
-  return images.value.some(img => img.preview) && promptText.value.trim() !== ''
-})
-
-// 处理图片上传
-const handleImageUpload = async (event: Event, index: number) => {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
-
-  // 本地预览
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    images.value[index].preview = e.target?.result as string
-    images.value[index].url = '' // 清空URL输入
-  }
-  reader.readAsDataURL(file)
-
-  // 上传到服务器
-  try {
-    const bodyData = new FormData()
-    bodyData.append('file', file)
-    bodyData.append('user', user)
-
-    const response = await fetch('http://218.76.9.139:8535/v1/files/upload', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
-      },
-      body: bodyData
-    })
-
-    const data = await response.json()
-    if (!response.ok) {
-      throw new Error(data.message || '上传失败')
+// 将图片转换为blob对象
+async function getImageBlob(image: any) {
+  if (!image.preview) return null
+  
+  if (image.transfer_method === 'local_file') {
+    // 本地文件已经是File对象(继承自Blob)
+    return image.file
+  } else if (image.url) {
+    // URL需要fetch获取blob
+    try {
+      const response = await fetch(image.url)
+      return await response.blob()
+    } catch (error) {
+      console.error('Failed to fetch image:', error)
+      return null
     }
-
-    images.value[index].upload_file_id = data.id
-    images.value[index].transfer_method = 'local_file'
-  } catch (error) {
-    console.error('上传图片失败:', error)
-    alert('上传图片失败,请重试')
   }
+  return null
 }
 
 // 生成图片
-const generateImage = async () => {
-  if (!canGenerate.value) {
-    alert('请输入提示文本并至少上传一张图片')
-    return
-  }
-
+async function generateImage() {
+  if (!canGenerate.value || loading.value) return
+  
   loading.value = true
   try {
-    // 如果启用随机种子，生成新的种子值
-    if (randomizeSeed.value) {
-      seed.value = Math.floor(Math.random() * 2147483648)
+    // 转换所有图片为blob
+    const imageBlobs = await Promise.all(images.value.map(getImageBlob))
+    
+    // 连接到gradio客户端
+    const client = await Client.connect(import.meta.env.VITE_GRADIO_SERVER_URL)
+    
+    // 准备参数
+    const params = {
+      text: promptText.value,
+      img1: imageBlobs[0],
+      img2: imageBlobs[1],
+      img3: imageBlobs[2],
+      height: numericParameters.value.find(p => p.name === 'height')?.value || 1024,
+      width: numericParameters.value.find(p => p.name === 'width')?.value || 1024,
+      guidance_scale: numericParameters.value.find(p => p.name === 'guidance_scale')?.value || 2.5,
+      img_guidance_scale: numericParameters.value.find(p => p.name === 'img_guidance_scale')?.value || 1.6,
+      inference_steps: numericParameters.value.find(p => p.name === 'inference_steps')?.value || 50,
+      seed: randomizeSeed.value ? -1 : seed.value,
+      separate_cfg_infer: separateCfgInfer.value,
+      offload_model: offloadModel.value,
+      use_input_image_size_as_output: useInputSizeAsOutput.value,
+      max_input_image_size: maxInputImageSize.value,
+      randomize_seed: randomizeSeed.value,
+      save_images: false
     }
+    
+    // 调用API
+    const result = await client.predict("/generate_image", params)
+    
+    // 添加调试信息
+    console.log('Generated image result:', result)
+    console.log('Result data type:', typeof result.data)
+    console.log('Result data:', result.data)
 
-    const response = await fetch('http://218.76.9.139:8535/v1/workflows/run', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${import.meta.env.VITE_API_KEY}`
-      },
-      body: JSON.stringify({
-        inputs: {
-          prompt: promptText.value,
-          images: images.value.filter(img => img.preview || img.url),
-          parameters: {
-            ...Object.fromEntries(numericParameters.value.map(p => [p.name, p.value])),
-            seed: seed.value,
-            max_input_image_size: maxInputImageSize.value,
-            separate_cfg_infer: separateCfgInfer.value,
-            offload_model: offloadModel.value,
-            use_input_image_size_as_output: useInputSizeAsOutput.value
-          }
-        },
-        response_mode: 'blocking',
-        user: user
-      })
-    })
-
-    const data = await response.json()
-    const imageUrl = data?.data?.outputs?.output?.[0]?.url
-    if (!imageUrl) {
-      throw new Error('生成的图片URL无效')
+    if (result.data && result.data.length > 0) {
+      generatedImage.value=result.data[0].url
+      console.log('Generated image URL:', generatedImage.value)
+    }else{
+      console.error('Unexpected image data format:', result.data)
     }
-    generatedImage.value = imageUrl
   } catch (error) {
-    console.error('生成图片失败:', error)
-    alert('生成图片失败,请重试')
+    console.error('Failed to generate image:', error)
   } finally {
     loading.value = false
   }
 }
+
+// 处理图片上传
+async function handleImageUpload(event: Event, index: number) {
+  const input = event.target as HTMLInputElement
+  if (!input.files?.length) return
+  
+  const file = input.files[0]
+  images.value[index] = {
+    preview: URL.createObjectURL(file),
+    url: '',
+    upload_file_id: '',
+    transfer_method: 'local_file',
+    file // 保存File对象以便后续转换为blob
+  }
+}
+
+// 计算是否可以生成
+const canGenerate = computed(() => {
+  return promptText.value.trim() !== '' && 
+         images.value.some(img => img.preview || img.url)
+})
 
 // 显示图片预览
 const showImagePreview = (imageUrl: string) => {
@@ -429,6 +427,14 @@ for (let i = 0; i < images.value.length; i++) {
       images.value[i].upload_file_id = ''
     }
   })
+}
+
+// 创建文件输入引用数组
+const imageInputRefs = ref<HTMLInputElement[]>([])
+
+// 处理图片上传按钮点击
+const handleUploadClick = (index: number) => {
+  imageInputRefs.value[index]?.click()
 }
 </script>
 

@@ -26,6 +26,7 @@
     "vue3-particles": "^2.12.0"
   },
   "devDependencies": {
+    "@gradio/client": "^1.10.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.5.3",
     "vite": "^5.4.8",
