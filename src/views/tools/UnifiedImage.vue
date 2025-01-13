@@ -87,19 +87,6 @@
                     :placeholder="'或输入图片URL'"
                   />
                 </div>
-
-                <!-- 操作按钮 -->
-                <div class="flex justify-center space-x-2">
-                  <button class="p-2 text-gray-600 hover:text-gray-800 transition-colors duration-200">
-                    <i class="download-icon">↓</i>
-                  </button>
-                  <button class="p-2 text-gray-600 hover:text-gray-800 transition-colors duration-200">
-                    <i class="history-icon">⟲</i>
-                  </button>
-                  <button class="p-2 text-gray-600 hover:text-gray-800 transition-colors duration-200">
-                    <i class="copy-icon">⎘</i>
-                  </button>
-                </div>
               </div>
             </div>
 
