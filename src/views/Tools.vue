@@ -8,7 +8,7 @@
             AI 工具
           </h1>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
-            探索我们提供的丰富 AI 工具，为您的应用赋能。
+            探索我提供的丰富 AI 工具，为您带来些许快乐。
           </p>
         </div>
 

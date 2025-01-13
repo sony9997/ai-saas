@@ -30,6 +30,19 @@
         <div class="backdrop-blur-sm bg-white rounded-2xl p-6">
           <h1 class="text-3xl font-bold text-black mb-4">统一图片生成</h1>
           
+          <div class="text-gray-700 mb-6 space-y-3">
+            <p>
+              本模块是基于OmniGen模型开发的，OmniGen是一个统一的图像生成模型，可用于执行各种任务，包括但不限于文本到图像生成、主题驱动生成、身份保留生成和图像条件生成。
+            </p>
+            <p>
+              对于多模式图像生成，您应该将字符串作为提示传递，将图像路径列表作为input_images传递。提示中的占位符应采用<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>的格式（对于第一幅图像，占位符为<code class="bg-gray-100 px-1 rounded">&lt;|image_1|&gt;</code>。对于第二幅图像，占位为<code class="bg-gray-100 px-1 rounded">&lt;|image_2|&gt;</code>）。
+            </p>
+            <p>
+              例如，使用一个女人的图像来生成一个新的图像：<br>
+              提示="一个女人拿着一束花面对着相机。这个女人是<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_1|&gt;&lt;/img&gt;</code>。"
+            </p>
+          </div>
+          
           <div class="space-y-4">
             <!-- 提示文本输入 -->
             <div class="w-full">
@@ -46,10 +59,10 @@
               <div v-for="(image, index) in images" :key="index" class="space-y-4">
                 <!-- 图片预览区域 -->
                 <div 
-                  class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[200px]"
+                  class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[370px]"
                   @click="showImagePreview(image.preview)"
                 >
-                  <div class="w-full h-full flex items-center justify-center">
+                  <div class="w-full h-full flex items-center justify-center relative">
                     <img
                       v-if="image.preview"
                       :src="image.preview"
@@ -57,11 +70,12 @@
                       class="w-full h-full object-contain"
                     />
                     <div v-else class="text-black text-center">
-                      <div class="upload-icon mb-2">↑</div>
-                      <div>将图像拖放到此处</div>
-                      <div class="text-sm text-gray-500">- 或 -</div>
-                      <div>点击上传</div>
+                      图片预览区域
                     </div>
+                    <!-- 图片序号 -->
+                    <span class="absolute top-2 left-2 bg-white text-black rounded-full px-2 py-1 text-sm">
+                      {{ index + 1 }}
+                    </span>
                   </div>
                 </div>
 
@@ -104,7 +118,7 @@
             <!-- 生成结果预览 -->
             <div 
               v-if="generatedImage"
-              class="border border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[300px]"
+              class="border border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
               @click="showImagePreview(generatedImage)"
             >
               <img
@@ -116,7 +130,8 @@
 
             <!-- 参数控制区域 -->
             <div class="grid grid-cols-2 gap-6">
-              <div v-for="param in parameters" :key="param.name" class="space-y-2">
+              <!-- 常规参数 -->
+              <div v-for="param in numericParameters" :key="param.name" class="space-y-2">
                 <div class="flex justify-between items-center">
                   <label class="text-black">{{param.label}}</label>
                   <input 
@@ -134,16 +149,101 @@
                   class="w-full"
                 >
               </div>
-            </div>
 
-            <!-- 保存选项 -->
-            <div class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                v-model="saveGenerated"
-                class="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-              >
-              <label class="text-black">保存生成的图片</label>
+              <!-- 种子参数 -->
+              <div class="col-span-2 space-y-4 mt-4">
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center">
+                    <label class="text-black">Seed</label>
+                    <div class="flex items-center space-x-2">
+                      <input 
+                        type="number" 
+                        v-model="seed"
+                        :disabled="randomizeSeed"
+                        class="w-20 px-2 py-1 border border-gray-300 rounded text-black"
+                      >
+                      <button 
+                        @click="refreshSeed"
+                        class="p-1 text-gray-600 hover:text-gray-800"
+                        :disabled="randomizeSeed"
+                      >
+                        <i class="fas fa-sync-alt"></i>
+                      </button>
+                    </div>
+                  </div>
+                  <input 
+                    type="range" 
+                    v-model="seed"
+                    :disabled="randomizeSeed"
+                    min="0"
+                    max="2147483647"
+                    step="1"
+                    class="w-full"
+                  >
+                  <div class="flex items-center space-x-2 mt-2">
+                    <input 
+                      type="checkbox"
+                      v-model="randomizeSeed"
+                      class="w-4 h-4"
+                    >
+                    <label class="text-black">Randomize seed</label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 新增参数 -->
+              <div class="col-span-2 space-y-6 mt-4">
+                <div class="space-y-2">
+                  <div class="flex justify-between items-center">
+                    <label class="text-black">最大输入图片尺寸</label>
+                    <input 
+                      type="number" 
+                      v-model="maxInputImageSize"
+                      class="w-20 px-2 py-1 border border-gray-300 rounded text-black"
+                    >
+                  </div>
+                  <input 
+                    type="range" 
+                    v-model="maxInputImageSize"
+                    min="128"
+                    max="2048"
+                    step="64"
+                    class="w-full"
+                  >
+                </div>
+
+                <div class="space-y-4">
+                  <div class="flex items-center space-x-2">
+                    <input 
+                      type="checkbox"
+                      v-model="separateCfgInfer"
+                      class="w-4 h-4"
+                    >
+                    <label class="text-black">使用单独的推理过程</label>
+                  </div>
+                  <p class="text-sm text-gray-500">对不同的引导使用单独的推理过程，这将减少内存消耗</p>
+
+                  <div class="flex items-center space-x-2">
+                    <input 
+                      type="checkbox"
+                      v-model="offloadModel"
+                      class="w-4 h-4"
+                    >
+                    <label class="text-black">将模型卸载到CPU</label>
+                  </div>
+                  <p class="text-sm text-gray-500">显著减少内存消耗但会降低生成速度</p>
+
+                  <div class="flex items-center space-x-2">
+                    <input 
+                      type="checkbox"
+                      v-model="useInputSizeAsOutput"
+                      class="w-4 h-4"
+                    >
+                    <label class="text-black">使用输入图片尺寸作为输出尺寸</label>
+                  </div>
+                  <p class="text-sm text-gray-500">自动调整输出图片尺寸以匹配输入图片，有助于提升性能</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -188,14 +288,28 @@ const images = ref([
 ])
 
 // 参数配置
-const parameters = ref([
+const numericParameters = ref([
   { name: 'height', label: '高度', value: 1024, min: 128, max: 2048, step: 64 },
   { name: 'width', label: '宽度', value: 1024, min: 128, max: 2048, step: 64 },
   { name: 'guidance_scale', label: '引导比例', value: 2.5, min: 1, max: 5, step: 0.1 },
   { name: 'img_guidance_scale', label: '图像引导比例', value: 1.6, min: 1, max: 2, step: 0.1 },
-  { name: 'inference_steps', label: '推理步数', value: 50, min: 1, max: 100, step: 1 },
-  { name: 'seed', label: '随机种子', value: 42, min: 0, max: 2147483647, step: 1 }
+  { name: 'inference_steps', label: '推理步数', value: 50, min: 1, max: 100, step: 1 }
 ])
+
+// 新增参数
+const maxInputImageSize = ref(1024)
+const separateCfgInfer = ref(true)
+const offloadModel = ref(false)
+const useInputSizeAsOutput = ref(false)
+
+// 种子相关状态
+const seed = ref(52)
+const randomizeSeed = ref(true)
+
+// 刷新种子
+const refreshSeed = () => {
+  seed.value = Math.floor(Math.random() * 2147483648)
+}
 
 // 计算是否可以生成
 const canGenerate = computed(() => {
@@ -251,6 +365,11 @@ const generateImage = async () => {
 
   loading.value = true
   try {
+    // 如果启用随机种子，生成新的种子值
+    if (randomizeSeed.value) {
+      seed.value = Math.floor(Math.random() * 2147483648)
+    }
+
     const response = await fetch('http://218.76.9.139:8535/v1/workflows/run', {
       method: 'POST',
       headers: {
@@ -261,9 +380,14 @@ const generateImage = async () => {
         inputs: {
           prompt: promptText.value,
           images: images.value.filter(img => img.preview || img.url),
-          parameters: Object.fromEntries(
-            parameters.value.map(p => [p.name, p.value])
-          )
+          parameters: {
+            ...Object.fromEntries(numericParameters.value.map(p => [p.name, p.value])),
+            seed: seed.value,
+            max_input_image_size: maxInputImageSize.value,
+            separate_cfg_infer: separateCfgInfer.value,
+            offload_model: offloadModel.value,
+            use_input_image_size_as_output: useInputSizeAsOutput.value
+          }
         },
         response_mode: 'blocking',
         user: user
