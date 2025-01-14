@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-white">
+  <div class="relative h-screen bg-dark-800">
     <PageLayout>
       <!-- 调整返回按钮位置 -->
       <div class="absolute top-0 left-4">
@@ -25,15 +25,15 @@
       </div>
 
       <div class="container mx-auto px-4 py-6">
-        <div class="backdrop-blur-sm bg-white rounded-2xl p-6">
-          <h1 class="text-3xl font-bold text-black mb-4">图像生成图像</h1>
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">图像生成图像</h1>
           
           <div class="space-y-4">
             <!-- 第一排:预览区域 -->
             <div class="grid grid-cols-2 gap-6">
               <!-- 参考图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
+                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
                 @click="showImagePreview(inputImagePreview)"
               >
                 <div class="w-full h-full flex items-center justify-center">
@@ -43,7 +43,7 @@
                     alt="输入参考图片"
                     class="w-full h-full object-contain"
                   />
-                  <div v-else class="text-black">
+                  <div v-else class="text-gray-900 dark:text-gray-100">
                     参考图片预览区域
                   </div>
                 </div>
@@ -51,11 +51,11 @@
 
               <!-- 生成图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
+                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
                 @click="showImagePreview(generatedImage)"
               >
                 <div class="w-full h-full flex items-center justify-center">
-                  <div v-if="loading" class="text-black">
+                  <div v-if="loading" class="text-gray-900 dark:text-gray-100">
                     <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
                     <p>正在生成图片...</p>
                   </div>
@@ -65,7 +65,7 @@
                     alt="生成的图片"
                     class="w-full h-full object-contain"
                   />
-                  <div v-else class="text-black">
+                  <div v-else class="text-gray-900 dark:text-gray-100">
                     生成图片预览区域
                   </div>
                 </div>
@@ -76,7 +76,7 @@
             <div class="grid grid-cols-2 gap-6">
               <!-- 输入图片上传区域 -->
               <div>
-                <label class="block text-sm font-medium text-black mb-2">输入参考图片</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">输入参考图片</label>
                 <div class="space-y-2">
                   <div class="relative">
                     <input
@@ -96,22 +96,22 @@
                       选择图片
                     </button>
                   </div>
-                  <div class="text-center text-black">或</div>
+                  <div class="text-center text-gray-900 dark:text-gray-100">或</div>
                   <input
                     v-model="formData.image.url"
                     type="text"
                     placeholder="输入图片URL..."
-                    class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   />
                 </div>
               </div>
 
               <!-- 风格选择 -->
               <div>
-                <label class="block text-sm font-medium text-black mb-2">风格选择</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">风格选择</label>
                 <select 
                   v-model="formData.baseModel"
-                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="墨幽岚">墨幽岚</option>
                   <option value="美丽的现实主义">美丽的现实主义</option>
@@ -127,22 +127,22 @@
             <div class="grid grid-cols-2 gap-6">
               <!-- 正向提示词 -->
               <div>
-                <label class="block text-sm font-medium text-black mb-2">正向提示词</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">正向提示词</label>
                 <textarea
                   v-model="formData.prompt"
                   rows="4"
-                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="请输入正向提示词..."
                 />
               </div>
 
               <!-- 反向提示词 -->
               <div>
-                <label class="block text-sm font-medium text-black mb-2">反向提示词</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">反向提示词</label>
                 <textarea
                   v-model="formData.negative_prompt"
                   rows="4"
-                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="请输入反向提示词..."
                 />
               </div>
@@ -165,7 +165,7 @@
       <!-- 图片预览Modal -->
       <div 
         v-if="previewImage"
-        class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+        class="fixed inset-0 bg-black/80 dark:bg-black/90 z-50 flex items-center justify-center p-4"
         @click="closeImagePreview"
       >
         <div class="relative max-w-full max-h-full">

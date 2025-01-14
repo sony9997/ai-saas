@@ -1,73 +1,41 @@
 <!-- 统一图片生成 -->
 
 <template>
-  <div class="relative bg-white">
+  <div class="relative h-screen bg-dark-800">
     <PageLayout>
       <!-- 返回按钮 -->
-      <div class="absolute top-0 left-4">
-        <button 
-          class="p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
-          @click="router.back()"
-          v-if="$route.path !== '/tools'"
+      <button 
+        class="absolute -top-4 left-6 p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
+        @click="router.back()"
+        v-if="$route.path !== '/tools'"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
         >
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="20" 
-            height="20" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            stroke-width="2" 
-            stroke-linecap="round" 
-            stroke-linejoin="round"
-          >
-            <path d="M19 12H5M12 19l-7-7 7-7"/>
-          </svg>
-        </button>
-      </div>
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
 
       <div class="container mx-auto px-4 py-6">
-        <div class="backdrop-blur-sm bg-white rounded-2xl p-6">
-          <h1 class="text-3xl font-bold text-black mb-4">统一图片生成</h1>
-          
-          <div class="text-gray-700 mb-6 space-y-3">
-            <p>
-              本模块是基于OmniGen模型开发的，OmniGen是一个统一的图像生成模型，可用于执行各种任务，包括但不限于文本到图像生成、主题驱动生成、身份保留生成和图像条件生成。
-            </p>
-            <p>
-              对于多模式图像生成，您应该将字符串作为提示传递，将图像路径列表作为input_images传递。提示中的占位符应采用<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>的格式（对于第一幅图像，占位符为<code class="bg-gray-100 px-1 rounded">&lt;|image_1|&gt;</code>。对于第二幅图像，占位为<code class="bg-gray-100 px-1 rounded">&lt;|image_2|&gt;</code>）。
-            </p>
-            <p>
-              例如，使用一个女人的图像来生成一个新的图像：<br>
-              提示="一个女人拿着一束花面对着相机。这个女人是<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_1|&gt;&lt;/img&gt;</code>。"
-            </p>
-          </div>
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">统一图像处理</h1>
           
           <div class="space-y-4">
-            <!-- 提示文本输入 -->
-            <div class="w-full">
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                提示词
-                <span class="text-gray-500 font-normal">
-                  (使用<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>表示第*张输入图片)
-                </span>
-              </label>
-              <textarea 
-                v-model="promptText"
-                rows="3"
-                class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none overflow-y-auto"
-                placeholder="输入提示文本，使用<img></img>表示输入图片"
-                style="min-height: 80px; max-height: 120px;"
-              ></textarea>
-            </div>
-            
             <!-- 图片上传网格 -->
             <div class="grid grid-cols-3 gap-6">
               <div v-for="(image, index) in images" :key="index">
                 <!-- 图片预览/上传区域 -->
                 <div 
-                  class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[200px] relative"
-                  :class="{ 'border-blue-500 bg-blue-50': isDragging[index] }"
+                  class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[200px] relative"
+                  :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': isDragging[index] }"
                   @click="handlePreviewAreaClick(index)"
                   @dragenter.prevent="handleDragEnter(index)"
                   @dragleave.prevent="handleDragLeave(index)"
@@ -83,7 +51,7 @@
                       />
                       <!-- 删除按钮 -->
                       <button 
-                        class="absolute top-2 right-2 p-1.5 bg-gray-800/70 hover:bg-gray-900/70 rounded-full text-white transition-all duration-200"
+                        class="absolute top-2 right-2 p-1.5 bg-gray-800/70 dark:bg-dark-600/70 hover:bg-gray-900/70 dark:hover:bg-dark-500/70 rounded-full text-white transition-all duration-200"
                         @click.stop="clearImage(index)"
                       >
                         <svg 
@@ -102,15 +70,29 @@
                         </svg>
                       </button>
                     </template>
-                    <div v-else class="text-center text-gray-500">
-                      <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                      </svg>
-                      <p class="mt-2">点击或拖放图片到此处</p>
+                    <div v-else class="text-center text-gray-900 dark:text-gray-100">
+                      <p>点击或拖放图片到此处</p>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+
+            <!-- 提示文本输入 -->
+            <div class="w-full">
+              <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
+                提示词
+                <span class="text-gray-500 dark:text-gray-400 font-normal">
+                  (使用<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>表示第*张输入图片)
+                </span>
+              </label>
+              <textarea
+                v-model="promptText"
+                rows="3"
+                class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none overflow-y-auto"
+                placeholder="输入提示文本，使用<img></img>表示输入图片"
+                style="min-height: 80px; max-height: 120px;"
+              ></textarea>
             </div>
 
             <!-- 生成按钮 -->

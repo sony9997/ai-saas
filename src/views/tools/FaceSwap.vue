@@ -1,5 +1,5 @@
 <template>
-  <div class="relative bg-white">
+  <div class="relative h-screen bg-dark-800">
     <PageLayout>
       <!-- 返回按钮 -->
       <div class="absolute top-0 left-4">
@@ -25,15 +25,15 @@
       </div>
 
       <div class="container mx-auto px-4 py-6">
-        <div class="backdrop-blur-sm bg-white rounded-2xl p-6">
-          <h1 class="text-3xl font-bold text-black mb-4">AI 换脸</h1>
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">人脸替换</h1>
           
           <div class="space-y-4">
-            <!-- 第一排:预览区域 -->
+            <!-- 第一排：预览区域 -->
             <div class="grid grid-cols-2 gap-6">
               <!-- 源图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[300px]"
+                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
                 @click="showImagePreview(sourceImagePreview)"
               >
                 <div class="w-full h-full flex items-center justify-center">
@@ -43,119 +43,113 @@
                     alt="源图片"
                     class="w-full h-full object-contain"
                   />
-                  <div v-else class="text-black">
+                  <div v-else class="text-gray-900 dark:text-gray-100">
                     源图片预览区域
                   </div>
                 </div>
               </div>
 
-              <!-- 目标图片预览 -->
+              <!-- 生成图片预览 -->
               <div 
-                class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[300px]"
-                @click="showImagePreview(targetImagePreview)"
+                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
+                @click="showImagePreview(generatedImage)"
               >
                 <div class="w-full h-full flex items-center justify-center">
+                  <div v-if="loading" class="text-gray-900 dark:text-gray-100">
+                    <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
+                    <p>正在生成图片...</p>
+                  </div>
                   <img
-                    v-if="targetImagePreview"
-                    :src="targetImagePreview"
-                    alt="目标图片"
+                    v-else-if="generatedImage"
+                    :src="generatedImage"
+                    alt="生成的图片"
                     class="w-full h-full object-contain"
                   />
-                  <div v-else class="text-black">
-                    目标图片预览区域
+                  <div v-else class="text-gray-900 dark:text-gray-100">
+                    生成图片预览区域
                   </div>
                 </div>
               </div>
             </div>
 
-            <!-- 第二排:上传按钮和生成结果 -->
+            <!-- 第二排：图片上传区域 -->
             <div class="grid grid-cols-2 gap-6">
               <!-- 源图片上传 -->
-              <div class="space-y-2">
-                <input
-                  type="file"
-                  ref="sourceImageInput"
-                  class="hidden"
-                  accept="image/*"
-                  @change="handleSourceImageUpload"
-                />
-                <button
-                  @click="$refs.sourceImageInput.click()"
-                  class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
-                >
-                  上传源图片
-                </button>
-                <!-- 源图片URL输入 -->
-                <input
-                  v-model="formData.sourceImage.url"
-                  type="text"
-                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="或输入图片URL"
-                />
+              <div>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">源图片</label>
+                <div class="space-y-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    ref="sourceImageInput"
+                    @change="handleSourceImageUpload"
+                  />
+                  <button
+                    @click="triggerSourceImageUpload"
+                    class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                  >
+                    选择图片
+                  </button>
+                  <input
+                    v-model="formData.sourceImage.url"
+                    type="text"
+                    placeholder="输入图片URL..."
+                    class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
               </div>
 
               <!-- 目标图片上传 -->
-              <div class="space-y-2">
-                <input
-                  type="file"
-                  ref="targetImageInput"
-                  class="hidden"
-                  accept="image/*"
-                  @change="handleTargetImageUpload"
-                />
-                <button
-                  @click="$refs.targetImageInput.click()"
-                  class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
-                >
-                  上传目标图片
-                </button>
-                <!-- 目标图片URL输入 -->
-                <input
-                  v-model="formData.targetImage.url"
-                  type="text"
-                  class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="或输入图片URL"
-                />
+              <div>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">目标图片</label>
+                <div class="space-y-2">
+                  <input
+                    type="file"
+                    accept="image/*"
+                    class="hidden"
+                    ref="targetImageInput"
+                    @change="handleTargetImageUpload"
+                  />
+                  <button
+                    @click="triggerTargetImageUpload"
+                    class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                  >
+                    选择图片
+                  </button>
+                  <input
+                    v-model="formData.targetImage.url"
+                    type="text"
+                    placeholder="输入图片URL..."
+                    class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  />
+                </div>
               </div>
             </div>
 
             <!-- 生成按钮 -->
-            <div class="flex justify-center">
-              <button
-                @click="generateImage"
-                class="py-2 px-8 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                :disabled="!canGenerate || loading"
-              >
-                {{ loading ? '生成中...' : '开始生成' }}
-              </button>
-            </div>
-
-            <!-- 生成结果预览 -->
-            <div 
-              v-if="generatedImage"
-              class="border border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[300px]"
-              @click="showImagePreview(generatedImage)"
+            <button
+              @click="generateImage"
+              :disabled="loading"
+              class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
             >
-              <img
-                :src="generatedImage"
-                alt="生成结果"
-                class="w-full h-full object-contain"
-              />
-            </div>
+              {{ loading ? '生成中...' : '生成图片' }}
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- 图片预览弹窗 -->
-      <div
+      <!-- 图片预览Modal -->
+      <div 
         v-if="previewImage"
-        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50"
+        class="fixed inset-0 bg-black/80 dark:bg-black/90 z-50 flex items-center justify-center p-4"
         @click="closeImagePreview"
       >
-        <img
-          :src="previewImage"
+        <img 
+          :src="previewImage" 
           alt="预览图片"
-          class="max-w-[90%] max-h-[90vh] object-contain"
+          class="max-w-full max-h-full object-contain"
+          @click.stop
         />
       </div>
     </PageLayout>

@@ -2,7 +2,7 @@
   <div class="relative h-screen bg-dark-800">
     <div 
       v-show="loading"
-      class="absolute inset-0 flex items-center justify-center bg-dark-800/50 backdrop-blur-sm"
+      class="absolute inset-0 flex items-center justify-center bg-white/50 dark:bg-dark-800/50 backdrop-blur-sm"
     >
       <div class="relative">
         <div class="animate-spin rounded-full h-24 w-24 border-t-4 border-b-4 border-blue-500"></div>
