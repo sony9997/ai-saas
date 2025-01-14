@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-screen bg-dark-800">
+  <div class="relative bg-dark-800">
     <PageLayout>
       <!-- 返回按钮 -->
       <div class="absolute top-0 left-4">
@@ -25,7 +25,7 @@
       </div>
 
       <div class="container mx-auto px-4 py-6">
-        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
+        <div class="bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">人脸替换</h1>
           
           <div class="space-y-4">

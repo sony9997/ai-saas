@@ -1,5 +1,5 @@
 <template>
-  <div class="relative h-screen bg-dark-800">
+  <div class="relative bg-dark-800">
     <PageLayout>
       <button 
       class="absolute -top-4 left-6 p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"

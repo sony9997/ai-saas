@@ -1,7 +1,7 @@
 <!-- 统一图片生成 -->
 
 <template>
-  <div class="relative h-screen bg-dark-800">
+  <div class="relative bg-dark-8s00">
     <PageLayout>
       <!-- 返回按钮 -->
       <button 
@@ -25,9 +25,21 @@
       </button>
 
       <div class="container mx-auto px-4 py-6">
-        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
+        <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6 h-full">
           <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">统一图像处理</h1>
-          
+          <div class="text-gray-700 dark:text-gray-300 mb-6 space-y-3">
+            <p>
+              本模块是基于OmniGen模型开发的，OmniGen是一个统一的图像生成模型，可用于执行各种任务，包括但不限于文本到图像生成、主题驱动生成、身份保留生成和图像条件生成。
+            </p>
+            <p>
+              对于多模式图像生成，您应该将字符串作为提示传递，将图像路径列表作为input_images传递。提示中的占位符应采用<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>的格式（对于第一幅图像，占位符为<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_1|&gt;</code>。对于第二幅图像，占位为<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_2|&gt;</code>）。
+              另外，提示词请使用英文。
+            </p>
+            <p>
+              例如，使用一个女人的图像来生成一个新的图像：<br>
+              提示="A woman holds a bouquet of flowers and faces the camera. The woman is <code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_1|&gt;&lt;/img&gt;</code>."
+            </p>
+          </div>
           <div class="space-y-4">
             <!-- 图片上传网格 -->
             <div class="grid grid-cols-3 gap-6">
@@ -120,7 +132,7 @@
                   class="w-full h-full object-contain"
                   @load="scrollToOutput"
                 />
-                <div v-else class="text-black">
+                <div v-else class="text-center text-gray-900 dark:text-gray-100">
                   输出图片预览区域
                 </div>
               </div>
@@ -131,11 +143,11 @@
               <!-- 常规参数 -->
               <div v-for="param in numericParameters" :key="param.name" class="space-y-2">
                 <div class="flex justify-between items-center">
-                  <label class="text-black">{{param.label}}</label>
+                  <label class="text-black dark:text-white">{{param.label}}</label>
                   <input 
                     type="number" 
                     v-model="param.value"
-                    class="w-20 px-2 py-1 border border-gray-300 rounded text-black"
+                    class="w-20 px-2 py-1 border border-gray-300 rounded text-black dark:text-white"
                   >
                 </div>
                 <input 
@@ -152,13 +164,13 @@
               <div class="col-span-2 space-y-4 mt-4">
                 <div class="space-y-2">
                   <div class="flex justify-between items-center">
-                    <label class="text-black">Seed</label>
+                    <label class="text-black dark:text-white">Seed</label>
                     <div class="flex items-center space-x-2">
                       <input 
                         type="number" 
                         v-model="seed"
                         :disabled="randomizeSeed"
-                        class="w-20 px-2 py-1 border border-gray-300 rounded text-black"
+                        class="w-20 px-2 py-1 border border-gray-300 rounded text-black dark:text-white"
                       >
                       <button 
                         @click="refreshSeed"
@@ -184,7 +196,7 @@
                       v-model="randomizeSeed"
                       class="w-4 h-4"
                     >
-                    <label class="text-black">Randomize seed</label>
+                    <label class="text-black dark:text-white">Randomize seed</label>
                   </div>
                 </div>
               </div>
@@ -193,11 +205,11 @@
               <div class="col-span-2 space-y-6 mt-4">
                 <div class="space-y-2">
                   <div class="flex justify-between items-center">
-                    <label class="text-black">最大输入图片尺寸</label>
+                    <label class="text-black dark:text-white">最大输入图片尺寸</label>
                     <input 
                       type="number" 
                       v-model="maxInputImageSize"
-                      class="w-20 px-2 py-1 border border-gray-300 rounded text-black"
+                      class="w-20 px-2 py-1 border border-gray-300 rounded text-black dark:text-white"
                     >
                   </div>
                   <input 
@@ -217,19 +229,9 @@
                       v-model="separateCfgInfer"
                       class="w-4 h-4"
                     >
-                    <label class="text-black">使用单独的推理过程</label>
+                    <label class="text-black dark:text-white">使用单独的推理过程</label>
                   </div>
-                  <p class="text-sm text-gray-500">对不同的引导使用单独的推理过程，这将减少内存消耗</p>
-<!-- 
-                  <div class="flex items-center space-x-2">
-                    <input 
-                      type="checkbox"
-                      v-model="offloadModel"
-                      class="w-4 h-4"
-                    >
-                    <label class="text-black">将模型卸载到CPU</label>
-                  </div>
-                  <p class="text-sm text-gray-500">显著减少内存消耗但会降低生成速度</p> -->
+                  <p class="text-sm text-gray-500 dark:text-gray-300">对不同的引导使用单独的推理过程，这将减少内存消耗</p>
 
                   <div class="flex items-center space-x-2">
                     <input 
@@ -237,9 +239,9 @@
                       v-model="useInputSizeAsOutput"
                       class="w-4 h-4"
                     >
-                    <label class="text-black">使用输入图片尺寸作为输出尺寸</label>
+                    <label class="text-black dark:text-white">使用输入图片尺寸作为输出尺寸</label>
                   </div>
-                  <p class="text-sm text-gray-500">自动调整输出图片尺寸以匹配输入图片，有助于提升性能</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-300">自动调整输出图片尺寸以匹配输入图片，有助于提升性能</p>
                 </div>
               </div>
             </div>
