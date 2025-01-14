@@ -29,22 +29,48 @@
           <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">图像生成图像</h1>
           
           <div class="space-y-4">
-            <!-- 第一排:预览区域 -->
+            <!-- 图片上传和预览 -->
             <div class="grid grid-cols-2 gap-6">
-              <!-- 参考图片预览 -->
+              <!-- 参考图片上传区域 -->
               <div 
-                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
-                @click="showImagePreview(inputImagePreview)"
+                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px] relative"
+                :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': isDragging }"
+                @click="handlePreviewAreaClick"
+                @dragenter.prevent="handleDragEnter"
+                @dragleave.prevent="handleDragLeave"
+                @dragover.prevent
+                @drop.prevent="handleDrop"
               >
                 <div class="w-full h-full flex items-center justify-center">
-                  <img
-                    v-if="inputImagePreview"
-                    :src="inputImagePreview"
-                    alt="输入参考图片"
-                    class="w-full h-full object-contain"
-                  />
-                  <div v-else class="text-gray-900 dark:text-gray-100">
-                    参考图片预览区域
+                  <template v-if="inputImagePreview">
+                    <img
+                      :src="inputImagePreview"
+                      alt="输入图片"
+                      class="w-full h-full object-contain"
+                    />
+                    <!-- 删除按钮 -->
+                    <button 
+                      class="absolute top-2 right-2 p-1.5 bg-gray-800/70 dark:bg-dark-600/70 hover:bg-gray-900/70 dark:hover:bg-dark-500/70 rounded-full text-white transition-all duration-200"
+                      @click.stop="clearImage"
+                    >
+                      <svg 
+                        xmlns="http://www.w3.org/2000/svg" 
+                        width="16" 
+                        height="16" 
+                        viewBox="0 0 24 24" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                        stroke-linecap="round" 
+                        stroke-linejoin="round"
+                      >
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </template>
+                  <div v-else class="text-center text-gray-900 dark:text-gray-100">
+                    <p>点击或拖放参考图片到此处</p>
                   </div>
                 </div>
               </div>
@@ -52,7 +78,7 @@
               <!-- 生成图片预览 -->
               <div 
                 class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px]"
-                @click="showImagePreview(generatedImage)"
+                @click="generatedImage && showImagePreview(generatedImage)"
               >
                 <div class="w-full h-full flex items-center justify-center">
                   <div v-if="loading" class="text-gray-900 dark:text-gray-100">
@@ -65,7 +91,7 @@
                     alt="生成的图片"
                     class="w-full h-full object-contain"
                   />
-                  <div v-else class="text-gray-900 dark:text-gray-100">
+                  <div v-else class="text-center text-gray-900 dark:text-gray-100">
                     生成图片预览区域
                   </div>
                 </div>
@@ -73,38 +99,7 @@
             </div>
 
             <!-- 第二排:输入图片和风格选择 -->
-            <div class="grid grid-cols-2 gap-6">
-              <!-- 输入图片上传区域 -->
-              <div>
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">输入参考图片</label>
-                <div class="space-y-2">
-                  <div class="relative">
-                    <input
-                      type="file"
-                      accept="image/*"
-                      @change="handleImageUpload"
-                      class="hidden"
-                      ref="fileInput"
-                    />
-                    <button 
-                      @click="$refs.fileInput.click()"
-                      class="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors flex items-center justify-center gap-2"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd" />
-                      </svg>
-                      选择图片
-                    </button>
-                  </div>
-                  <div class="text-center text-gray-900 dark:text-gray-100">或</div>
-                  <input
-                    v-model="formData.image.url"
-                    type="text"
-                    placeholder="输入图片URL..."
-                    class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  />
-                </div>
-              </div>
+            <div class="grid grid-cols-1 gap-6">
 
               <!-- 风格选择 -->
               <div>
@@ -185,6 +180,62 @@
           </button>
         </div>
       </div>
+
+      <!-- 图片上传对话框 -->
+      <div v-if="showUploadDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-96" @click.stop>
+          <h3 class="text-lg font-semibold mb-4">上传图片</h3>
+          
+          <!-- 本地上传选项 -->
+          <div 
+            class="border-2 border-dashed border-gray-300 rounded-lg p-4 mb-4 cursor-pointer hover:border-blue-500"
+            @click="triggerFileInput"
+          >
+            <div class="text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+              </svg>
+              <p class="mt-2">从本地选择图片</p>
+            </div>
+          </div>
+
+          <!-- URL输入选项 -->
+          <div class="mb-4">
+            <input 
+              type="text" 
+              v-model="imageUrl"
+              placeholder="输入图片URL"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+
+          <!-- 按钮组 -->
+          <div class="flex justify-end space-x-2">
+            <button 
+              class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+              @click="closeUploadDialog"
+            >
+              取消
+            </button>
+            <button 
+              class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              @click="confirmImageUpload"
+              :disabled="!imageUrl"
+            >
+              确认
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 隐藏的文件输入 -->
+      <input 
+        type="file"
+        ref="fileInput"
+        class="hidden"
+        accept="image/*"
+        @change="handleFileUpload"
+      >
     </PageLayout>
   </div>
 </template>
@@ -213,36 +264,60 @@ const formData = ref({
 const loading = ref(false)
 const inputImagePreview = ref('')
 const generatedImage = ref('')
-const user='hed-1'
+const user = 'hed-1'
 
-// 添加图片预览相关的状态
+// 添加新的状态变量
+const isDragging = ref(false)
+const showUploadDialog = ref(false)
+const imageUrl = ref('')
+const fileInput = ref<HTMLInputElement | null>(null)
 const previewImage = ref('')
-const fileInput = ref<HTMLInputElement>()
 
-// 显示图片预览
-const showImagePreview = (imageUrl: string) => {
-  if (imageUrl) {
-    previewImage.value = imageUrl
+// 处理预览区域点击
+const handlePreviewAreaClick = () => {
+  if (inputImagePreview.value) {
+    showImagePreview(inputImagePreview.value)
+  } else {
+    showUploadDialog.value = true
   }
 }
 
-// 关闭图片预览
-const closeImagePreview = () => {
-  previewImage.value = ''
+// 处理拖放事件
+const handleDragEnter = () => {
+  isDragging.value = true
 }
 
-// 处理图片上传
-const handleImageUpload = async (event: Event) => {
-  const file = (event.target as HTMLInputElement).files?.[0]
-  if (!file) return
+const handleDragLeave = () => {
+  isDragging.value = false
+}
 
+const handleDrop = async (event: DragEvent) => {
+  isDragging.value = false
+  const file = event.dataTransfer?.files[0]
+  if (file && file.type.startsWith('image/')) {
+    await handleImageFile(file)
+  }
+}
+
+// 触发文件选择
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
+
+// 处理文件上传
+const handleFileUpload = async (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input.files?.length) {
+    await handleImageFile(input.files[0])
+    closeUploadDialog()
+  }
+}
+
+// 处理图片文件
+const handleImageFile = async (file: File) => {
   // 本地预览
-  const reader = new FileReader()
-  reader.onload = (e) => {
-    inputImagePreview.value = e.target?.result as string
-    formData.value.image.url = '' // 清空URL输入
-  }
-  reader.readAsDataURL(file)
+  inputImagePreview.value = URL.createObjectURL(file)
+  formData.value.image.url = '' // 清空URL输入
 
   // 上传到服务器
   try {
@@ -263,13 +338,48 @@ const handleImageUpload = async (event: Event) => {
       throw new Error(data.message || '上传失败')
     }
 
-    // 保存上传后的文件ID到formData.image中
     formData.value.image.upload_file_id = data.id
     formData.value.image.transfer_method = 'local_file'
   } catch (error) {
     console.error('上传图片失败:', error)
     alert('上传图片失败,请重试')
   }
+}
+
+// 确认图片上传
+const confirmImageUpload = () => {
+  if (imageUrl.value) {
+    inputImagePreview.value = imageUrl.value
+    formData.value.image.url = imageUrl.value
+    formData.value.image.transfer_method = 'remote_url'
+    closeUploadDialog()
+  }
+}
+
+// 关闭上传对话框
+const closeUploadDialog = () => {
+  showUploadDialog.value = false
+  imageUrl.value = ''
+}
+
+// 清除图片
+const clearImage = () => {
+  inputImagePreview.value = ''
+  formData.value.image.url = ''
+  formData.value.image.upload_file_id = ''
+  formData.value.image.transfer_method = ''
+}
+
+// 显示图片预览
+const showImagePreview = (imageUrl: string) => {
+  if (imageUrl) {
+    previewImage.value = imageUrl
+  }
+}
+
+// 关闭图片预览
+const closeImagePreview = () => {
+  previewImage.value = ''
 }
 
 // 监听URL输入变化
@@ -331,7 +441,22 @@ const generateImage = async () => {
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* 添加过渡动画 */
+.border-dashed {
+  transition: all 0.3s ease;
+}
+
+.border-dashed:hover {
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* 删除按钮的过渡动画 */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
+}
+
 .fixed {
   animation: fadeIn 0.2s ease-out;
 }
