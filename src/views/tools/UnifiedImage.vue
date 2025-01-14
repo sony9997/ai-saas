@@ -117,15 +117,22 @@
 
             <!-- 生成结果预览 -->
             <div 
-              v-if="generatedImage"
-              class="border border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[400px]"
+              ref="outputImageRef"
+              class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[300px]"
               @click="showImagePreview(generatedImage)"
             >
-              <img
-                :src="generatedImage"
-                alt="生成结果"
-                class="w-full h-full object-contain"
-              />
+              <div class="w-full h-full flex items-center justify-center">
+                <img
+                  v-if="generatedImage"
+                  :src="generatedImage"
+                  alt="生成的图片"
+                  class="w-full h-full object-contain"
+                  @load="scrollToOutput"
+                />
+                <div v-else class="text-black">
+                  输出图片预览区域
+                </div>
+              </div>
             </div>
 
             <!-- 参数控制区域 -->
@@ -222,7 +229,7 @@
                     <label class="text-black">使用单独的推理过程</label>
                   </div>
                   <p class="text-sm text-gray-500">对不同的引导使用单独的推理过程，这将减少内存消耗</p>
-
+<!-- 
                   <div class="flex items-center space-x-2">
                     <input 
                       type="checkbox"
@@ -231,7 +238,7 @@
                     >
                     <label class="text-black">将模型卸载到CPU</label>
                   </div>
-                  <p class="text-sm text-gray-500">显著减少内存消耗但会降低生成速度</p>
+                  <p class="text-sm text-gray-500">显著减少内存消耗但会降低生成速度</p> -->
 
                   <div class="flex items-center space-x-2">
                     <input 
@@ -435,6 +442,19 @@ const imageInputRefs = ref<HTMLInputElement[]>([])
 // 处理图片上传按钮点击
 const handleUploadClick = (index: number) => {
   imageInputRefs.value[index]?.click()
+}
+
+// 添加ref
+const outputImageRef = ref<HTMLElement | null>(null)
+
+// 滚动到输出图片
+const scrollToOutput = () => {
+  if (outputImageRef.value) {
+    outputImageRef.value.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'center'
+    })
+  }
 }
 </script>
 
