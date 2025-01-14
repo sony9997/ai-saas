@@ -46,60 +46,69 @@
           <div class="space-y-4">
             <!-- 提示文本输入 -->
             <div class="w-full">
-              <input 
-                type="text" 
-                class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="输入提示文本，使用<img></img>表示第i张输入图片"
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                提示词
+                <span class="text-gray-500 font-normal">
+                  (使用<code class="bg-gray-100 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>表示第*张输入图片)
+                </span>
+              </label>
+              <textarea 
                 v-model="promptText"
-              >
+                rows="3"
+                class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none overflow-y-auto"
+                placeholder="输入提示文本，使用<img></img>表示输入图片"
+                style="min-height: 80px; max-height: 120px;"
+              ></textarea>
             </div>
             
             <!-- 图片上传网格 -->
             <div class="grid grid-cols-3 gap-6">
-              <div v-for="(image, index) in images" :key="index" class="space-y-4">
-                <!-- 图片预览区域 -->
+              <div v-for="(image, index) in images" :key="index">
+                <!-- 图片预览/上传区域 -->
                 <div 
-                  class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[370px]"
-                  @click="showImagePreview(image.preview)"
+                  class="border border-dashed border-gray-300 rounded-lg overflow-hidden cursor-pointer h-[200px] relative"
+                  :class="{ 'border-blue-500 bg-blue-50': isDragging[index] }"
+                  @click="handlePreviewAreaClick(index)"
+                  @dragenter.prevent="handleDragEnter(index)"
+                  @dragleave.prevent="handleDragLeave(index)"
+                  @dragover.prevent
+                  @drop.prevent="handleDrop($event, index)"
                 >
-                  <div class="w-full h-full flex items-center justify-center relative">
-                    <img
-                      v-if="image.preview"
-                      :src="image.preview"
-                      :alt="`图片 ${index + 1}`"
-                      class="w-full h-full object-contain"
-                    />
-                    <div v-else class="text-black text-center">
-                      图片预览区域
+                  <div class="w-full h-full flex items-center justify-center">
+                    <template v-if="image.preview">
+                      <img
+                        :src="image.preview"
+                        :alt="`图片 ${index + 1}`"
+                        class="w-full h-full object-contain"
+                      />
+                      <!-- 删除按钮 -->
+                      <button 
+                        class="absolute top-2 right-2 p-1.5 bg-gray-800/70 hover:bg-gray-900/70 rounded-full text-white transition-all duration-200"
+                        @click.stop="clearImage(index)"
+                      >
+                        <svg 
+                          xmlns="http://www.w3.org/2000/svg" 
+                          width="16" 
+                          height="16" 
+                          viewBox="0 0 24 24" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          stroke-width="2" 
+                          stroke-linecap="round" 
+                          stroke-linejoin="round"
+                        >
+                          <line x1="18" y1="6" x2="6" y2="18"></line>
+                          <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                      </button>
+                    </template>
+                    <div v-else class="text-center text-gray-500">
+                      <svg class="mx-auto h-12 w-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                      </svg>
+                      <p class="mt-2">点击或拖放图片到此处</p>
                     </div>
-                    <!-- 图片序号 -->
-                    <span class="absolute top-2 left-2 bg-white text-black rounded-full px-2 py-1 text-sm">
-                      {{ index + 1 }}
-                    </span>
                   </div>
-                </div>
-
-                <!-- 上传按钮和URL输入 -->
-                <div class="space-y-2">
-                  <input
-                    type="file"
-                    :ref="el => { if (el) imageInputRefs[index] = el as HTMLInputElement }"
-                    class="hidden"
-                    accept="image/*"
-                    @change="(e) => handleImageUpload(e, index)"
-                  />
-                  <button
-                    @click="handleUploadClick(index)"
-                    class="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors duration-200"
-                  >
-                    上传图片 {{index + 1}}
-                  </button>
-                  <input
-                    v-model="image.url"
-                    type="text"
-                    class="w-full px-3 py-2 bg-white border border-gray-300 rounded-lg text-black focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                    :placeholder="'或输入图片URL'"
-                  />
                 </div>
               </div>
             </div>
@@ -268,6 +277,62 @@
           class="max-w-[90%] max-h-[90vh] object-contain"
         />
       </div>
+
+      <!-- 上传对话框 -->
+      <div v-if="showUploadDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 w-96" @click.stop>
+          <h3 class="text-lg font-semibold mb-4">上传图片</h3>
+          
+          <!-- 本地上传选项 -->
+          <div 
+            class="border-2 border-dashed border-gray-300 rounded-lg p-4 mb-4 cursor-pointer hover:border-blue-500"
+            @click="triggerFileInput"
+          >
+            <div class="text-center">
+              <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+              </svg>
+              <p class="mt-2">从本地选择图片</p>
+            </div>
+          </div>
+
+          <!-- URL输入选项 -->
+          <div class="mb-4">
+            <input 
+              type="text" 
+              v-model="imageUrl"
+              placeholder="输入图片URL"
+              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+          </div>
+
+          <!-- 按钮组 -->
+          <div class="flex justify-end space-x-2">
+            <button 
+              class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
+              @click="closeUploadDialog"
+            >
+              取消
+            </button>
+            <button 
+              class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              @click="confirmImageUpload"
+              :disabled="!imageUrl"
+            >
+              确认
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 隐藏的文件输入 -->
+      <input 
+        type="file"
+        ref="fileInput"
+        class="hidden"
+        accept="image/*"
+        @change="handleFileUpload"
+      >
     </PageLayout>
   </div>
 </template>
@@ -456,6 +521,95 @@ const scrollToOutput = () => {
     })
   }
 }
+
+// 拖放状态
+const isDragging = ref(Array(3).fill(false))
+const currentUploadIndex = ref(-1)
+const showUploadDialog = ref(false)
+const imageUrl = ref('')
+const fileInput = ref<HTMLInputElement | null>(null)
+
+// 处理预览区域点击
+const handlePreviewAreaClick = (index: number) => {
+  if (images.value[index].preview) {
+    showImagePreview(images.value[index].preview)
+  } else {
+    currentUploadIndex.value = index
+    showUploadDialog.value = true
+  }
+}
+
+// 处理拖放事件
+const handleDragEnter = (index: number) => {
+  isDragging.value[index] = true
+}
+
+const handleDragLeave = (index: number) => {
+  isDragging.value[index] = false
+}
+
+const handleDrop = async (event: DragEvent, index: number) => {
+  isDragging.value[index] = false
+  const file = event.dataTransfer?.files[0]
+  if (file && file.type.startsWith('image/')) {
+    await handleImageFile(file, index)
+  }
+}
+
+// 触发文件选择
+const triggerFileInput = () => {
+  fileInput.value?.click()
+}
+
+// 处理文件上传
+const handleFileUpload = async (event: Event) => {
+  const input = event.target as HTMLInputElement
+  if (input.files?.length) {
+    await handleImageFile(input.files[0], currentUploadIndex.value)
+    closeUploadDialog()
+  }
+}
+
+// 处理图片文件
+const handleImageFile = async (file: File, index: number) => {
+  images.value[index] = {
+    preview: URL.createObjectURL(file),
+    url: '',
+    upload_file_id: '',
+    transfer_method: 'local_file',
+    file
+  }
+}
+
+// 确认图片上传
+const confirmImageUpload = () => {
+  if (imageUrl.value && currentUploadIndex.value !== -1) {
+    images.value[currentUploadIndex.value] = {
+      preview: imageUrl.value,
+      url: imageUrl.value,
+      upload_file_id: '',
+      transfer_method: 'remote_url'
+    }
+    closeUploadDialog()
+  }
+}
+
+// 关闭上传对话框
+const closeUploadDialog = () => {
+  showUploadDialog.value = false
+  imageUrl.value = ''
+  currentUploadIndex.value = -1
+}
+
+// 清除图片
+const clearImage = (index: number) => {
+  images.value[index] = {
+    preview: '',
+    url: '',
+    upload_file_id: '',
+    transfer_method: ''
+  }
+}
 </script>
 
 <style scoped>
@@ -475,6 +629,22 @@ const scrollToOutput = () => {
   to {
     opacity: 1;
   }
+}
+
+.border-dashed {
+  transition: all 0.3s ease;
+}
+
+.border-dashed:hover {
+  border-color: #3b82f6;
+  background-color: rgba(59, 130, 246, 0.05);
+}
+
+/* 删除按钮的过渡动画 */
+.transition-all {
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
 </style>
 
