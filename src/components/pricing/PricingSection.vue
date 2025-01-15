@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref } from 'vue'
 import { pricingTiers } from '@/config/pricing'
 import type { PricingTier } from '@/types'
 

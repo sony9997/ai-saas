@@ -1,4 +1,3 @@
-import { supabase } from '@/config/supabase'
 import type { AuthError } from '@supabase/supabase-js'
 
 export const handleAuthError = (error: AuthError): string => {

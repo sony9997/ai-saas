@@ -19,6 +19,25 @@ export const useAuthStore = defineStore('auth', () => {
     user.value = session?.user ?? null
   })
 
+  // 注册
+  const register = async (email: string, password: string) => {
+    try {
+      loading.value = true
+      error.value = null
+      const { data, error: err } = await supabase.auth.signUp({
+        email,
+        password
+      })
+      if (err) throw err
+      user.value = data.user
+    } catch (err: any) {
+      error.value = err.message
+      user.value = null
+    } finally {
+      loading.value = false
+    }
+  }
+
   // 登录
   const login = async (email: string, password: string) => {
     try {
@@ -57,6 +76,7 @@ export const useAuthStore = defineStore('auth', () => {
     loading,
     error,
     initUser,
+    register,
     login,
     logout
   }
