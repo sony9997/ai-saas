@@ -17,6 +17,18 @@
   - 实时订阅
 - Supabase GitHub: https://github.com/supabase/supabase
 
+## 开发过程
+
+本项目采用以下开发流程：
+
+1. 使用bolt.new快速构建项目基础框架
+2. 使用Cursor + Cline进行代码优化和功能开发：
+   - Cline使用DeepSeek模型进行多文件协同开发
+   - Cursor用于单个功能/文件的优化和开发
+3. 开发经验总结：
+   - Cline + DeepSeek在处理涉及多个文件的复杂需求时表现优异
+   - Cursor在优化单个功能或文件时效率更高
+
 ## 安装步骤
 
 ### 前端安装
@@ -50,7 +62,7 @@
 
 ## 免费使用
 
-本项目所有功能均可免费使用，访问地址：  
+本项目已部署到公网，所有功能均可免费使用，访问地址：  
 https://as.qimuinfo.top
 
 ## 支持项目
@@ -58,10 +70,15 @@ https://as.qimuinfo.top
 如果本项目对您有帮助，欢迎打赏支持：
 
 ### 微信支付
-![微信支付](src/assets/pay-weixin.jpg)
+<img src="src/assets/pay-weixin.jpg" width="150" height="150">
 
 ### 支付宝
-![支付宝](src/assets/pay-zhifubao.jpg)
+<img src="src/assets/pay-zhifubao.jpg" width="150" height="150">
 
 ### Ko-fi
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/your-ko-fi)
+
+
+### 其他
+
+您还可以逛逛我的官网 https://qimuinfo.top
