@@ -1,4 +1,6 @@
-export const particlesConfig = {
+import type { ISourceOptions } from "tsparticles-engine"
+
+export const particlesConfig: ISourceOptions = {
   background: {
     opacity: 0
   },

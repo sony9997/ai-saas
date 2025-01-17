@@ -66,7 +66,11 @@
             </div>
 
             <!-- 图片预览区域 -->
-            <div class="flex items-center justify-center border-2 border-dashed border-dark-500 rounded-lg min-h-[360px]">
+            <div 
+              class="flex items-center justify-center border-2 border-dashed border-dark-500 rounded-lg min-h-[360px] cursor-pointer" 
+              @click="generatedImage && showImagePreview(generatedImage)"
+              :class="{ 'hover:cursor-pointer': generatedImage }"
+            >
               <div v-if="loading" class="text-gray-900">
                 <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
                 <p>正在生成图片...</p>
@@ -85,6 +89,30 @@
         </div>
       </div>
     </PageLayout>
+  </div>
+
+  <!-- 图片预览Modal -->
+  <div 
+    v-if="previewImage"
+    class="fixed inset-0 bg-black/80 dark:bg-black/90 z-50 flex items-center justify-center p-4"
+    @click="closeImagePreview"
+  >
+    <div class="relative max-w-full max-h-full">
+      <img 
+        :src="previewImage" 
+        alt="预览图片"
+        class="max-w-full max-h-[90vh] object-contain"
+        @click.stop
+      />
+      <button 
+        class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
+        @click="closeImagePreview"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -109,6 +137,21 @@ const formData = ref({
 // 状态管理
 const loading = ref(false)
 const generatedImage = ref('')
+
+// 新增的图片预览功能
+const previewImage = ref('')
+
+// 显示图片预览
+const showImagePreview = (imageUrl: string) => {
+  if (imageUrl) {
+    previewImage.value = imageUrl
+  }
+}
+
+// 关闭图片预览
+const closeImagePreview = () => {
+  previewImage.value = ''
+}
 
 // 生成图片
 const generateImage = async () => {

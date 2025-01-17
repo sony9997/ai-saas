@@ -132,3 +132,6 @@ dist
 node_modules
 .env
 
+.vite
+dist/
+tsconfig.node.tsbuildinfo

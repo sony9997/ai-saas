@@ -328,17 +328,29 @@ import PageLayout from '@/components/layout/PageLayout.vue'
 import { Client } from "@gradio/client"
 
 const router = useRouter()
-const user = 'hed-1'
 
 // 状态管理
 const loading = ref(false)
 const promptText = ref('')
 const previewImage = ref('')
 const generatedImage = ref('')
-const saveGenerated = ref(false)
 
 // 图片数据
-const images = ref([
+interface ImageData {
+  preview: string
+  url: string
+  upload_file_id: string
+  transfer_method: string
+  file?: File // 使file成为可选属性
+}
+
+interface APIResponse {
+  data: Array<{
+    url: string
+  }>
+}
+
+const images = ref<ImageData[]>([
   { preview: '', url: '', upload_file_id: '', transfer_method: 'local_file' },
   { preview: '', url: '', upload_file_id: '', transfer_method: 'local_file' },
   { preview: '', url: '', upload_file_id: '', transfer_method: 'local_file' }
@@ -421,38 +433,23 @@ async function generateImage() {
     }
     
     // 调用API
-    const result = await client.predict("/generate_image", params)
+    const result = await client.predict("/generate_image", params) as APIResponse
     
     // 添加调试信息
     console.log('Generated image result:', result)
     console.log('Result data type:', typeof result.data)
     console.log('Result data:', result.data)
 
-    if (result.data && result.data.length > 0) {
-      generatedImage.value=result.data[0].url
+    if (result.data && Array.isArray(result.data) && result.data.length > 0) {
+      generatedImage.value = result.data[0].url
       console.log('Generated image URL:', generatedImage.value)
-    }else{
+    } else {
       console.error('Unexpected image data format:', result.data)
     }
   } catch (error) {
     console.error('Failed to generate image:', error)
   } finally {
     loading.value = false
-  }
-}
-
-// 处理图片上传
-async function handleImageUpload(event: Event, index: number) {
-  const input = event.target as HTMLInputElement
-  if (!input.files?.length) return
-  
-  const file = input.files[0]
-  images.value[index] = {
-    preview: URL.createObjectURL(file),
-    url: '',
-    upload_file_id: '',
-    transfer_method: 'local_file',
-    file // 保存File对象以便后续转换为blob
   }
 }
 
@@ -483,27 +480,6 @@ for (let i = 0; i < images.value.length; i++) {
       images.value[i].upload_file_id = ''
     }
   })
-}
-
-// 创建文件输入引用数组
-const imageInputRefs = ref<HTMLInputElement[]>([])
-
-// 处理图片上传按钮点击
-const handleUploadClick = (index: number) => {
-  imageInputRefs.value[index]?.click()
-}
-
-// 添加ref
-const outputImageRef = ref<HTMLElement | null>(null)
-
-// 滚动到输出图片
-const scrollToOutput = () => {
-  if (outputImageRef.value) {
-    outputImageRef.value.scrollIntoView({ 
-      behavior: 'smooth',
-      block: 'center'
-    })
-  }
 }
 
 // 拖放状态
@@ -594,6 +570,19 @@ const clearImage = (index: number) => {
     transfer_method: ''
   }
 }
+
+// 添加ref
+const outputImageRef = ref<HTMLElement | null>(null)
+
+// 滚动到输出图片
+const scrollToOutput = () => {
+  if (outputImageRef.value) {
+    outputImageRef.value.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'center'
+    })
+  }
+}
 </script>
 
 <style scoped>
@@ -631,4 +620,3 @@ const clearImage = (index: number) => {
   transition-duration: 200ms;
 }
 </style>
-

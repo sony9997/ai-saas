@@ -10,7 +10,15 @@ import {
 
 const router = useRouter()
 
-const features = [
+interface Feature {
+  title: string
+  description: string
+  icon: any
+  route?: string
+  link?: string
+}
+
+const features: Feature[] = [
   {
     title: '智能对话',
     description: '基于大语言模型的个性化对话助手，支持上下文理解、知识问答、情感交互等功能。',
@@ -37,7 +45,7 @@ const features = [
   }
 ]
 
-const handleNavigation = (feature) => {
+const handleNavigation = (feature: Feature) => {
   if (feature.link) {
     window.open(feature.link, '_blank')
   } else if (feature.route) {

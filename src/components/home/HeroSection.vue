@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue'
 import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 
 const stats = [

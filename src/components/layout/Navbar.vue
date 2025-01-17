@@ -2,18 +2,14 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/vue'
-import { Sun, Moon, Menu as MenuIcon, X } from 'lucide-vue-next'
+import { Sun, Moon, Menu as MenuIcon, X, Github } from 'lucide-vue-next'
 import { useTheme } from '@/composables/useTheme'
 import { useAuth } from '@/composables/useAuth'
 import { useNavigation } from '@/config/navigation'
-import { storeToRefs } from 'pinia'
 
 const { isDark, toggleTheme } = useTheme()
-const { logout } = useAuth()
 const router = useRouter()
-
-// 使用 storeToRefs 来保持响应性
-const { user } = storeToRefs(useAuth())
+const { user, logout } = useAuth()
 
 const { navigation } = useNavigation()
 
@@ -64,6 +60,15 @@ const handleLogout = async () => {
 
         <!-- Right Section -->
         <div class="flex items-center space-x-4">
+          <!-- Github Link -->
+          <a
+            href="https://github.com/sony9997/ai-saas"
+            target="_blank"
+            class="p-2 rounded-full hover:bg-gray-800 transition-colors duration-200"
+          >
+            <Github class="h-5 w-5 text-gray-300" />
+          </a>
+
           <!-- Theme Toggle -->
           <button
             @click="toggleTheme"

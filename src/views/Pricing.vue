@@ -51,7 +51,6 @@
 </template>
 
 <script setup lang="ts">
-import ParticlesBackground from '@/components/particles/ParticlesBackground.vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
 
 const tiers = [
