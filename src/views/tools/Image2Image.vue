@@ -267,11 +267,24 @@ import PageLayout from '@/components/layout/PageLayout.vue'
 const router = useRouter()
 const { t } = useI18n()
 
-// 表单数据
-const formData = ref({
+interface FormData {
+  prompt: string
+  baseModel: string
+  negative_prompt: string
+  strength: number
+  image: {
+    transfer_method: string
+    type: string
+    upload_file_id: string
+    url: string
+  }
+}
+
+const formData = ref<FormData>({
   prompt: '1girl',
   baseModel: '麦橘写实',
   negative_prompt: '',
+  strength: 0.75,
   image:{
     transfer_method: 'local_file',
     type: 'image',
@@ -430,6 +443,7 @@ const generateImage = async () => {
           baseModel: formData.value.baseModel,
           prompt: formData.value.prompt,
           negative_prompt: formData.value.negative_prompt,
+          strength: formData.value.strength,
           images: [formData.value.image]
         },
         response_mode: 'blocking',
