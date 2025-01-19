@@ -189,16 +189,31 @@ export default {
     customAmount: '自定义金额'
   },
   about: {
-    title: '关于我们',
-    subtitle: '认识我们的团队',
-    description: '我们致力于为用户提供最好的 AI 服务',
-    team: '团队介绍',
-    contact: '联系我们',
-    vision: '我们的愿景',
-    mission: '使命',
-    values: '价值观',
-    story: '我们的故事',
-    joinUs: '加入我们'
+    title: '关于我',
+    introduction: '你好！我是一名热爱技术的独立开发者。我喜欢探索新技术，开发有趣的项目，并与志同道合的朋友分享交流。这个网站就是我的一个尝试，希望能为大家带来一些有用且有趣的东西。',
+    whatImDoing: {
+      title: '我在做什么',
+      content: '我致力于开发简单易用的工具和应用，让AI技术能更好地服务于日常生活和工作。同时也在这里分享我的学习心得和技术积累，希望能与大家一起进步。'
+    },
+    expectation: {
+      title: '我的期待',
+      content: '希望通过这个平台，能认识更多对技术有热情的朋友。无论你是开发者还是普通用户，都欢迎和我交流，分享你的想法和建议。让我们一起探索技术的无限可能！'
+    },
+    philosophy: {
+      title: '我的理念',
+      items: [
+        '保持好奇心，不断学习',
+        '简单实用优于花哨复杂',
+        '乐于分享，共同成长',
+        '用技术服务生活'
+      ]
+    },
+    contact: {
+      title: '联系我',
+      content: '如果你有任何问题、建议或者合作想法，欢迎通过以下方式联系我：',
+      email: 'Email:',
+      website: '官网:'
+    }
   },
   auth: {
     loginTitle: '欢迎回来',
@@ -210,7 +225,9 @@ export default {
     noAccount: '还没有账号？',
     hasAccount: '已有账号？',
     registerNow: '立即注册',
-    loginNow: '立即登录'
+    loginNow: '立即登录',
+    registerSubtitle: '创建一个新的账号',
+    loginSubtitle: '登录到您的账号'
   },
   errors: {
     required: '此字段为必填项',

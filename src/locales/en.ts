@@ -166,32 +166,38 @@ export default {
   },
   donate: {
     title: 'Support Us',
-    subtitle: 'Help Us Keep Improving',
-    description: 'Your support drives us forward',
-    methods: {
-      wechat: 'WeChat Pay',
-      alipay: 'Alipay',
-      paypal: 'PayPal'
-    },
-    tiers: {
-      basic: 'Basic Support',
-      pro: 'Pro Support',
-      enterprise: 'Enterprise Support'
-    },
-    thanks: 'Thank you for your support!',
-    customAmount: 'Custom Amount'
+    description: 'We are committed to providing quality AI services. If you find our tools helpful, we welcome your support! Every contribution will help us do better.',
+    wechatPay: 'WeChat Pay',
+    alipay: 'Alipay',
+    kofi: 'Ko-fi',
+    qrCode: 'Payment QR Code'
   },
   about: {
-    title: 'About Us',
-    subtitle: 'Meet Our Team',
-    description: 'We are dedicated to providing the best AI services to our users',
-    team: 'Our Team',
-    contact: 'Contact Us',
-    vision: 'Our Vision',
-    mission: 'Mission',
-    values: 'Values',
-    story: 'Our Story',
-    joinUs: 'Join Us'
+    title: 'About Me',
+    introduction: 'Hello! I am an independent developer passionate about technology. I love exploring new technologies, developing interesting projects, and sharing with like-minded friends. This website is one of my attempts to bring something useful and interesting to everyone.',
+    whatImDoing: {
+      title: 'What I\'m Doing',
+      content: 'I am dedicated to developing simple and easy-to-use tools and applications, making AI technology better serve daily life and work. I also share my learning experiences and technical knowledge here, hoping to progress together with everyone.'
+    },
+    expectation: {
+      title: 'My Expectations',
+      content: 'I hope to meet more friends who are passionate about technology through this platform. Whether you\'re a developer or a regular user, you\'re welcome to communicate with me and share your thoughts and suggestions. Let\'s explore the endless possibilities of technology together!'
+    },
+    philosophy: {
+      title: 'My Philosophy',
+      items: [
+        'Stay curious, keep learning',
+        'Simple and practical over fancy and complex',
+        'Share willingly, grow together',
+        'Use technology to serve life'
+      ]
+    },
+    contact: {
+      title: 'Contact Me',
+      content: 'If you have any questions, suggestions, or ideas for collaboration, feel free to contact me through:',
+      email: 'Email:',
+      website: 'Website:'
+    }
   },
   auth: {
     loginTitle: 'Welcome Back',
@@ -203,7 +209,9 @@ export default {
     noAccount: 'Don\'t have an account?',
     hasAccount: 'Already have an account?',
     registerNow: 'Register Now',
-    loginNow: 'Login Now'
+    loginNow: 'Login Now',
+    registerSubtitle: 'Create a new account',
+    loginSubtitle: 'Login to your account' 
   },
   errors: {
     required: 'This field is required',
