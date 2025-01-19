@@ -178,13 +178,12 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAuthStore } from '@/stores/auth'
 import { supabase } from '@/config/supabase'
 
 const router = useRouter()
-const route = useRoute()
 const { t } = useI18n()
 const authStore = useAuthStore()
 
