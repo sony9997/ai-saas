@@ -173,20 +173,11 @@ export default {
   },
   donate: {
     title: '支持我们',
-    subtitle: '帮助我们持续改进',
     description: '您的支持是我们前进的动力',
-    methods: {
-      wechat: '微信支付',
-      alipay: '支付宝',
-      paypal: 'PayPal'
-    },
-    tiers: {
-      basic: '基础支持',
-      pro: '专业支持',
-      enterprise: '企业支持'
-    },
-    thanks: '感谢您的支持！',
-    customAmount: '自定义金额'
+    wechatPay: '微信支付',
+    alipay: '支付宝',
+    kofi: 'Ko-fi',
+    qrCode: '支付二维码'
   },
   about: {
     title: '关于我',
