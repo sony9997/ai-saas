@@ -111,7 +111,7 @@
             <div class="flex justify-center">
               <button
                 @click="generateImage"
-                class="py-2 px-8 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                class="py-2 px-8 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white rounded-lg transition-colors duration-200 disabled:cursor-not-allowed"
                 :disabled="!canGenerate || loading"
               >
                 {{ loading ? '生成中...' : '开始生成' }}
@@ -125,14 +125,18 @@
               @click="showImagePreview(generatedImage)"
             >
               <div class="w-full h-full flex items-center justify-center">
+                <div v-if="loading" class="text-gray-900 dark:text-gray-100">
+                  <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
+                  <p>正在生成图片...</p>
+                </div>
                 <img
-                  v-if="generatedImage"
+                  v-else-if="generatedImage"
                   :src="generatedImage"
                   alt="生成的图片"
                   class="w-full h-full object-contain"
                   @load="scrollToOutput"
                 />
-                <div v-else class="text-center text-gray-900 dark:text-gray-100">
+                <div v-else-if="!loading" class="text-center text-gray-900 dark:text-gray-100">
                   输出图片预览区域
                 </div>
               </div>
@@ -455,8 +459,7 @@ async function generateImage() {
 
 // 计算是否可以生成
 const canGenerate = computed(() => {
-  return promptText.value.trim() !== '' && 
-         images.value.some(img => img.preview || img.url)
+  return promptText.value.trim() !== ''
 })
 
 // 显示图片预览
