@@ -16,6 +16,9 @@ import Sing from '@/views/tools/Sing.vue'
 import FaceSwap from '@/views/tools/FaceSwap.vue'
 import UnifiedImage from '@/views/tools/UnifiedImage.vue'
 import Donate from '../views/Donate.vue'
+import ForgotPassword from '../views/auth/ForgotPassword.vue'
+import ResetPassword from '../views/auth/ResetPassword.vue'
+
 const router = createRouter({
   history: createWebHistory(),
   routes: [
@@ -106,6 +109,18 @@ const router = createRouter({
       meta: { requiresAuth: true }
     },
     {
+      path: '/forgot-password',
+      name: 'forgot-password',
+      component: ForgotPassword,
+      meta: { requiresGuest: true }
+    },
+    {
+      path: '/reset-password',
+      name: 'reset-password',
+      component: ResetPassword,
+      meta: { requiresGuest: true }
+    },
+    {
       path: '/donate',
       name: 'donate',
       component: Donate
@@ -119,10 +134,16 @@ router.beforeEach(async (to, _from, next) => {
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresGuest = to.matched.some(record => record.meta.requiresGuest)
 
+  // 如果是重置密码页面，且 URL 中包含 type=recovery，允许访问
+  if (to.path === '/reset-password' && window.location.href.includes('type=recovery')) {
+    next()
+    return
+  }
+
   if (requiresAuth && !session) {
     next('/login')
-  } else if (requiresGuest && session) {
-    next('/dashboard')
+  } else if (requiresGuest && session && to.path !== '/reset-password') {
+    next('/')
   } else {
     next()
   }

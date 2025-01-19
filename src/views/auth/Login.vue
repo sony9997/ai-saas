@@ -54,6 +54,17 @@ const handleSubmit = async (e: Event) => {
         {{ t('common.login') }}
       </AuthButton>
 
+      <div class="flex items-center justify-between mt-4">
+        <div class="text-sm">
+          <router-link
+            to="/forgot-password"
+            class="font-medium text-blue-600 hover:text-blue-500"
+          >
+            {{ t('auth.forgotPassword') }}
+          </router-link>
+        </div>
+      </div>
+
       <div class="text-center mt-4">
         <router-link to="/register" class="text-indigo-500 hover:text-indigo-600 text-sm">
           {{ t('auth.noAccount') }} {{ t('auth.registerNow') }}
