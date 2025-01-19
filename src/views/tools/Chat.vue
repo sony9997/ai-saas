@@ -11,6 +11,9 @@
           <div class="h-16 w-16 rounded-full bg-blue-500/10 animate-pulse"></div>
         </div>
       </div>
+      <div class="absolute mt-32 text-gray-600 dark:text-gray-300">
+        {{ t('common.loading') }}
+      </div>
     </div>
     
     <iframe
@@ -22,6 +25,7 @@
       allow="microphone"
       @load="loading = false"
       style="overflow: hidden;"
+      :title="t('chat.title')"
     >
     </iframe>
 
@@ -29,6 +33,7 @@
       class="absolute -top-4 left-6 p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
       @click="router.back()"
       v-if="$route.path !== '/tools'"
+      :title="t('common.back')"
     >
       <svg 
         xmlns="http://www.w3.org/2000/svg" 
@@ -49,9 +54,11 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { ref } from 'vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const loading = ref(true)
 </script>
 

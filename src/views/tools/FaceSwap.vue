@@ -1,12 +1,32 @@
 <template>
   <div class="relative min-h-screen bg-dark-800">
     <PageLayout>
+      <!-- 返回按钮 -->
+      <button 
+        class="absolute -top-4 left-6 p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
+        @click="router.back()"
+        v-if="$route.path !== '/tools'"
+      >
+        <svg 
+          xmlns="http://www.w3.org/2000/svg" 
+          width="20" 
+          height="20" 
+          viewBox="0 0 24 24" 
+          fill="none" 
+          stroke="currentColor" 
+          stroke-width="2" 
+          stroke-linecap="round" 
+          stroke-linejoin="round"
+        >
+          <path d="M19 12H5M12 19l-7-7 7-7"/>
+        </svg>
+      </button>
       <div class="container mx-auto px-4 py-12">
         <!-- 页面标题 -->
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-8 shadow-lg">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">AI 换脸</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">{{ t('faceSwap.title') }}</h1>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
-            上传两张图片，AI 将帮您完成换脸操作。
+            {{ t('faceSwap.description') }}
           </p>
         </div>
 
@@ -14,7 +34,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <!-- 源图片上传 -->
           <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">源图片</h2>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ t('faceSwap.sourceImage') }}</h2>
             <div class="relative">
               <input
                 type="file"
@@ -29,10 +49,10 @@
               >
                 <div v-if="!formData.sourceImage.url" class="text-center p-6">
                   <p class="text-gray-600 dark:text-gray-300">
-                    点击或拖拽上传图片
+                    {{ t('faceSwap.dragDrop') }}
                   </p>
                   <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    支持 JPG、PNG 格式
+                    {{ t('faceSwap.fileSupport') }}
                   </p>
                 </div>
                 <img 
@@ -47,7 +67,7 @@
 
           <!-- 目标图片上传 -->
           <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg">
-            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">目标图片</h2>
+            <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ t('faceSwap.targetImage') }}</h2>
             <div class="relative">
               <input
                 type="file"
@@ -62,10 +82,10 @@
               >
                 <div v-if="!formData.targetImage.url" class="text-center p-6">
                   <p class="text-gray-600 dark:text-gray-300">
-                    点击或拖拽上传图片
+                    {{ t('faceSwap.dragDrop') }}
                   </p>
                   <p class="text-sm text-gray-500 dark:text-gray-400 mt-2">
-                    支持 JPG、PNG 格式
+                    {{ t('faceSwap.fileSupport') }}
                   </p>
                 </div>
                 <img 
@@ -86,7 +106,7 @@
             :disabled="!canGenerate"
             class="px-8 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
-            开始生成
+            {{ t('faceSwap.startGenerate') }}
           </button>
         </div>
 
@@ -127,6 +147,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 interface ImageData {
   file: File | null
@@ -137,6 +159,10 @@ interface FormData {
   sourceImage: ImageData
   targetImage: ImageData
 }
+
+const { t } = useI18n()
+
+const router = useRouter()
 
 const loading = ref(false)
 const sourceImagePreview = ref(false)
@@ -199,4 +225,4 @@ const handleSubmit = async () => {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-</style> 
+</style>

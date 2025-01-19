@@ -7,6 +7,7 @@
           class="p-3 text-gray-100 dark:text-gray-200 bg-gray-700/80 dark:bg-dark-600/80 rounded-lg hover:bg-gray-600/90 dark:hover:bg-dark-500/90 transition-all duration-200 shadow-lg backdrop-blur-sm"
           @click="router.back()"
           v-if="$route.path !== '/tools'"
+          :title="t('common.back')"
         >
           <svg 
             xmlns="http://www.w3.org/2000/svg" 
@@ -26,7 +27,7 @@
 
       <div class="container mx-auto px-4 py-6">
         <div class=" bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">图像生成图像</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">{{ t('imageToImage.title') }}</h1>
           
           <div class="space-y-4">
             <!-- 图片上传和预览 -->
@@ -45,13 +46,14 @@
                   <template v-if="inputImagePreview">
                     <img
                       :src="inputImagePreview"
-                      alt="输入图片"
+                      :alt="t('imageToImage.sourceImage')"
                       class="w-full h-full object-contain"
                     />
                     <!-- 删除按钮 -->
                     <button 
                       class="absolute top-2 right-2 p-1.5 bg-gray-800/70 dark:bg-dark-600/70 hover:bg-gray-900/70 dark:hover:bg-dark-500/70 rounded-full text-white transition-all duration-200"
                       @click.stop="clearImage"
+                      :title="t('common.delete')"
                     >
                       <svg 
                         xmlns="http://www.w3.org/2000/svg" 
@@ -70,7 +72,7 @@
                     </button>
                   </template>
                   <div v-else class="text-center text-gray-900 dark:text-gray-100">
-                    <p>点击或拖放参考图片到此处</p>
+                    <p>{{ t('imageToImage.dragDrop') }}</p>
                   </div>
                 </div>
               </div>
@@ -83,30 +85,29 @@
                 <div class="w-full h-full flex items-center justify-center">
                   <div v-if="loading" class="text-gray-900 dark:text-gray-100">
                     <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
-                    <p>正在生成图片...</p>
+                    <p>{{ t('common.loading') }}</p>
                   </div>
                   <img
                     v-else-if="generatedImage"
                     :src="generatedImage"
-                    alt="生成的图片"
+                    :alt="t('imageToImage.generatedImage')"
                     class="w-full h-full object-contain"
                   />
                   <div v-else class="text-center text-gray-900 dark:text-gray-100">
-                    生成图片预览区域
+                    {{ t('imageToImage.previewArea') }}
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- 第二排:输入图片和风格选择 -->
-            <div class="grid grid-cols-1 gap-6">
-
+            <div class="grid grid-cols-2 gap-6">
               <!-- 风格选择 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">风格选择</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageToImage.style') }}</label>
                 <select 
                   v-model="formData.baseModel"
-                  class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="墨幽岚">墨幽岚</option>
                   <option value="美丽的现实主义">美丽的现实主义</option>
@@ -116,29 +117,43 @@
                   <option value="麦橘幻想">麦橘幻想</option>
                 </select>
               </div>
+
+              <!-- 效果强度 -->
+              <div>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageToImage.strength') }}</label>
+                <input
+                  type="range"
+                  v-model="formData.strength"
+                  min="0"
+                  max="1"
+                  step="0.1"
+                  class="w-full"
+                />
+                <div class="text-sm text-gray-500 mt-1">{{ formData.strength }}</div>
+              </div>
             </div>
 
             <!-- 第三排:提示词 -->
             <div class="grid grid-cols-2 gap-6">
               <!-- 正向提示词 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">正向提示词</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageToImage.prompt') }}</label>
                 <textarea
                   v-model="formData.prompt"
                   rows="4"
                   class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="请输入正向提示词..."
+                  :placeholder="t('imageToImage.promptPlaceholder')"
                 />
               </div>
 
               <!-- 反向提示词 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">反向提示词</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageToImage.negativePrompt') }}</label>
                 <textarea
                   v-model="formData.negative_prompt"
                   rows="4"
                   class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="请输入反向提示词..."
+                  :placeholder="t('imageToImage.negativePromptPlaceholder')"
                 />
               </div>
             </div>
@@ -147,10 +162,10 @@
             <div>
               <button
                 @click="generateImage"
-                :disabled="loading"
+                :disabled="loading || !inputImagePreview"
                 class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
               >
-                {{ loading ? '生成中...' : '生成图片' }}
+                {{ loading ? t('common.loading') : t('imageToImage.convert') }}
               </button>
             </div>
           </div>
@@ -166,13 +181,14 @@
         <div class="relative max-w-full max-h-full">
           <img 
             :src="previewImage" 
-            alt="预览图片"
+            :alt="t('imageToImage.generatedImage')"
             class="max-w-full max-h-[90vh] object-contain"
             @click.stop
           />
           <button 
             class="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors"
             @click="closeImagePreview"
+            :title="t('common.close')"
           >
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -184,7 +200,7 @@
       <!-- 图片上传对话框 -->
       <div v-if="showUploadDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 w-96" @click.stop>
-          <h3 class="text-lg font-semibold mb-4">上传图片</h3>
+          <h3 class="text-lg font-semibold mb-4">{{ t('imageToImage.uploadImage') }}</h3>
           
           <!-- 本地上传选项 -->
           <div 
@@ -195,7 +211,7 @@
               <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
               </svg>
-              <p class="mt-2">从本地选择图片</p>
+              <p class="mt-2">{{ t('imageToImage.uploadFromLocal') }}</p>
             </div>
           </div>
 
@@ -204,7 +220,7 @@
             <input 
               type="text" 
               v-model="imageUrl"
-              placeholder="输入图片URL"
+              placeholder="请输入图片URL"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
           </div>
@@ -214,15 +230,17 @@
             <button 
               class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
               @click="closeUploadDialog"
+              :title="t('common.cancel')"
             >
-              取消
+              {{ t('common.cancel') }}
             </button>
             <button 
               class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
               @click="confirmImageUpload"
               :disabled="!imageUrl"
+              :title="t('common.confirm')"
             >
-              确认
+              {{ t('common.confirm') }}
             </button>
           </div>
         </div>
@@ -243,9 +261,11 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import PageLayout from '@/components/layout/PageLayout.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 
 // 表单数据
 const formData = ref({
@@ -262,12 +282,10 @@ const formData = ref({
 
 // 状态管理
 const loading = ref(false)
+const isDragging = ref(false)
 const inputImagePreview = ref('')
 const generatedImage = ref('')
 const user = 'hed-1'
-
-// 添加新的状态变量
-const isDragging = ref(false)
 const showUploadDialog = ref(false)
 const imageUrl = ref('')
 const fileInput = ref<HTMLInputElement | null>(null)
@@ -394,7 +412,7 @@ watch(() => formData.value.image.url, (newUrl) => {
 // 生成图片
 const generateImage = async () => {
   if (!inputImagePreview.value) {
-    alert('请先上传图片或输入图片URL')
+    alert(t('errors.noImage'))
     return
   }
 
@@ -428,7 +446,7 @@ const generateImage = async () => {
     generatedImage.value = imageUrl
   } catch (error) {
     console.error('生成图片失败:', error)
-    alert('生成图片失败,请重试')
+    alert(t('errors.networkError'))
   } finally {
     loading.value = false
   }
