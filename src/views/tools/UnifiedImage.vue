@@ -357,7 +357,7 @@ const images = ref<ImageData[]>([
 ])
 
 // 参数配置
-const numericParameters = ref([
+const numericParameters = computed(() => [
   { name: 'height', label: t('unifiedImage.height'), value: 1024, min: 128, max: 2048, step: 64 },
   { name: 'width', label: t('unifiedImage.width'), value: 1024, min: 128, max: 2048, step: 64 },
   { name: 'guidance_scale', label: t('unifiedImage.guidanceScale'), value: 2.5, min: 1, max: 5, step: 0.1 },

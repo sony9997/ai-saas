@@ -5,10 +5,10 @@
         <!-- 标题区域 -->
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-12 shadow-lg">
           <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-6">
-            支持我们
+            {{ t('donate.title') }}
           </h1>
           <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">
-            我们致力于提供优质的AI服务。如果您觉得我们的工具对您有帮助，欢迎您的支持！您的每一份贡献都将帮助我们做得更好。
+            {{ t('donate.description') }}
           </p>
         </div>
 
@@ -17,10 +17,10 @@
           <!-- 微信支付 -->
           <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg">
             <div class="flex flex-col items-center">
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">微信支付</h2>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ t('donate.wechatPay') }}</h2>
               <div class="w-96 h-96 bg-white p-2 rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                    @click="showImage('weixin')">
-                <img src="@/assets/pay-weixin.jpg" alt="微信支付" class="w-full h-full object-contain" />
+                <img src="@/assets/pay-weixin.jpg" :alt="t('donate.wechatPay')" class="w-full h-full object-contain" />
               </div>
             </div>
           </div>
@@ -28,10 +28,10 @@
           <!-- 支付宝 -->
           <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg">
             <div class="flex flex-col items-center">
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">支付宝</h2>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ t('donate.alipay') }}</h2>
               <div class="w-96 h-96 bg-white p-2 rounded-lg mb-4 cursor-pointer hover:scale-105 transition-transform"
                    @click="showImage('zhifubao')">
-                <img src="@/assets/pay-zhifubao.jpg" alt="支付宝" class="w-full h-full object-contain" />
+                <img src="@/assets/pay-zhifubao.jpg" :alt="t('donate.alipay')" class="w-full h-full object-contain" />
               </div>
             </div>
           </div>
@@ -39,9 +39,9 @@
           <!-- Ko-fi -->
           <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-6 shadow-lg">
             <div class="flex flex-col items-center justify-center h-full">
-              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">Ko-fi</h2>
+              <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-4">{{ t('donate.kofi') }}</h2>
               <a href="https://ko-fi.com/sony9997" target="_blank" class="w-96 h-96">
-                <img src="@/assets/pay-kofi.webp" alt="ko-fi" class="w-full h-full object-contain" />
+                <img src="@/assets/pay-kofi.webp" :alt="t('donate.kofi')" class="w-full h-full object-contain" />
               </a>
             </div>
           </div>
@@ -53,7 +53,7 @@
              @click="showModal = false">
           <img :src="currentImage" 
                class="max-w-[90vw] max-h-[90vh] object-contain"
-               alt="支付二维码" />
+               :alt="t('donate.qrCode')" />
         </div>
       </div>
     </PageLayout>
@@ -63,6 +63,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const showModal = ref(false)
 const currentImage = ref('')
@@ -80,4 +83,4 @@ const showImage = (type: 'weixin' | 'zhifubao') => {
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
-</style> 
+</style>
