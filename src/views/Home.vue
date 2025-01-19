@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
 import PageLayout from '@/components/layout/PageLayout.vue'
 import { useRouter } from 'vue-router'
 import {
@@ -8,42 +10,46 @@ import {
   ChartBarIcon
 } from '@heroicons/vue/24/outline'
 
+const { t } = useI18n()
 const router = useRouter()
 
 interface Feature {
-  title: string
-  description: string
+  key: string
   icon: any
   route?: string
   link?: string
 }
 
-const features: Feature[] = [
+const featuresList: Feature[] = [
   {
-    title: '智能对话',
-    description: '基于大语言模型的个性化对话助手，支持上下文理解、知识问答、情感交互等功能。',
+    key: 'chat',
     icon: ChatBubbleBottomCenterTextIcon,
     route: '/tools/chat'
   },
   {
-    title: '内容创作',
-    description: '智能文本生成与处理，支持文章写作、内容润色、多语言翻译等创作需求。',
+    key: 'contentCreation',
     icon: DocumentTextIcon,
     route: '/tools'
   },
   {
-    title: 'AI绘画',
-    description: '先进的图像生成与编辑能力，支持文生图、图生图、风格迁移等多种创作模式。',
+    key: 'aiPainting',
     icon: PhotoIcon,
     route: '/tools/unified-image'
   },
   {
-    title: '开放API',
-    description: '提供标准化的API接口，轻松将AI能力集成到您的应用中。更多API服务请访问琦木科技。',
+    key: 'openApi',
     icon: ChartBarIcon,
     link: 'https://qimuinfo.top/products/api/'
   }
 ]
+
+const features = computed(() => 
+  featuresList.map(feature => ({
+    ...feature,
+    title: t(`${feature.key}.title`),
+    description: t(`${feature.key}.description`)
+  }))
+)
 
 const handleNavigation = (feature: Feature) => {
   if (feature.link) {
@@ -61,32 +67,31 @@ const handleNavigation = (feature: Feature) => {
         <!-- Hero Section -->
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-8 mb-16 shadow-lg">
           <h1 class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 leading-tight">
-            个人AI助手与创作平台
+            {{ t('home.title') }}
           </h1>
           <p class="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed max-w-3xl">
-            为个人用户打造的一站式AI服务平台。无论是日常对话、内容创作还是图像生成，
-            都能以简单直观的方式使用先进的AI技术，释放您的创造力。
+            {{ t('home.description') }}
           </p>
           <div class="flex flex-wrap gap-4">
             <router-link 
               to="/tools"
               class="inline-flex items-center px-6 py-3 rounded-lg bg-gradient-to-r from-indigo-600 to-blue-500 hover:from-indigo-700 hover:to-blue-600 text-white font-semibold transition duration-300 ease-in-out transform hover:-translate-y-0.5"
             >
-              开始体验
+              {{ t('home.tryNow') }}
             </router-link>
             <a 
               href="https://qimuinfo.top/products/api/" 
               target="_blank"
               class="inline-flex items-center px-6 py-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white font-semibold transition duration-300 ease-in-out transform hover:-translate-y-0.5"
             >
-              API服务
+              {{ t('home.learnMore') }}
             </a>
           </div>
         </div>
 
         <!-- Features Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div v-for="feature in features" :key="feature.title" 
+          <div v-for="feature in features" :key="feature.key" 
                :class="['backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-xl p-8 shadow-lg hover:shadow-2xl transition duration-300 ease-in-out transform hover:-translate-y-1 group cursor-pointer']"
                @click="handleNavigation(feature)">
             <div class="flex flex-col items-center text-center">

@@ -6,7 +6,10 @@ import { Sun, Moon, Menu as MenuIcon, X, Github } from 'lucide-vue-next'
 import { useTheme } from '@/composables/useTheme'
 import { useAuth } from '@/composables/useAuth'
 import { useNavigation } from '@/config/navigation'
+import { useI18n } from 'vue-i18n'
+import LanguageSwitch from '@/components/LanguageSwitch.vue'
 
+const { t } = useI18n()
 const { isDark, toggleTheme } = useTheme()
 const router = useRouter()
 const { user, logout } = useAuth()
@@ -42,7 +45,7 @@ const handleLogout = async () => {
         <!-- Logo -->
         <div class="flex-shrink-0">
           <router-link to="/" class="text-2xl font-bold bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent">
-            AI-SaaS
+            {{ t('home.title') }}
           </router-link>
         </div>
 
@@ -54,12 +57,15 @@ const handleLogout = async () => {
             :to="item.href"
             class="text-gray-300 hover:text-purple-400 px-3 py-2 text-sm font-medium transition-colors duration-200"
           >
-            {{ item.name }}
+            {{ t(`nav.${item.name}`) }}
           </router-link>
         </div>
 
         <!-- Right Section -->
         <div class="flex items-center space-x-4">
+          <!-- Language Switch -->
+          <LanguageSwitch />
+          
           <!-- Github Link -->
           <a
             href="https://github.com/sony9997/ai-saas"
@@ -85,13 +91,13 @@ const handleLogout = async () => {
                 to="/login"
                 class="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
               >
-                登录
+                {{ t('common.login') }}
               </router-link>
               <router-link
                 to="/register"
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
               >
-                免费注册
+                {{ t('common.signup') }}
               </router-link>
             </template>
 
@@ -100,56 +106,35 @@ const handleLogout = async () => {
                 @click="handleLogout"
                 class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-purple-600 hover:bg-purple-700 transition-colors duration-200"
               >
-                退出登录
+                {{ t('common.logout') }}
               </button>
             </template>
           </div>
 
           <!-- Mobile menu button -->
-          <DisclosureButton class="md:hidden inline-flex items-center justify-center p-2 rounded-md text-gray-300 hover:bg-gray-800">
-            <MenuIcon v-if="!open" class="h-6 w-6" />
-            <X v-else class="h-6 w-6" />
-          </DisclosureButton>
+          <div class="md:hidden">
+            <DisclosureButton class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-800 focus:outline-none">
+              <span class="sr-only">Open main menu</span>
+              <MenuIcon v-if="!open" class="block h-6 w-6" aria-hidden="true" />
+              <X v-else class="block h-6 w-6" aria-hidden="true" />
+            </DisclosureButton>
+          </div>
         </div>
       </div>
+
+      <!-- Mobile menu -->
+      <DisclosurePanel class="md:hidden">
+        <div class="px-2 pt-2 pb-3 space-y-1">
+          <router-link
+            v-for="item in navigation"
+            :key="item.name"
+            :to="item.href"
+            class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+          >
+            {{ t(`nav.${item.name}`) }}
+          </router-link>
+        </div>
+      </DisclosurePanel>
     </div>
-
-    <!-- Mobile menu -->
-    <DisclosurePanel class="md:hidden">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <router-link
-          v-for="item in navigation"
-          :key="item.name"
-          :to="item.href"
-          class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
-        >
-          {{ item.name }}
-        </router-link>
-
-        <!-- Mobile Auth Buttons -->
-        <template v-if="!isLoggedIn">
-          <router-link
-            to="/login"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
-          >
-            登录
-          </router-link>
-          <router-link
-            to="/register"
-            class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
-          >
-            注册
-          </router-link>
-        </template>
-        <template v-else>
-          <button
-            @click="handleLogout"
-            class="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-800"
-          >
-            退出登录
-          </button>
-        </template>
-      </div>
-    </DisclosurePanel>
   </Disclosure>
 </template>

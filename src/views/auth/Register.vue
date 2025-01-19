@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuth } from '@/composables/useAuth'
 import AuthLayout from '@/components/auth/AuthLayout.vue'
 import AuthHeader from '@/components/auth/AuthHeader.vue'
@@ -8,6 +9,7 @@ import AuthInput from '@/components/auth/AuthInput.vue'
 import AuthButton from '@/components/auth/AuthButton.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const { register, loading, error } = useAuth()
 
 const email = ref('')
@@ -19,7 +21,7 @@ const handleSubmit = async (e: Event) => {
   e.preventDefault()
   
   if (password.value !== confirmPassword.value) {
-    validationError.value = '两次输入的密码不一致'
+    validationError.value = t('errors.passwordMismatch')
     return
   }
   
@@ -34,8 +36,8 @@ const handleSubmit = async (e: Event) => {
 <template>
   <AuthLayout>
     <AuthHeader
-      title="创建账户"
-      subtitle="开始您的 AI 之旅"
+      :title="t('auth.registerTitle')"
+      :subtitle="t('auth.registerSubtitle')"
     />
     
     <form @submit="handleSubmit" class="mt-8 space-y-6">
@@ -43,7 +45,7 @@ const handleSubmit = async (e: Event) => {
         <AuthInput
           v-model="email"
           type="email"
-          label="邮箱地址"
+          :label="t('auth.emailLabel')"
           autocomplete="email"
           required
         />
@@ -51,7 +53,7 @@ const handleSubmit = async (e: Event) => {
         <AuthInput
           v-model="password"
           type="password"
-          label="密码"
+          :label="t('auth.passwordLabel')"
           autocomplete="new-password"
           required
         />
@@ -59,7 +61,7 @@ const handleSubmit = async (e: Event) => {
         <AuthInput
           v-model="confirmPassword"
           type="password"
-          label="确认密码"
+          :label="t('auth.confirmPassword')"
           autocomplete="new-password"
           required
         />
@@ -70,19 +72,16 @@ const handleSubmit = async (e: Event) => {
       </div>
 
       <div v-if="error" class="text-red-400 text-sm text-center">
-        {{ error }}
+        {{ t('errors.registerFailed') }}
       </div>
 
       <AuthButton type="submit" :loading="loading">
-        {{ loading ? '注册中...' : '注册' }}
+        {{ t('common.signup') }}
       </AuthButton>
 
-      <div class="text-center">
-        <router-link
-          to="/login"
-          class="text-sm text-gray-300 hover:text-white"
-        >
-          已有账户？立即登录
+      <div class="text-center mt-4">
+        <router-link to="/login" class="text-indigo-500 hover:text-indigo-600 text-sm">
+          {{ t('auth.hasAccount') }} {{ t('auth.loginNow') }}
         </router-link>
       </div>
     </form>

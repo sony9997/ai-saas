@@ -6,18 +6,14 @@ export const useNavigation = () => {
   
   const navigation = computed(() => {
     const publicRoutes = [
-      { name: '首页', href: '/' },
-      { name: '工具', href: '/tools' },
-      // { name: '文档', href: '/docs' },
-      // { name: '定价', href: '/pricing' },
-      // { name: '新闻', href: '/news' },
-      { name: '捐赠', href: '/donate' },
-      { name: '关于', href: '/about' },
+      { name: 'home', href: '/' },
+      { name: 'tools', href: '/tools' },
+      // { name: 'docs', href: '/docs' },
+      // { name: 'pricing', href: '/pricing' },
+      // { name: 'news', href: '/news' },
+      { name: 'donate', href: '/donate' },
+      { name: 'about', href: '/about' },
     ]
-
-    // const privateRoutes = [
-    //   { name: '仪表盘', href: '/dashboard' }
-    // ]
 
     return user.value ? [...publicRoutes] : publicRoutes
   })
