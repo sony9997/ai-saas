@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { useAuth } from '@/composables/useAuth'
 import AuthLayout from '@/components/auth/AuthLayout.vue'
 import AuthHeader from '@/components/auth/AuthHeader.vue'
@@ -8,6 +9,7 @@ import AuthInput from '@/components/auth/AuthInput.vue'
 import AuthButton from '@/components/auth/AuthButton.vue'
 
 const router = useRouter()
+const { t } = useI18n()
 const { login, loading, error } = useAuth()
 
 const email = ref('')
@@ -25,39 +27,36 @@ const handleSubmit = async (e: Event) => {
 <template>
   <AuthLayout>
     <AuthHeader
-      title="欢迎回来"
-      subtitle="登录您的账户"
+      :title="t('auth.loginTitle')"
+      :subtitle="t('auth.loginSubtitle')"
     />
     <form @submit="handleSubmit" class="mt-8 space-y-6">
       <div class="space-y-4">
         <AuthInput
           v-model="email"
           type="email"
-          label="邮箱地址"
+          :label="t('auth.emailLabel')"
           required
         />
         <AuthInput
           v-model="password"
           type="password"
-          label="密码"
+          :label="t('auth.passwordLabel')"
           required
         />
       </div>
 
       <div v-if="error" class="text-red-400 text-sm text-center">
-        {{ error }}
+        {{ t('errors.loginFailed') }}
       </div>
 
       <AuthButton type="submit" :loading="loading">
-        {{ loading ? '登录中...' : '登录' }}
+        {{ t('common.login') }}
       </AuthButton>
 
-      <div class="text-center">
-        <router-link
-          to="/register"
-          class="text-sm text-gray-300 hover:text-white"
-        >
-          还没有账户？立即注册
+      <div class="text-center mt-4">
+        <router-link to="/register" class="text-indigo-500 hover:text-indigo-600 text-sm">
+          {{ t('auth.noAccount') }} {{ t('auth.registerNow') }}
         </router-link>
       </div>
     </form>
