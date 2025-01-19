@@ -26,18 +26,17 @@
 
       <div class="container mx-auto px-4 py-6">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6 h-full">
-          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">统一图像处理</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">{{ t('unifiedImage.title') }}</h1>
           <div class="text-gray-700 dark:text-gray-300 mb-6 space-y-3">
+            <p>{{ t('unifiedImage.description') }}</p>
+            <p></p>
             <p>
-              本模块是基于OmniGen模型开发的，OmniGen是一个统一的图像生成模型，可用于执行各种任务，包括但不限于文本到图像生成、主题驱动生成、身份保留生成和图像条件生成。
+              {{ t('unifiedImage.modelDescription1') }}<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>{{ t('unifiedImage.modelDescription2') }}<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_1|&gt;</code>{{ t('unifiedImage.modelDescription3') }}<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_2|&gt;</code>）
+              {{ t('unifiedImage.modelDescription4') }}
             </p>
             <p>
-              对于多模式图像生成，您应该将字符串作为提示传递，将图像路径列表作为input_images传递。提示中的占位符应采用<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>的格式（对于第一幅图像，占位符为<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_1|&gt;</code>。对于第二幅图像，占位为<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;|image_2|&gt;</code>）。
-              另外，提示词请使用英文。
-            </p>
-            <p>
-              例如，使用一个女人的图像来生成一个新的图像：<br>
-              提示="A woman holds a bouquet of flowers and faces the camera. The woman is <code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_1|&gt;&lt;/img&gt;</code>."
+              {{ t('unifiedImage.example') }}<br>
+              {{ t('unifiedImage.examplePrompt') }}="A woman holds a bouquet of flowers and faces the camera. The woman is <code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_1|&gt;&lt;/img&gt;</code>."
             </p>
           </div>
           <div class="space-y-4">
@@ -58,7 +57,7 @@
                     <template v-if="image.preview">
                       <img
                         :src="image.preview"
-                        :alt="`图片 ${index + 1}`"
+                        :alt="`Image ${index + 1}`"
                         class="w-full h-full object-contain"
                       />
                       <!-- 删除按钮 -->
@@ -83,7 +82,7 @@
                       </button>
                     </template>
                     <div v-else class="text-center text-gray-900 dark:text-gray-100">
-                      <p>点击或拖放图片到此处</p>
+                      <p>{{ t('unifiedImage.dragDrop') }}</p>
                     </div>
                   </div>
                 </div>
@@ -93,30 +92,24 @@
             <!-- 提示文本输入 -->
             <div class="w-full">
               <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">
-                提示词
-                <span class="text-gray-500 dark:text-gray-400 font-normal">
-                  (使用<code class="bg-gray-100 dark:bg-dark-600 px-1 rounded">&lt;img&gt;&lt;|image_*|&gt;&lt;/img&gt;</code>表示第*张输入图片)
-                </span>
+                {{ t('unifiedImage.prompt') }}
               </label>
               <textarea
                 v-model="promptText"
-                rows="3"
-                class="w-full px-3 py-2 bg-white dark:bg-dark-600 border border-gray-300 dark:border-dark-500 rounded-lg text-gray-900 dark:text-gray-100 focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none overflow-y-auto"
-                placeholder="输入提示文本，使用<img></img>表示输入图片"
-                style="min-height: 80px; max-height: 120px;"
-              ></textarea>
+                rows="4"
+                class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                :placeholder="t('unifiedImage.promptPlaceholder')"
+              />
             </div>
 
             <!-- 生成按钮 -->
-            <div class="flex justify-center">
-              <button
-                @click="generateImage"
-                class="py-2 px-8 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 text-white rounded-lg transition-colors duration-200 disabled:cursor-not-allowed"
-                :disabled="!canGenerate || loading"
-              >
-                {{ loading ? '生成中...' : '开始生成' }}
-              </button>
-            </div>
+            <button
+              @click="generateImage"
+              :disabled="loading || !canGenerate"
+              class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+            >
+              {{ loading ? t('unifiedImage.generating') : t('unifiedImage.startGenerate') }}
+            </button>
 
             <!-- 生成结果预览 -->
             <div 
@@ -127,7 +120,7 @@
               <div class="w-full h-full flex items-center justify-center">
                 <div v-if="loading" class="text-gray-900 dark:text-gray-100">
                   <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
-                  <p>正在生成图片...</p>
+                  <p>{{ t('unifiedImage.generating') }}</p>
                 </div>
                 <img
                   v-else-if="generatedImage"
@@ -137,7 +130,7 @@
                   @load="scrollToOutput"
                 />
                 <div v-else-if="!loading" class="text-center text-gray-900 dark:text-gray-100">
-                  输出图片预览区域
+                  {{ t('unifiedImage.outputPreview') }}
                 </div>
               </div>
             </div>
@@ -168,7 +161,7 @@
               <div class="col-span-2 space-y-4 mt-4">
                 <div class="space-y-2">
                   <div class="flex justify-between items-center">
-                    <label class="text-black dark:text-white">Seed</label>
+                    <label class="text-black dark:text-white">{{ t('unifiedImage.seed') }}</label>
                     <div class="flex items-center space-x-2">
                       <input 
                         type="number" 
@@ -200,7 +193,7 @@
                       v-model="randomizeSeed"
                       class="w-4 h-4"
                     >
-                    <label class="text-black dark:text-white">Randomize seed</label>
+                    <label class="text-black dark:text-white">{{ t('unifiedImage.randomizeSeed') }}</label>
                   </div>
                 </div>
               </div>
@@ -209,7 +202,7 @@
               <div class="col-span-2 space-y-6 mt-4">
                 <div class="space-y-2">
                   <div class="flex justify-between items-center">
-                    <label class="text-black dark:text-white">最大输入图片尺寸</label>
+                    <label class="text-black dark:text-white">{{ t('unifiedImage.maxInputImageSize') }}</label>
                     <input 
                       type="number" 
                       v-model="maxInputImageSize"
@@ -233,9 +226,9 @@
                       v-model="separateCfgInfer"
                       class="w-4 h-4"
                     >
-                    <label class="text-black dark:text-white">使用单独的推理过程</label>
+                    <label class="text-black dark:text-white">{{ t('unifiedImage.separateCfgInfer') }}</label>
                   </div>
-                  <p class="text-sm text-gray-500 dark:text-gray-300">对不同的引导使用单独的推理过程，这将减少内存消耗</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-300">{{ t('unifiedImage.separateCfgInferDescription') }}</p>
 
                   <div class="flex items-center space-x-2">
                     <input 
@@ -243,9 +236,9 @@
                       v-model="useInputSizeAsOutput"
                       class="w-4 h-4"
                     >
-                    <label class="text-black dark:text-white">使用输入图片尺寸作为输出尺寸</label>
+                    <label class="text-black dark:text-white">{{ t('unifiedImage.useInputSizeAsOutput') }}</label>
                   </div>
-                  <p class="text-sm text-gray-500 dark:text-gray-300">自动调整输出图片尺寸以匹配输入图片，有助于提升性能</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-300">{{ t('unifiedImage.useInputSizeAsOutputDescription') }}</p>
                 </div>
               </div>
             </div>
@@ -269,7 +262,7 @@
       <!-- 上传对话框 -->
       <div v-if="showUploadDialog" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg p-6 w-96" @click.stop>
-          <h3 class="text-lg font-semibold mb-4">上传图片</h3>
+          <h3 class="text-lg font-semibold mb-4">{{ t('unifiedImage.uploadDialogTitle') }}</h3>
           
           <!-- 本地上传选项 -->
           <div 
@@ -280,7 +273,7 @@
               <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
               </svg>
-              <p class="mt-2">从本地选择图片</p>
+              <p class="mt-2">{{ t('unifiedImage.uploadFromLocal') }}</p>
             </div>
           </div>
 
@@ -289,7 +282,7 @@
             <input 
               type="text" 
               v-model="imageUrl"
-              placeholder="输入图片URL"
+              :placeholder="t('unifiedImage.uploadFromUrl')"
               class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             >
           </div>
@@ -300,14 +293,14 @@
               class="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg"
               @click="closeUploadDialog"
             >
-              取消
+              {{ t('unifiedImage.cancel') }}
             </button>
             <button 
               class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
               @click="confirmImageUpload"
               :disabled="!imageUrl"
             >
-              确认
+              {{ t('unifiedImage.confirm') }}
             </button>
           </div>
         </div>
@@ -330,6 +323,9 @@ import { ref, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import PageLayout from '@/components/layout/PageLayout.vue'
 import { Client } from "@gradio/client"
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const router = useRouter()
 
@@ -362,11 +358,11 @@ const images = ref<ImageData[]>([
 
 // 参数配置
 const numericParameters = ref([
-  { name: 'height', label: '高度', value: 1024, min: 128, max: 2048, step: 64 },
-  { name: 'width', label: '宽度', value: 1024, min: 128, max: 2048, step: 64 },
-  { name: 'guidance_scale', label: '引导比例', value: 2.5, min: 1, max: 5, step: 0.1 },
-  { name: 'img_guidance_scale', label: '图像引导比例', value: 1.6, min: 1, max: 2, step: 0.1 },
-  { name: 'inference_steps', label: '推理步数', value: 50, min: 1, max: 100, step: 1 }
+  { name: 'height', label: t('unifiedImage.height'), value: 1024, min: 128, max: 2048, step: 64 },
+  { name: 'width', label: t('unifiedImage.width'), value: 1024, min: 128, max: 2048, step: 64 },
+  { name: 'guidance_scale', label: t('unifiedImage.guidanceScale'), value: 2.5, min: 1, max: 5, step: 0.1 },
+  { name: 'img_guidance_scale', label: t('unifiedImage.imgGuidanceScale'), value: 1.6, min: 1, max: 2, step: 0.1 },
+  { name: 'inference_steps', label: t('unifiedImage.inferenceSteps'), value: 50, min: 1, max: 100, step: 1 }
 ])
 
 // 新增参数
