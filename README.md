@@ -1,84 +1,131 @@
-# AI SaaS 项目
+<h1 align="center">AI SaaS</h1>
 
-## 技术架构
+<p align="center">
+    <a href="https://github.com/sony9997/ai-saas">
+        <img alt="Build" src="https://img.shields.io/badge/Project%20Page-AI%20SaaS-yellow">
+    </a>
+    <a href="https://as.qimuinfo.top/">
+        <img alt="License" src="https://img.shields.io/badge/Demo-🤗-lightblue">
+    </a>
+    <a href="https://qimuinfo.top">
+        <img alt="Build" src="https://img.shields.io/badge/Official%20Website-🤗-yellow">
+    </a>    
+</p>
 
-### 前端技术栈
+<h4 align="center">
+    <p>
+        <a href=#technical-architecture>Technical Architecture</a> |
+        <a href=#development-process>Development Process</a> |
+        <a href=#installation>Installation</a> |
+        <a href=#key-features>Key Features</a> |
+        <a href=#free-usage>Free Usage</a> |
+        <a href="#license">License</a> |
+        <a href="#support">Support</a>
+    <p>
+</h4>
+
+<div align="center">
+
+[🌟 English](README.md) | [🌏 中文](README_CN.md)
+
+<img src="./public/favicon.svg" alt="Qimu Logo" width="120"/>
+
+</div>
+
+## Technical Architecture
+
+### Frontend Stack
+
 - Vue 3 + Vite + TypeScript
-- TailwindCSS 样式框架
-- Particles.js 粒子效果 ([GitHub](https://github.com/VincentGarreau/particles.js))
-- Vue Router 路由管理
-- Pinia 状态管理
+- TailwindCSS for styling
+- Particles.js for particle effects ([GitHub](https://github.com/VincentGarreau/particles.js))
+- Vue Router for routing
+- Pinia for state management
 
-### 后端服务
-- 使用Supabase作为后端即服务(BaaS)，提供：
-  - 用户认证
-  - 数据库存储
-  - 文件存储
-  - 实时订阅
+### Backend Services
+
+- Supabase as Backend-as-a-Service (BaaS), providing:
+  - User authentication
+  - Database storage
+  - File storage
+  - Real-time subscriptions
 - Supabase GitHub: https://github.com/supabase/supabase
+- Using [Dify](https://github.com/langgenius/dify) for AI chat, text-to-image, and image-to-image backend services. For more information, refer to [Dify Documentation](https://docs.dify.ai/)
+  - AI chat application description file is located at [/res/chat.yml](./res/chat.yml)
+  - Text-to-image and image-to-image applications are developed based on Dify's Comfyui component, with description file at [/res/Comfyui.yml](./res/Comfyui.yml)
+- Unified image processing is developed using OmniGen model's Gradio API. For more information, refer to [OmniGen GitHub](https://github.com/VectorSpaceLab/OmniGen)
 
-## 开发过程
+## Development Process
 
-本项目采用以下开发流程：
+This project follows the development workflow below:
 
-1. 使用bolt.new快速构建项目基础框架
-2. 使用Cursor + Cline进行代码优化和功能开发：
-   - Cline使用DeepSeek模型进行多文件协同开发
-   - Cursor用于单个功能/文件的优化和开发
-3. 开发经验总结：
-   - Cline + DeepSeek在处理涉及多个文件的复杂需求时表现优异
-   - Cursor在优化单个功能或文件时效率更高
+1. Used bolt.new to quickly build the project's basic framework
+2. Used Cursor + Cline for code optimization and feature development:
+   - Cline uses the DeepSeek model for multi-file collaborative development
+   - Cursor is used for optimizing and developing individual features/files
+3. Development experience summary:
+   - Cline + DeepSeek excels at handling complex requirements involving multiple files
+   - Cursor is more efficient for optimizing individual features or files
 
-## 安装步骤
+## Installation
 
-### 前端安装
-1. 克隆项目
+### Frontend Installation
+
+1. Clone the project
+
    ```bash
    git clone https://github.com/your-repo/ai-saas.git
    cd ai-saas
    ```
+2. Install dependencies
 
-2. 安装依赖
    ```bash
    npm install
    ```
+3. Configure environment variables
+   Copy `.env.example` to `.env` and fill in Supabase configuration
+4. Start development server
 
-3. 配置环境变量
-   复制`.env.example`文件为`.env`，并填写Supabase配置
-
-4. 启动开发服务器
    ```bash
    npm run dev
    ```
 
-## 主要功能
+## Key Features
 
-- **AI聊天**：基于GPT的智能对话
-- **文生图**：根据文字描述生成图像
-- **图生图**：图像风格转换
-- **人脸替换**：AI换脸功能
-- **AI唱歌**：文字转歌声
-- **统一图像处理**：集成多种图像处理功能
+- **AI Chat**: Intelligent conversations based on GPT
+- **Text-to-Image**: Generate images from text descriptions
+- **Image-to-Image**: Image style transfer
+- **Face Swap**: AI face replacement functionality
+- **AI Singing**: Text-to-song conversion
+- **Unified Image Processing**: Integrated multiple image processing features
 
-## 免费使用
+## Free Usage
 
-本项目已部署到公网，所有功能均可免费使用，访问地址：  
+This project is deployed online and all features are available for free at:
 https://as.qimuinfo.top
 
-## 支持项目
+## License
+This repository is under the [MIT License](LICENSE).
 
-如果本项目对您有帮助，欢迎打赏支持：
+## Support
 
-### 微信支付
+If this project has been helpful to you, feel free to show your support:
+
+### WeChat Pay (Chinese Payment Method)
+
 <img src="src/assets/pay-weixin.jpg" width="150" height="150">
 
-### 支付宝
+### Alipay (Chinese Payment Method)
+
 <img src="src/assets/pay-zhifubao.jpg" width="150" height="150">
 
 ### Ko-fi
+
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/your-ko-fi)
 
+### Contact Me
+You can reach me via email:
 
-### 其他
+- Email: [sony9997@sina.com](mailto:sony9997@sina.com)
 
-您还可以逛逛我的官网 https://qimuinfo.top
+You can also visit my [Official Website](https://qimuinfo.top)
