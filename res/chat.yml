@@ -1,0 +1,239 @@
+app:
+  description: 利用o1思维链模式来进行推理
+  icon: female_superhero
+  icon_background: '#E0F2FE'
+  mode: advanced-chat
+  name: 推理能手
+  use_icon_as_answer_icon: true
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - document
+      - image
+      - audio
+      - video
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: 你好，很高兴能与您聊天
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        sourceType: start
+        targetType: llm
+      id: 1731421248814-llm
+      source: '1731421248814'
+      sourceHandle: source
+      target: llm
+      targetHandle: target
+      type: custom
+    - data:
+        sourceType: llm
+        targetType: answer
+      id: llm-answer
+      source: llm
+      sourceHandle: source
+      target: answer
+      targetHandle: target
+      type: custom
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables: []
+      height: 54
+      id: '1731421248814'
+      position:
+        x: 30
+        y: 251.5
+      positionAbsolute:
+        x: 30
+        y: 251.5
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        memory:
+          query_prompt_template: '{{#sys.query#}}'
+          role_prefix:
+            assistant: ''
+            user: ''
+          window:
+            enabled: true
+            size: 50
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: a378840b-990e-418e-a07d-4c38f4f3465a
+          role: system
+          text: '你是一位聊天助手，由琦木信息科技打造，如果用户的问题是涉及你的身份确认问题，直接回答"我是一位聊天助手",不做任何解释或说明。你负责全面分析特定问题或疑问。你的任务是准确分类识别用户问题，基于推理结果动态调用相应的工具。你应以结构化和透明的方式呈现推理过程，每一步都经过彻底检查，最终得出合理结论。
+
+
+
+            ### 推理步骤的结构：
+
+            1. **标题**：明确标识当前推理阶段。
+
+            2. **内容**：详细描述你的思考过程，解释理由及得出结论所采取的步骤。
+
+            3. **工具调用**（如有需要）：在此步骤调用相关工具，并明确工具调用的原因。
+
+            4. **下一步行动**：决定是否继续深入推理或准备提供最终答案。
+
+
+
+            ### 输出格式：请使用以下Markdown格式返回结果，通过视觉处理方式降低用户对推理过程的关注度：
+
+
+
+            ### Title：当前推理阶段的简短标签。
+
+            #### Content：深入解释此步骤的推理过程。
+
+            > Tool Call（如有必要）：描述并调用相应的工具。
+
+            > Next Action >> 选择 ''continue'' 继续推理或 ''final_answer'' 得出结论。
+
+
+
+            ### 关键说明：
+
+            - **至少进行 2 个不同的推理步骤**，每个步骤基于前一个步骤。
+
+            - **承认人工智能的局限性**，尤其在评估准确性及可能面临的困难方面。
+
+            - **使用多种推理框架**（如演绎、归纳、溯因、类比推理）来解决问题。
+
+            - **批判性分析推理过程**，寻找潜在缺陷或逻辑漏洞。
+
+            - **结合相关领域知识和最佳实践**，确保推理符合既定标准。
+
+            - **量化每个步骤和最终结论的确定性水平**，并考虑可能影响结果的边缘情况。
+
+            ### Markdown 输出示例：
+
+
+
+            ### 初始问题分析
+
+            > #### Content:
+
+            > 为了有效地解决这个问题，我将首先将给定的信息分解为关键部分。这涉及到识别……【详细说明】……通过这种方式构建问题，我们可以系统地解决每个方面。
+
+            >
+
+            > > Tool Call:
+
+            > > 在这一步，我决定调用 [工具名称] 来进一步分析 [具体分析内容]。这是因为该工具可以……
+
+            >
+
+            > Next Action >> continue
+
+
+
+            ---
+
+            ### 最终结论
+
+            #### Content:
+
+            经过多轮推理与工具分析，我得出最终结论是……【详细说明】……这个结论基于我们之前的推理框架与工具结果。'
+        selected: true
+        title: LLM
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+            variable_selector:
+            - sys
+            - files
+          enabled: false
+      height: 98
+      id: llm
+      position:
+        x: 334
+        y: 251.5
+      positionAbsolute:
+        x: 334
+        y: 251.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#llm.text#}}'
+        desc: ''
+        selected: false
+        title: 直接回复
+        type: answer
+        variables: []
+      height: 103
+      id: answer
+      position:
+        x: 638
+        y: 251.5
+      positionAbsolute:
+        x: 638
+        y: 251.5
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 159.37824548891274
+      y: 106.7206684228592
+      zoom: 0.7498606407574909

@@ -1,0 +1,1793 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Comfyui服务
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables:
+  - description: ''
+    id: 9d1eaaac-9a89-4735-9588-0e755b3b7b51
+    name: ERR_PARAMS
+    selector:
+    - env
+    - ERR_PARAMS
+    value: 参数错误
+    value_type: string
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: if-else
+      id: 1736418127727-source-1736418223834-target
+      source: '1736418127727'
+      sourceHandle: source
+      target: '1736418223834'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1736418245220-source-1736418530286-target
+      source: '1736418245220'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: variable-aggregator
+        targetType: end
+      id: 1736418530286-source-1736418542650-target
+      source: '1736418530286'
+      sourceHandle: source
+      target: '1736418542650'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: end
+      id: 1736418223834-false-1736418608008-target
+      source: '1736418223834'
+      sourceHandle: 'false'
+      target: '1736418608008'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1736418326799-source-1736518209405-target
+      source: '1736418326799'
+      sourceHandle: source
+      target: '1736518209405'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-3d9e04a2-dff0-4a80-a961-b88bfa25f4ce-1736418245220-target
+      source: '1736518209405'
+      sourceHandle: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+      target: '1736418245220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-false-1736418245220-target
+      source: '1736518209405'
+      sourceHandle: 'false'
+      target: '1736418245220'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-true-17365191224750-target
+      source: '1736518209405'
+      sourceHandle: 'true'
+      target: '17365191224750'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17365191224750-source-1736418530286-target
+      source: '17365191224750'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-d0d9daa5-b187-4390-b6d7-f6d9c966cb3b-17365202663250-target
+      source: '1736518209405'
+      sourceHandle: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+      target: '17365202663250'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17365202663250-source-1736418530286-target
+      source: '17365202663250'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7-17365207890880-target
+      source: '1736518209405'
+      sourceHandle: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+      target: '17365207890880'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17365207890880-source-1736418530286-target
+      source: '17365207890880'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-c08e44a9-f957-4ec9-9c54-95f9107d0242-17365213298650-target
+      source: '1736518209405'
+      sourceHandle: c08e44a9-f957-4ec9-9c54-95f9107d0242
+      target: '17365213298650'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17365213298650-source-1736418530286-target
+      source: '17365213298650'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736518209405-391e29fe-8779-445d-a873-9501f3d535ad-17365240830170-target
+      selected: false
+      source: '1736518209405'
+      sourceHandle: 391e29fe-8779-445d-a873-9501f3d535ad
+      target: '17365240830170'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17365240830170-source-1736418530286-target
+      source: '17365240830170'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: llm
+      id: 17364217881050-source-1736572490962-target
+      source: '17364217881050'
+      sourceHandle: source
+      target: '1736572490962'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1736418223834-63accf51-9cc0-4c8a-9242-cbd90b48f4ae-17364217881050-target
+      source: '1736418223834'
+      sourceHandle: 63accf51-9cc0-4c8a-9242-cbd90b48f4ae
+      target: '17364217881050'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: if-else
+      id: 1736572490962-source-17366039717630-target
+      source: '1736572490962'
+      sourceHandle: source
+      target: '17366039717630'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-true-1736418640006-target
+      source: '17366039717630'
+      sourceHandle: 'true'
+      target: '1736418640006'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-d0d9daa5-b187-4390-b6d7-f6d9c966cb3b-17366039902360-target
+      source: '17366039717630'
+      sourceHandle: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+      target: '17366039902360'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7-17366039931900-target
+      source: '17366039717630'
+      sourceHandle: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+      target: '17366039931900'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-c08e44a9-f957-4ec9-9c54-95f9107d0242-17366039874760-target
+      source: '17366039717630'
+      sourceHandle: c08e44a9-f957-4ec9-9c54-95f9107d0242
+      target: '17366039874760'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-391e29fe-8779-445d-a873-9501f3d535ad-17366039894550-target
+      source: '17366039717630'
+      sourceHandle: 391e29fe-8779-445d-a873-9501f3d535ad
+      target: '17366039894550'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-3d9e04a2-dff0-4a80-a961-b88bfa25f4ce-17366039885250-target
+      source: '17366039717630'
+      sourceHandle: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+      target: '17366039885250'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 17366039717630-false-17366039885250-target
+      source: '17366039717630'
+      sourceHandle: 'false'
+      target: '17366039885250'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17366039902360-source-1736418530286-target
+      source: '17366039902360'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1736418640006-source-1736418530286-target
+      source: '1736418640006'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17366039931900-source-1736418530286-target
+      source: '17366039931900'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17366039874760-source-1736418530286-target
+      source: '17366039874760'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17366039894550-source-1736418530286-target
+      source: '17366039894550'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 17366039885250-source-1736418530286-target
+      source: '17366039885250'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: tool
+      id: 1736418223834-b0069bfe-aa40-4343-8e4c-a32e383f3229-1736697322841-target
+      source: '1736418223834'
+      sourceHandle: b0069bfe-aa40-4343-8e4c-a32e383f3229
+      target: '1736697322841'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: tool
+        targetType: variable-aggregator
+      id: 1736697322841-source-1736418530286-target
+      source: '1736697322841'
+      sourceHandle: source
+      target: '1736418530286'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: if-else
+        targetType: llm
+      id: 1736418223834-true-1736418326799-target
+      source: '1736418223834'
+      sourceHandle: 'true'
+      target: '1736418326799'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: 开始
+        type: start
+        variables:
+        - label: action
+          max_length: 48
+          options:
+          - txt2img
+          - img2img
+          - switch_face
+          required: true
+          type: select
+          variable: action
+        - allowed_file_extensions: []
+          allowed_file_types:
+          - image
+          allowed_file_upload_methods:
+          - local_file
+          - remote_url
+          label: images
+          max_length: 5
+          options: []
+          required: false
+          type: file-list
+          variable: images
+        - label: prompt
+          max_length: 1000
+          options: []
+          required: false
+          type: paragraph
+          variable: prompt
+        - label: baseModel
+          max_length: 48
+          options:
+          - 麦橘写实
+          - 美丽的现实主义
+          - 墨幽岚
+          - 国风
+          - 墨幽二次元
+          - 麦橘幻想
+          required: false
+          type: select
+          variable: baseModel
+        - label: negative_prompt
+          max_length: 256
+          options: []
+          required: false
+          type: text-input
+          variable: negative_prompt
+      height: 194
+      id: '1736418127727'
+      position:
+        x: 27.469764517363217
+        y: 363
+      positionAbsolute:
+        x: 27.469764517363217
+        y: 363
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: 3cd934e3-713e-4c05-9d1e-bb6fecd62e2f
+            value: txt2img
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - action
+          - comparison_operator: not empty
+            id: 255f5711-7469-46b1-82a8-d204e956e631
+            value: ''
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 'true'
+          logical_operator: and
+        - case_id: 63accf51-9cc0-4c8a-9242-cbd90b48f4ae
+          conditions:
+          - comparison_operator: is
+            id: aae80cc5-5611-4061-bc17-8c357fd7792a
+            value: img2img
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - action
+          - comparison_operator: not empty
+            id: 3b9dd60d-c295-4950-a3b4-987e974672ed
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - '1736418127727'
+            - images
+          - comparison_operator: not empty
+            id: f4cffc9f-7c6b-46de-8b59-682d44bf5310
+            value: ''
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 63accf51-9cc0-4c8a-9242-cbd90b48f4ae
+          logical_operator: and
+        - case_id: b0069bfe-aa40-4343-8e4c-a32e383f3229
+          conditions:
+          - comparison_operator: is
+            id: fda8c7b5-54b1-4afe-9d60-1222762d8bce
+            value: switch_face
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - action
+          - comparison_operator: not empty
+            id: 57b9ee43-7380-473a-85e8-a5f1de8ea18a
+            value: ''
+            varType: array[file]
+            variable_selector:
+            - '1736418127727'
+            - images
+          id: b0069bfe-aa40-4343-8e4c-a32e383f3229
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支
+        type: if-else
+      height: 326
+      id: '1736418223834'
+      position:
+        x: 334
+        y: 363
+      positionAbsolute:
+        x: 334
+        y: 363
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-麦橘写实
+        tool_configurations:
+          cfg: 20
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: majicmixRealistic_v7.safetensors
+          model_type: SD15
+          negative_prompt: 'ng_deepnegative_v1_75t, badhandv4 '
+          sampler_name: euler
+          scheduler: normal
+          steps: 20
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: Best quality, masterpiece, ultra high res, (photorealistic:1.4),
+              1girl,{{#1736418326799.text#}}
+        type: tool
+      height: 454
+      id: '1736418245220'
+      position:
+        x: 1550
+        y: 438
+      positionAbsolute:
+        x: 1550
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1736418127727'
+          - prompt
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 5ddefba3-f38d-4913-8cf3-421f8f0c2faa
+          role: system
+          text: 你是一个翻译助理，请将用户的输入的内容按照Comfyui的习惯翻译成英文
+        - id: 5d7385d1-ed4a-4ac3-86d8-5712013227e8
+          role: user
+          text: '{{#context#}}'
+        selected: false
+        title: 翻译
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1736418326799'
+      position:
+        x: 942
+        y: 438
+      positionAbsolute:
+        x: 942
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        output_type: array[file]
+        selected: false
+        title: 变量聚合器
+        type: variable-aggregator
+        variables:
+        - - '1736418245220'
+          - files
+        - - '1736418640006'
+          - files
+        - - '17365191224750'
+          - files
+        - - '17365202663250'
+          - files
+        - - '17365207890880'
+          - files
+        - - '17365213298650'
+          - files
+        - - '17365240830170'
+          - files
+        - - '17366039902360'
+          - files
+        - - '17366039931900'
+          - files
+        - - '17366039874760'
+          - files
+        - - '17366039894550'
+          - files
+        - - '17366039885250'
+          - files
+        - - '1736697322841'
+          - files
+      height: 373
+      id: '1736418530286'
+      position:
+        x: 1854
+        y: 3246
+      positionAbsolute:
+        x: 1854
+        y: 3246
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1736418530286'
+          - output
+          variable: output
+        selected: false
+        title: 结束
+        type: end
+      height: 90
+      id: '1736418542650'
+      position:
+        x: 2158
+        y: 3246
+      positionAbsolute:
+        x: 2158
+        y: 3246
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - env
+          - ERR_PARAMS
+          variable: ERR_PARAMS
+        selected: false
+        title: 输入参数错误
+        type: end
+      height: 90
+      id: '1736418608008'
+      position:
+        x: 638
+        y: 363
+      positionAbsolute:
+        x: 638
+        y: 363
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 参考图片生图-国风
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "3Guofeng3_v34.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '1736418640006'
+      position:
+        x: 1550
+        y: 3584
+      positionAbsolute:
+        x: 1550
+        y: 3584
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1736418127727'
+          - prompt
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: 5ddefba3-f38d-4913-8cf3-421f8f0c2faa
+          role: system
+          text: 你是一个翻译助理，请将用户的输入的内容按照Comfyui的习惯翻译成英文，如果用户没有输入任何内容就返回空字符串，不做任何解释或说明
+        - id: 5d7385d1-ed4a-4ac3-86d8-5712013227e8
+          role: user
+          text: '{{#context#}}'
+        selected: false
+        title: 翻译正向提示词
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '17364217881050'
+      position:
+        x: 638
+        y: 3242
+      positionAbsolute:
+        x: 638
+        y: 3242
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: fe25186d-2858-45e6-b46c-13de4692f296
+            value: 国风
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 'true'
+          logical_operator: and
+        - case_id: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+          conditions:
+          - comparison_operator: is
+            id: 84fa0ea2-eb90-41a6-b8d9-61fb79955c1e
+            value: 墨幽二次元
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+          logical_operator: and
+        - case_id: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+          conditions:
+          - comparison_operator: is
+            id: f4a1654b-8ffd-47b2-bbd6-838a65c3f9cb
+            value: 麦橘幻想
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+          logical_operator: and
+        - case_id: c08e44a9-f957-4ec9-9c54-95f9107d0242
+          conditions:
+          - comparison_operator: is
+            id: 65c590c6-b570-4ab9-9963-eb5f7785d93f
+            value: 墨幽岚
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: c08e44a9-f957-4ec9-9c54-95f9107d0242
+          logical_operator: and
+        - case_id: 391e29fe-8779-445d-a873-9501f3d535ad
+          conditions:
+          - comparison_operator: is
+            id: fd90d340-94da-49fe-9401-406f8fc74a68
+            value: 美丽的现实主义
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 391e29fe-8779-445d-a873-9501f3d535ad
+          logical_operator: and
+        - case_id: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+          conditions:
+          - comparison_operator: is
+            id: 57e78cd5-3b63-4438-8af3-09ac7ce2c0e7
+            value: 麦橘写实
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3
+        type: if-else
+      height: 366
+      id: '1736518209405'
+      position:
+        x: 1246
+        y: 438
+      positionAbsolute:
+        x: 1246
+        y: 438
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-国风
+        tool_configurations:
+          cfg: 8
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: 3Guofeng3_v34.safetensors
+          model_type: SD15
+          negative_prompt: (((simple background))),monochrome ,lowres, bad anatomy,
+            bad hands, text, error, missing fingers, extra digit, fewer digits, cropped,
+            worst quality, low quality, normal quality, jpeg artifacts, signature,
+            watermark, username, blurry, lowres, bad anatomy, bad hands, text, error,
+            extra digit, fewer digits, cropped, worst quality, low quality, normal
+            quality, jpeg artifacts, signature, watermark, username, blurry, ugly,pregnant,vore,duplicate,morbid,mut
+            ilated,tran nsexual, hermaphrodite,long neck,mutated hands,poorly drawn
+            hands,poorly drawn face,mutation,deformed,blurry,bad anatomy,bad proportions,malformed
+            limbs,extra limbs,cloned face,disfigured,gross proportions, (((missing
+            arms))),(((missing legs))), (((extra arms))),(((extra legs))),pubic hair,
+            plump,bad legs,error legs,username,blurry,bad feet
+          sampler_name: dpm_2
+          scheduler: karras
+          steps: 50
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: 'Beautiful face,hair ornament, solo,looking at viewer,smile,closed
+              mouth,lips
+
+              china dress,dress,hair ornament, necklace, jewelry, long hair, earrings,
+              chinese clothes,
+
+              architecture,east asian architecture,building,outdoors,rooftop,city,cityscape
+
+              ,{{#1736418326799.text#}}'
+        type: tool
+      height: 454
+      id: '17365191224750'
+      position:
+        x: 1550
+        y: 932
+      positionAbsolute:
+        x: 1550
+        y: 932
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-墨幽二次元
+        tool_configurations:
+          cfg: 7
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: 墨幽二次元_v2.safetensors
+          model_type: SD15
+          negative_prompt: (worst quality:2),(low quality:2),(normal quality:2),lowres,watermark,
+          sampler_name: dpmpp_3m_sde_gpu
+          scheduler: karras
+          steps: 60
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: 1girl,moyou,{{#1736418326799.text#}}
+        type: tool
+      height: 454
+      id: '17365202663250'
+      position:
+        x: 1550
+        y: 1426
+      positionAbsolute:
+        x: 1550
+        y: 1426
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-麦橘幻想
+        tool_configurations:
+          cfg: 8
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: majicmixFantasy_v30Vae.safetensors
+          model_type: SD15
+          negative_prompt: ng_deepnegative_v1_75t , badhandv4
+          sampler_name: euler
+          scheduler: normal
+          steps: 20
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: official art, unity 8k wallpaper, ultra detailed, beautiful and
+              aesthetic, beautiful, masterpiece, best quality,{{#1736418326799.text#}}
+        type: tool
+      height: 454
+      id: '17365207890880'
+      position:
+        x: 1550
+        y: 1920
+      positionAbsolute:
+        x: 1550
+        y: 1920
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-墨幽岚
+        tool_configurations:
+          cfg: 3
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: 墨幽的姐姐——墨幽岚_v1.safetensors
+          model_type: SD15
+          negative_prompt: (worst quality:2),(low quality:2),(normal quality:2),lowres,watermark,
+          sampler_name: dpmpp_2m
+          scheduler: karras
+          steps: 50
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: 1girl,moyou,{{#1736418326799.text#}}
+        type: tool
+      height: 454
+      id: '17365213298650'
+      position:
+        x: 1550
+        y: 2414
+      positionAbsolute:
+        x: 1550
+        y: 2414
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: Txt2Img-美丽的现实主义亚洲人
+        tool_configurations:
+          cfg: 5
+          height: 1024
+          lora_1: null
+          lora_2: null
+          lora_3: null
+          lora_strength_1: null
+          lora_strength_2: null
+          lora_strength_3: null
+          model: beautifulRealistic_v7.safetensors
+          model_type: SD15
+          negative_prompt: (worst quality:2),(low quality:2),(normal quality:2),lowres,watermark,
+          sampler_name: dpmpp_2m
+          scheduler: karras
+          steps: 20
+          width: 768
+        tool_label: Txt2Img
+        tool_name: txt2img
+        tool_parameters:
+          prompt:
+            type: mixed
+            value: '{{#1736418326799.text#}}'
+        type: tool
+      height: 454
+      id: '17365240830170'
+      position:
+        x: 1550
+        y: 2908
+      positionAbsolute:
+        x: 1550
+        y: 2908
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        context:
+          enabled: true
+          variable_selector:
+          - '1736418127727'
+          - negative_prompt
+        desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: Qwen/Qwen2.5-72B-Instruct
+          provider: openai_api_compatible
+        prompt_template:
+        - id: f55cbe6c-5a66-42c2-87c3-4e4c869c1878
+          role: system
+          text: 你是一个翻译助理，请将用户的输入的内容按照Comfyui的习惯翻译成英文，如果用户没有输入任何内容就返回空字符串，不做任何解释或说明
+        - id: 97718876-f681-48a9-995d-06fca0cc7798
+          role: user
+          text: '{{#context#}}'
+        selected: false
+        title: 翻译反向提示词
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1736572490962'
+      position:
+        x: 942
+        y: 3246
+      positionAbsolute:
+        x: 942
+        y: 3246
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        cases:
+        - case_id: 'true'
+          conditions:
+          - comparison_operator: is
+            id: fe25186d-2858-45e6-b46c-13de4692f296
+            value: 国风
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 'true'
+          logical_operator: and
+        - case_id: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+          conditions:
+          - comparison_operator: is
+            id: 84fa0ea2-eb90-41a6-b8d9-61fb79955c1e
+            value: 墨幽二次元
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: d0d9daa5-b187-4390-b6d7-f6d9c966cb3b
+          logical_operator: and
+        - case_id: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+          conditions:
+          - comparison_operator: is
+            id: f4a1654b-8ffd-47b2-bbd6-838a65c3f9cb
+            value: 麦橘幻想
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: a6ca8b5b-e541-49b0-90dd-7aa58c2c98a7
+          logical_operator: and
+        - case_id: c08e44a9-f957-4ec9-9c54-95f9107d0242
+          conditions:
+          - comparison_operator: is
+            id: 65c590c6-b570-4ab9-9963-eb5f7785d93f
+            value: 墨幽岚
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: c08e44a9-f957-4ec9-9c54-95f9107d0242
+          logical_operator: and
+        - case_id: 391e29fe-8779-445d-a873-9501f3d535ad
+          conditions:
+          - comparison_operator: is
+            id: fd90d340-94da-49fe-9401-406f8fc74a68
+            value: 美丽的现实主义
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 391e29fe-8779-445d-a873-9501f3d535ad
+          logical_operator: and
+        - case_id: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+          conditions:
+          - comparison_operator: is
+            id: 57e78cd5-3b63-4438-8af3-09ac7ce2c0e7
+            value: 麦橘写实
+            varType: string
+            variable_selector:
+            - '1736418127727'
+            - baseModel
+          id: 3d9e04a2-dff0-4a80-a961-b88bfa25f4ce
+          logical_operator: and
+        desc: ''
+        selected: false
+        title: 条件分支 3 (1)
+        type: if-else
+      height: 366
+      id: '17366039717630'
+      position:
+        x: 1246
+        y: 3246
+      positionAbsolute:
+        x: 1246
+        y: 3246
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 参考图片生图-墨幽岚
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "墨幽的姐姐——墨幽岚_v1.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '17366039874760'
+      position:
+        x: 1550
+        y: 3948
+      positionAbsolute:
+        x: 1550
+        y: 3948
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: true
+        title: 参考图片生图-麦橘写实
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "beautifulRealistic_v7.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '17366039885250'
+      position:
+        x: 1550
+        y: 4309.641447669114
+      positionAbsolute:
+        x: 1550
+        y: 4309.641447669114
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 参考图片生图-美丽的现实主义亚洲人
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "beautifulRealistic_v7.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '17366039894550'
+      position:
+        x: 1550
+        y: 4130
+      positionAbsolute:
+        x: 1550
+        y: 4130
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 参考图片生图-墨幽二次元
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "墨幽二次元_v2.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '17366039902360'
+      position:
+        x: 1550
+        y: 3402
+      positionAbsolute:
+        x: 1550
+        y: 3402
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 参考图片生图-麦橘幻想
+        tool_configurations:
+          image_ids: '32'
+          seed_id: '21'
+          workflow_json: '{   "21": {     "inputs": {       "seed": 504688214838789,       "steps":
+            20,       "cfg": 5,       "sampler_name": "dpmpp_2m",       "scheduler":
+            "karras",       "denoise": 0.8,       "model": [         "31",         0       ],       "positive":
+            [         "26",         0       ],       "negative": [         "23",         0       ],       "latent_image":
+            [         "30",         0       ]     },     "class_type": "KSampler",     "_meta":
+            {       "title": "K采样器"     }   },   "22": {     "inputs": {       "images":
+            [         "25",         0       ]     },     "class_type": "PreviewImage",     "_meta":
+            {       "title": "预览图像"     }   },   "23": {     "inputs": {       "text":
+            "negative_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "24":
+            {     "inputs": {       "text": "positive_prompt",       "clip": [         "31",         1       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "25":
+            {     "inputs": {       "samples": [         "21",         0       ],       "vae":
+            [         "31",         2       ]     },     "class_type": "VAEDecode",     "_meta":
+            {       "title": "VAE解码"     }   },   "26": {     "inputs": {       "strength":
+            0.75,       "strength_type": "multiply",       "conditioning": [         "24",         0       ],       "style_model":
+            [         "27",         0       ],       "clip_vision_output": [         "28",         0       ]     },     "class_type":
+            "StyleModelApply",     "_meta": {       "title": "风格模型应用"     }   },   "27":
+            {     "inputs": {       "style_model_name": "t2iadapter_style_sd14v1.pth"     },     "class_type":
+            "StyleModelLoader",     "_meta": {       "title": "风格模型加载器"     }   },   "28":
+            {     "inputs": {       "crop": "none",       "clip_vision": [         "29",         0       ],       "image":
+            [         "32",         0       ]     },     "class_type": "CLIPVisionEncode",     "_meta":
+            {       "title": "CLIP视觉编码"     }   },   "29": {     "inputs": {       "clip_name":
+            "clip-vit-large-patch14.safetensors"     },     "class_type": "CLIPVisionLoader",     "_meta":
+            {       "title": "CLIP视觉加载器"     }   },   "30": {     "inputs": {       "width":
+            720,       "height": 1024,       "batch_size": 1     },     "class_type":
+            "EmptyLatentImage",     "_meta": {       "title": "空Latent"     }   },   "31":
+            {     "inputs": {       "ckpt_name": "majicmixFantasy_v30Vae.safetensors"     },     "class_type":
+            "CheckpointLoaderSimple",     "_meta": {       "title": "Checkpoint加载器(简易)"     }   },   "32":
+            {     "inputs": {       "image": "6385554508038144422539091.png",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: no pornography,{{#1736572490962.text#}}
+          positive_prompt:
+            type: mixed
+            value: '{{#17364217881050.text#}}'
+        type: tool
+      height: 142
+      id: '17366039931900'
+      position:
+        x: 1550
+        y: 3766
+      positionAbsolute:
+        x: 1550
+        y: 3766
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        provider_id: comfyui
+        provider_name: comfyui
+        provider_type: builtin
+        selected: false
+        title: 换脸
+        tool_configurations:
+          image_ids: 54,69
+          seed_id: '25'
+          workflow_json: '{   "6": {     "inputs": {       "text": "A 60 year old
+            man immersed in an artificial intelligence model with \"PuLID Flux\" printed
+            on his T-shirt",       "clip": [         "67",         0       ]     },     "class_type":
+            "CLIPTextEncode",     "_meta": {       "title": "CLIP文本编码器"     }   },   "10":
+            {     "inputs": {       "vae_name": "FLUX.1-vae.sft"     },     "class_type":
+            "VAELoader",     "_meta": {       "title": "VAE加载器"     }   },   "16":
+            {     "inputs": {       "sampler_name": "euler"     },     "class_type":
+            "KSamplerSelect",     "_meta": {       "title": "K采样器选择"     }   },   "17":
+            {     "inputs": {       "scheduler": "simple",       "steps": 10,       "denoise":
+            0.5,       "model": [         "68",         0       ]     },     "class_type":
+            "BasicScheduler",     "_meta": {       "title": "基础调度器"     }   },   "22":
+            {     "inputs": {},     "class_type": "BasicGuider",     "_meta": {       "title":
+            "基础引导"     }   },   "25": {     "inputs": {       "noise_seed": 1064983515500996     },     "class_type":
+            "RandomNoise",     "_meta": {       "title": "随机噪波"     }   },   "26":
+            {     "inputs": {       "guidance": 3.5,       "conditioning": [         "6",         0       ]     },     "class_type":
+            "FluxGuidance",     "_meta": {       "title": "Flux引导"     }   },   "27":
+            {     "inputs": {       "width": 768,       "height": 1024,       "batch_size":
+            1     },     "class_type": "EmptySD3LatentImage",     "_meta": {       "title":
+            "空Latent_SD3"     }   },   "31": {     "inputs": {       "unet_name":
+            null     },     "class_type": "UnetLoaderGGUF",     "_meta": {       "title":
+            "Unet Loader (GGUF)"     }   },   "41": {     "inputs": {       "clip_name1":
+            "t5xxl_fp8_e4m3fn.safetensors",       "clip_name2": "clip_l.safetensors",       "type":
+            "flux"     },     "class_type": "DualCLIPLoaderGGUF",     "_meta": {       "title":
+            "DualCLIPLoader (GGUF)"     }   },   "45": {     "inputs": {       "pulid_file":
+            "pulid_flux_v0.9.1.safetensors"     },     "class_type": "PulidFluxModelLoader",     "_meta":
+            {       "title": "Load PuLID Flux Model"     }   },   "47": {     "inputs":
+            {       "model": [         "62",         0       ],       "conditioning":
+            [         "26",         0       ]     },     "class_type": "BasicGuider",     "_meta":
+            {       "title": "基础引导"     }   },   "48": {     "inputs": {       "noise":
+            [         "25",         0       ],       "guider": [         "47",         0       ],       "sampler":
+            [         "16",         0       ],       "sigmas": [         "17",         0       ],       "latent_image":
+            [         "70",         0       ]     },     "class_type": "SamplerCustomAdvanced",     "_meta":
+            {       "title": "自定义采样器(高级)"     }   },   "49": {     "inputs": {       "samples":
+            [         "48",         0       ],       "vae": [         "10",         0       ]     },     "class_type":
+            "VAEDecode",     "_meta": {       "title": "VAE解码"     }   },   "50":
+            {     "inputs": {       "images": [         "49",         0       ]     },     "class_type":
+            "PreviewImage",     "_meta": {       "title": "预览图像"     }   },   "51":
+            {     "inputs": {},     "class_type": "PulidFluxEvaClipLoader",     "_meta":
+            {       "title": "Load Eva Clip (PuLID Flux)"     }   },   "53": {     "inputs":
+            {       "provider": "CUDA"     },     "class_type": "PulidFluxInsightFaceLoader",     "_meta":
+            {       "title": "Load InsightFace (PuLID Flux)"     }   },   "54": {     "inputs":
+            {       "image": "einstein.jpg",       "upload": "image"     },     "class_type":
+            "LoadImage",     "_meta": {       "title": "加载图像"     }   },   "62": {     "inputs":
+            {       "weight": 1,       "start_at": 0,       "end_at": 1,       "fusion":
+            "mean",       "fusion_weight_max": 1,       "fusion_weight_min": 0,       "train_step":
+            3000,       "use_gray": true,       "model": [         "68",         0       ],       "pulid_flux":
+            [         "45",         0       ],       "eva_clip": [         "51",         0       ],       "face_analysis":
+            [         "53",         0       ],       "image": [         "54",         0       ]     },     "class_type":
+            "ApplyPulidFlux",     "_meta": {       "title": "Apply PuLID Flux"     }   },   "67":
+            {     "inputs": {       "clip_name1": "t5xxl_fp8_e4m3fn.safetensors",       "clip_name2":
+            "clip_l.safetensors",       "type": "flux",       "device": "default"     },     "class_type":
+            "DualCLIPLoader",     "_meta": {       "title": "双CLIP加载器"     }   },   "68":
+            {     "inputs": {       "unet_name": "FLUX1/flux1-dev-fp8.safetensors",       "weight_dtype":
+            "fp8_e4m3fn"     },     "class_type": "UNETLoader",     "_meta": {       "title":
+            "UNET加载器"     }   },   "69": {     "inputs": {       "image": "984227f10f2b98e0a1be207f47c6b6d9181737.jpg",       "upload":
+            "image"     },     "class_type": "LoadImage",     "_meta": {       "title":
+            "加载图像"     }   },   "70": {     "inputs": {       "pixels": [         "69",         0       ],       "vae":
+            [         "10",         0       ]     },     "class_type": "VAEEncode",     "_meta":
+            {       "title": "VAE编码"     }   },   "72": {     "inputs": {       "text":
+            "positive_prompt"     },     "class_type": "CLIPTextEncode",     "_meta":
+            {       "title": "CLIP文本编码器"     }   },   "73": {     "inputs": {       "text":
+            "negative_prompt"     },     "class_type": "CLIPTextEncode",     "_meta":
+            {       "title": "CLIP文本编码器"     }   },   "74": {     "inputs": {       "seed":
+            732819234925778,       "steps": 20,       "cfg": 5,       "sampler_name":
+            "dpmpp_2m",       "scheduler": "karras",       "denoise": 0.8,       "positive":
+            [         "72",         0       ],       "negative": [         "73",         0       ]     },     "class_type":
+            "KSampler",     "_meta": {       "title": "K采样器"     }   } }'
+        tool_label: 工作流
+        tool_name: workflow
+        tool_parameters:
+          images:
+            type: variable
+            value:
+            - '1736418127727'
+            - images
+          negative_prompt:
+            type: mixed
+            value: ''
+          positive_prompt:
+            type: mixed
+            value: '{{#1736418127727.prompt#}}'
+        type: tool
+      height: 142
+      id: '1736697322841'
+      position:
+        x: 1550
+        y: 4494
+      positionAbsolute:
+        x: 1550
+        y: 4494
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    viewport:
+      x: 248.31318351903644
+      y: -632.327441810892
+      zoom: 0.33638176063888886
