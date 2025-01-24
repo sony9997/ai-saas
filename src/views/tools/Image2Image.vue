@@ -169,7 +169,7 @@
               <button
                 @click="generateImage"
                 :disabled="loading || !inputImagePreview"
-                class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                class="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-700 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
               >
                 {{ loading ? t('common.loading') : t('imageToImage.convert') }}
               </button>
@@ -241,7 +241,7 @@
               {{ t('common.cancel') }}
             </button>
             <button 
-              class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+              class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
               @click="confirmImageUpload"
               :disabled="!imageUrl"
               :title="t('common.confirm')"

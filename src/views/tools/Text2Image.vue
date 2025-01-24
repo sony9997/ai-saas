@@ -24,14 +24,14 @@
 
       <div class="container mx-auto px-4 py-6">
         <div class="backdrop-blur-sm bg-white/10 dark:bg-dark-700/70 rounded-2xl p-6">
-          <h1 class="text-3xl font-bold text-gray-900 mb-4">{{ t('imageGen.title') }}</h1>
+          <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-4">{{ t('imageGen.title') }}</h1>
           
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <!-- 表单区域 -->
             <div class="space-y-4">
               <!-- 提示词输入 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">{{ t('imageGen.prompt') }}</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageGen.prompt') }}</label>
                 <textarea
                   v-model="formData.prompt"
                   rows="4"
@@ -42,7 +42,7 @@
 
               <!-- 基础模型选择 -->
               <div>
-                <label class="block text-sm font-medium text-gray-900 mb-2">{{ t('imageGen.style') }}</label>
+                <label class="block text-sm font-medium text-gray-900 dark:text-gray-100 mb-2">{{ t('imageGen.style') }}</label>
                 <select 
                   v-model="formData.baseModel"
                   class="w-full px-3 py-2 bg-dark-600 border border-dark-500 rounded-lg text-gray-500 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -57,7 +57,7 @@
               <button
                 @click="generateImage"
                 :disabled="loading"
-                class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                class="w-full py-3 px-4 bg-purple-600 hover:bg-purple-700 disabled:bg-purple-800 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
               >
                 {{ loading ? t('common.loading') : t('imageGen.generate') }}
               </button>
@@ -69,7 +69,7 @@
               @click="generatedImage && showImagePreview(generatedImage)"
               :class="{ 'hover:cursor-pointer': generatedImage }"
             >
-              <div v-if="loading" class="text-gray-900">
+              <div v-if="loading" class="text-gray-900 dark:text-gray-100">
                 <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent mb-4 mx-auto"></div>
                 <p>{{ t('common.loading') }}</p>
               </div>
@@ -79,7 +79,7 @@
                 :alt="t('imageGen.generatedImage')"
                 class="max-w-full max-h-[600px] rounded-lg"
               />
-              <div v-else class="text-gray-900">
+              <div v-else class="text-gray-900 dark:text-gray-100">
                 {{ t('imageGen.previewArea') }}
               </div>
             </div>

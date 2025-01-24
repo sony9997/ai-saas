@@ -153,7 +153,7 @@
           <button
             @click="handleSubmit"
             :disabled="!canGenerate"
-            class="px-8 py-3 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
+            class="px-8 py-3 bg-purple-600 text-white rounded-lg font-semibold hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
           >
             {{ t('faceSwap.startGenerate') }}
           </button>
@@ -240,7 +240,7 @@
                 {{ t('common.cancel') }}
               </button>
               <button 
-                class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                class="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                 @click="confirmImageUpload"
                 :disabled="!imageUrl"
               >
