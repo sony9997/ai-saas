@@ -287,8 +287,6 @@ const { t } = useI18n()
 const router = useRouter()
 
 const loading = ref(false)
-const sourceImagePreview = ref(false)
-const targetImagePreview = ref(false)
 const showUploadDialog = ref(false)
 const imageUrl = ref('')
 const currentUploadType = ref<'source' | 'target'>('source')
@@ -324,10 +322,6 @@ const isUploading = ref({
 // 添加 generatedImage ref
 const generatedImage = ref('')
 
-const handlePreviewAreaClick = (type: 'source' | 'target') => {
-  currentUploadType.value = type
-  showUploadDialog.value = true
-}
 
 const handleDragEnter = (type: 'source' | 'target') => {
   if (type === 'source') isDraggingSource.value = true
