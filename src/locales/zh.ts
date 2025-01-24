@@ -25,7 +25,8 @@ export default {
     edit: '编辑',
     success: '成功',
     error: '错误',
-    confirm: '确认'
+    confirm: '确认',
+    imageUrlPlaceholder: '请输入图片URL'
   },
   home: {
     title: 'AI SaaS 平台',
@@ -95,6 +96,7 @@ export default {
   faceSwap: {
     sourceImage: '源图片',
     targetImage: '目标图片',
+    uploadImage: '上传图片',
     swap: '替换面部',
     uploadBoth: '请上传两张图片',
     title: 'AI 换脸',
@@ -241,7 +243,7 @@ export default {
     registerNow: '立即注册',
     loginNow: '立即登录',
     registerSubtitle: '创建一个新的账号',
-    loginSubtitle: '登录到您的账号'
+    loginSubtitle: '登录到您的账号',
   },
   errors: {
     required: '请输入提示词',

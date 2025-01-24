@@ -26,7 +26,8 @@ export default {
     success: 'Success',
     error: 'Error',
     confirm: 'Confirm',
-    back: 'Back'
+    back: 'Back',
+    imageUrlPlaceholder: 'Please enter the image URL'
   },
   home: {
     title: 'AI SaaS Platform',
@@ -105,6 +106,7 @@ export default {
   faceSwap: {
     sourceImage: 'Source Image',
     targetImage: 'Target Image',
+    uploadImage: 'Upload Image',
     swap: 'Swap Faces',
     uploadBoth: 'Please upload both images',
     title: 'AI Face Swap',
