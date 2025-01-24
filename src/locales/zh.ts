@@ -74,7 +74,7 @@ export default {
     description: '基于输入图像生成新的图像',
     sourceImage: '源图片',
     generatedImage: '生成的图片',
-    dragDrop: '点击或拖放图片到此处',
+    dragDrop: '点击或拖放参考图片到此处',
     previewArea: '生成图片预览区域',
     style: '风格选择',
     strength: '效果强度',

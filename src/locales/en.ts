@@ -84,7 +84,7 @@ export default {
     description: 'Generate new images based on input images',
     sourceImage: 'Source Image',
     generatedImage: 'Generated Image',
-    dragDrop: 'Click or drag an image here',
+    dragDrop: 'Click or drag and drop reference images here',
     previewArea: 'Generated image preview area',
     style: 'Style',
     strength: 'Effect Strength',

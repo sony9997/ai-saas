@@ -34,46 +34,52 @@
             <div class="grid grid-cols-2 gap-6">
               <!-- 参考图片上传区域 -->
               <div 
-                class="border border-dashed border-gray-300 dark:border-dark-500 rounded-lg overflow-hidden cursor-pointer h-[400px] relative"
-                :class="{ 'border-blue-500 bg-blue-50 dark:bg-blue-900/20': isDragging }"
+                class="relative w-full h-[400px] border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden cursor-pointer"
+                :class="{ 'bg-blue-50 dark:bg-blue-900/20': isDragging }"
                 @click="handlePreviewAreaClick"
                 @dragenter.prevent="handleDragEnter"
                 @dragleave.prevent="handleDragLeave"
                 @dragover.prevent
                 @drop.prevent="handleDrop"
               >
-                <div class="w-full h-full flex items-center justify-center">
-                  <template v-if="inputImagePreview">
-                    <img
-                      :src="inputImagePreview"
-                      :alt="t('imageToImage.sourceImage')"
-                      class="w-full h-full object-contain"
-                    />
-                    <!-- 删除按钮 -->
-                    <button 
-                      class="absolute top-2 right-2 p-1.5 bg-gray-800/70 dark:bg-dark-600/70 hover:bg-gray-900/70 dark:hover:bg-dark-500/70 rounded-full text-white transition-all duration-200"
-                      @click.stop="clearImage"
-                      :title="t('common.delete')"
-                    >
-                      <svg 
-                        xmlns="http://www.w3.org/2000/svg" 
-                        width="16" 
-                        height="16" 
-                        viewBox="0 0 24 24" 
-                        fill="none" 
-                        stroke="currentColor" 
-                        stroke-width="2" 
-                        stroke-linecap="round" 
-                        stroke-linejoin="round"
-                      >
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </button>
-                  </template>
-                  <div v-else class="text-center text-gray-900 dark:text-gray-100">
-                    <p>{{ t('imageToImage.dragDrop') }}</p>
+                <!-- 无图片时的提示 -->
+                <div v-if="!inputImagePreview" class="absolute inset-0 flex flex-col items-center justify-center">
+                  <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+                  </svg>
+                  <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">{{ t('imageToImage.dragDrop') }}</p>
+                </div>
+
+                <!-- 预览图片 -->
+                <div v-else class="relative w-full h-full">
+                  <img 
+                    :src="inputImagePreview" 
+                    class="w-full h-full object-contain"
+                    :alt="t('imageToImage.previewImage')"
+                  />
+                  
+                  <!-- 上传loading动画 -->
+                  <div 
+                    v-if="isUploading"
+                    class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+                  >
+                    <svg class="animate-spin h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
                   </div>
+
+                  <!-- 删除按钮 -->
+                  <button
+                    v-if="!isUploading"
+                    @click.stop="clearImage"
+                    class="absolute top-2 right-2 p-1 bg-gray-800/70 hover:bg-gray-700/80 text-white rounded-full transition-colors"
+                    :title="t('common.delete')"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
                 </div>
               </div>
 
@@ -303,6 +309,7 @@ const showUploadDialog = ref(false)
 const imageUrl = ref('')
 const fileInput = ref<HTMLInputElement | null>(null)
 const previewImage = ref('')
+const isUploading = ref(false)
 
 // 处理预览区域点击
 const handlePreviewAreaClick = () => {
@@ -339,18 +346,34 @@ const triggerFileInput = () => {
 const handleFileUpload = async (event: Event) => {
   const input = event.target as HTMLInputElement
   if (input.files?.length) {
+    closeUploadDialog() // 立即关闭上传对话框
     await handleImageFile(input.files[0])
-    closeUploadDialog()
   }
+  input.value = '' // 重置input
 }
 
 // 处理图片文件
 const handleImageFile = async (file: File) => {
-  // 本地预览
+  // 验证文件类型和大小
+  const validTypes = ['image/jpeg', 'image/png', 'image/webp']
+  if (!validTypes.includes(file.type)) {
+    alert(t('errors.invalidImageType'))
+    return
+  }
+
+  const maxSize = 10 * 1024 * 1024 // 10MB
+  if (file.size > maxSize) {
+    alert(t('errors.imageTooLarge'))
+    return
+  }
+
+  // 先显示预览
   inputImagePreview.value = URL.createObjectURL(file)
   formData.value.image.url = '' // 清空URL输入
-
-  // 上传到服务器
+  
+  // 开始上传,显示loading动画
+  isUploading.value = true
+  
   try {
     const bodyData = new FormData()
     bodyData.append('file', file)
@@ -374,6 +397,9 @@ const handleImageFile = async (file: File) => {
   } catch (error) {
     console.error('上传图片失败:', error)
     alert('上传图片失败,请重试')
+    inputImagePreview.value = '' // 清除预览
+  } finally {
+    isUploading.value = false
   }
 }
 
