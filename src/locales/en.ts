@@ -107,6 +107,7 @@ export default {
     sourceImage: 'Source Image',
     targetImage: 'Target Image',
     uploadImage: 'Upload Image',
+    generatedResult: 'Generated Result',
     swap: 'Swap Faces',
     uploadBoth: 'Please upload both images',
     title: 'AI Face Swap',

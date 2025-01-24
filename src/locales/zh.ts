@@ -97,6 +97,7 @@ export default {
     sourceImage: '源图片',
     targetImage: '目标图片',
     uploadImage: '上传图片',
+    generatedResult: '生成结果',
     swap: '替换面部',
     uploadBoth: '请上传两张图片',
     title: 'AI 换脸',

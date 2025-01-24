@@ -159,6 +159,38 @@
           </button>
         </div>
 
+        <!-- 生成结果区域 -->
+        <div v-if="loading || generatedImage" class="mt-8">
+          <h3 class="text-lg font-medium text-gray-900 dark:text-gray-100 mb-4">
+            {{ t('faceSwap.generatedResult') }}
+          </h3>
+          
+          <div 
+            class="relative w-full h-[400px] border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg overflow-hidden"
+          >
+            <!-- 加载状态 -->
+            <div v-if="loading" class="absolute inset-0 flex items-center justify-center bg-gray-50 dark:bg-gray-800">
+              <svg class="animate-spin h-8 w-8 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+            
+            <!-- 生成的图片 -->
+            <div 
+              v-else-if="generatedImage" 
+              class="relative w-full h-full cursor-pointer"
+              @click="showImagePreview(generatedImage)"
+            >
+              <img 
+                :src="generatedImage" 
+                class="w-full h-full object-contain"
+                alt="Generated Image"
+              />
+            </div>
+          </div>
+        </div>
+
         <!-- 源图片预览弹窗 -->
         <div v-if="previewImage" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-75">
           <div class="relative max-w-[90vw] max-h-[90vh] w-full flex items-center justify-center">
@@ -238,6 +270,8 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 interface ImageData {
+  transfer_method: 'local_file',
+  type: 'image',
   file: File | null
   url: string
   upload_file_id: string
@@ -263,11 +297,15 @@ const isDraggingTarget = ref(false)
 
 const formData = ref<FormData>({
   sourceImage: {
+    transfer_method: 'local_file',
+    type: 'image',
     file: null,
     url: '',
     upload_file_id: ''
   },
   targetImage: {
+    transfer_method: 'local_file',
+    type: 'image',
     file: null,
     url: '',
     upload_file_id: ''
@@ -282,6 +320,9 @@ const isUploading = ref({
   source: false,
   target: false
 })
+
+// 添加 generatedImage ref
+const generatedImage = ref('')
 
 const handlePreviewAreaClick = (type: 'source' | 'target') => {
   currentUploadType.value = type
@@ -325,12 +366,16 @@ const handleImageFile = async (file: File, type: 'source' | 'target') => {
   // 先显示预览图
   if (type === 'source') {
     formData.value.sourceImage = {
+      transfer_method: 'local_file',
+      type: 'image',
       file,
       url: URL.createObjectURL(file),
       upload_file_id: ''
     }
   } else {
     formData.value.targetImage = {
+      transfer_method: 'local_file',
+      type: 'image',
       file,
       url: URL.createObjectURL(file),
       upload_file_id: ''
@@ -371,12 +416,16 @@ const handleImageFile = async (file: File, type: 'source' | 'target') => {
     // 上传失败时清除预览
     if (type === 'source') {
       formData.value.sourceImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: '',
         upload_file_id: ''
       }
     } else {
       formData.value.targetImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: '',
         upload_file_id: ''
@@ -391,12 +440,16 @@ const confirmImageUpload = () => {
   if (imageUrl.value) {
     if (currentUploadType.value === 'source') {
       formData.value.sourceImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: imageUrl.value,
         upload_file_id: ''
       }
     } else {
       formData.value.targetImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: imageUrl.value,
         upload_file_id: ''
@@ -412,7 +465,7 @@ const closeUploadDialog = () => {
 }
 
 const canGenerate = computed(() => {
-  return formData.value.sourceImage.file && formData.value.targetImage.file
+  return formData.value.sourceImage.upload_file_id && formData.value.targetImage.upload_file_id
 })
 
 const handleSubmit = async () => {
@@ -420,10 +473,32 @@ const handleSubmit = async () => {
   
   loading.value = true
   try {
-    // TODO: 实现换脸逻辑
-    await new Promise(resolve => setTimeout(resolve, 2000))
+    const response = await fetch(`${import.meta.env.VITE_DIFY_API_URL}/workflows/run`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
+      },
+      body: JSON.stringify({
+        inputs: {
+          action: 'switch_face',
+          images: [formData.value.sourceImage, formData.value.targetImage]
+        },
+        response_mode: 'blocking',
+        user: 'hed-1'
+      })
+    })
+
+    const data = await response.json()
+    console.log("data", data)
+    const imageUrl = data?.data?.outputs?.output?.[0]?.url
+    if (!imageUrl) {
+      throw new Error('生成的图片URL无效')
+    }
+    generatedImage.value = imageUrl
   } catch (error) {
     console.error('换脸失败:', error)
+    alert(t('errors.networkError'))
   } finally {
     loading.value = false
   }
@@ -461,12 +536,16 @@ const closeImagePreview = () => {
 const clearImage = (type: 'source' | 'target') => {
   if (type === 'source') {
     formData.value.sourceImage = {
+      transfer_method: 'local_file',
+      type: 'image',
       file: null,
       url: '',
       upload_file_id: ''
     }
   } else {
     formData.value.targetImage = {
+      transfer_method: 'local_file',
+      type: 'image',
       file: null,
       url: '',
       upload_file_id: ''
@@ -490,12 +569,16 @@ watch(() => imageUrl.value, (newUrl) => {
   if (newUrl && currentUploadType.value) {
     if (currentUploadType.value === 'source') {
       formData.value.sourceImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: newUrl,
         upload_file_id: ''
       }
     } else {
       formData.value.targetImage = {
+        transfer_method: 'local_file',
+        type: 'image',
         file: null,
         url: newUrl,
         upload_file_id: ''
