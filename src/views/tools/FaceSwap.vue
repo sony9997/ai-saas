@@ -270,7 +270,7 @@ import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
 interface ImageData {
-  transfer_method: 'local_file',
+  transfer_method: 'local_file' | 'remote_url',
   type: 'image',
   file: File | null
   url: string
@@ -440,7 +440,7 @@ const confirmImageUpload = () => {
   if (imageUrl.value) {
     if (currentUploadType.value === 'source') {
       formData.value.sourceImage = {
-        transfer_method: 'local_file',
+        transfer_method: 'remote_url',
         type: 'image',
         file: null,
         url: imageUrl.value,
@@ -448,7 +448,7 @@ const confirmImageUpload = () => {
       }
     } else {
       formData.value.targetImage = {
-        transfer_method: 'local_file',
+        transfer_method: 'remote_url',
         type: 'image',
         file: null,
         url: imageUrl.value,
@@ -465,7 +465,9 @@ const closeUploadDialog = () => {
 }
 
 const canGenerate = computed(() => {
-  return formData.value.sourceImage.upload_file_id && formData.value.targetImage.upload_file_id
+  const sourceValid = formData.value.sourceImage.upload_file_id || formData.value.sourceImage.url
+  const targetValid = formData.value.targetImage.upload_file_id || formData.value.targetImage.url
+  return sourceValid && targetValid
 })
 
 const handleSubmit = async () => {
@@ -493,12 +495,12 @@ const handleSubmit = async () => {
     console.log("data", data)
     const imageUrl = data?.data?.outputs?.output?.[0]?.url
     if (!imageUrl) {
-      throw new Error('生成的图片URL无效')
+      throw new Error(t('errors.generatedImageInvalid'))
     }
     generatedImage.value = imageUrl
   } catch (error) {
     console.error('换脸失败:', error)
-    alert(t('errors.networkError'))
+    alert(error)
   } finally {
     loading.value = false
   }

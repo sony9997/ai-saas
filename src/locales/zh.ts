@@ -258,7 +258,9 @@ export default {
     noImage: '请先上传图片',
     fileTooLarge: '文件大小不能超过10MB',
     invalidResetToken: '重置链接无效或已过期',
-    unknownError: '发生未知错误，请稍后重试'
+    unknownError: '发生未知错误，请稍后重试',
+    uploadFailed: '上传图片失败，请稍后重试',
+    generatedImageInvalid: '生成的图片URL无效'
   },
   contentCreation:{
     title: '内容创作',

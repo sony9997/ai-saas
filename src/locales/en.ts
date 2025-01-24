@@ -248,7 +248,9 @@ export default {
     noImage: 'Please upload an image first',
     fileTooLarge: 'File size cannot exceed 10MB',
     invalidResetToken: 'Reset link is invalid or has expired',
-    unknownError: 'An unknown error occurred. Please try again later'
+    unknownError: 'An unknown error occurred. Please try again later',
+    uploadFailed: 'Upload image failed. Please try again later',
+    generatedImageInvalid: 'Generated image URL is invalid'
   },
   aiSing: {
     inputText: 'Enter lyrics or text',
