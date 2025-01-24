@@ -235,7 +235,7 @@ export default {
     hasAccount: 'Already have an account?'
   },
   errors: {
-    required: 'This field is required',
+    required: 'Please enter the prompt word',
     invalidEmail: 'Please enter a valid email address',
     invalidPassword: 'Password must be at least 6 characters long',
     loginFailed: 'Login failed. Please check your credentials.',

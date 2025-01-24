@@ -171,21 +171,27 @@ const generateImage = async () => {
 
   loading.value = true
   try {
-    const response = await fetch('https://api.qimuinfo.top/aigc/api/generate/txt2img', {
+    const response = await fetch(import.meta.env.VITE_DIFY_API_URL+'/workflows/run', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
+        'Authorization': `Bearer ${import.meta.env.VITE_DIFY_API_KEY}`
       },
       body: JSON.stringify({
-        prompt: formData.prompt,
-        baseModel: formData.baseModel
+        inputs: {
+          action: 'txt2img',
+          prompt: formData.prompt,
+          baseModel: formData.baseModel,
+        },
+        response_mode: 'blocking',
+        user: 'hed-1'
       })
     })
 
     const data = await response.json()
-    if (data.code === 200) {
-      generatedImage.value = data.data.imageUrl
+    const imageUrl = data?.data?.outputs?.output?.[0]?.url
+    if (imageUrl) {
+      generatedImage.value = imageUrl
     } else {
       alert(data.message || t('errors.networkError'))
     }

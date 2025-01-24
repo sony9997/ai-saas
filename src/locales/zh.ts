@@ -244,7 +244,7 @@ export default {
     loginSubtitle: '登录到您的账号'
   },
   errors: {
-    required: '此字段为必填项',
+    required: '请输入提示词',
     invalidEmail: '请输入有效的邮箱地址',
     invalidPassword: '密码长度必须至少为6个字符',
     passwordsDoNotMatch: '两次输入的密码不一致',
